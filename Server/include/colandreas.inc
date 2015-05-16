@@ -435,15 +435,13 @@ stock CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 {
 	new Float:x, Float:y, Float:z, Float:tmp;
 	GetPlayerPos(playerid, x, y, z);
-	if(CA_RayCastLine(x+dist, y, z, x+dist, y, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x-dist, y, z, x-dist, y, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x, y+dist, z, x, y+dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x, y-dist, z, x, y-dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-		CA_RayCastLine(x+dist, y+dist, z, x+dist, y+dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x-dist, y-dist, z, x-dist, y-dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x-dist, y+dist, z, x-dist, y+dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x+dist, y-dist, z, x+dist, y-dist, z-height, tmp, tmp, tmp) == WATER_OBJECT)
-		return 1;
+	
+	for(new i; i<12; i++) 
+		if(CA_RayCastLine(
+			x + (dist * floatsin(i*30.0, degrees)), y + (dist * floatcos(i*30.0, degrees)), z+height, 
+			x + (dist * floatsin(i*30.0, degrees)), y + (dist * floatcos(i*30.0, degrees)), z-height, 
+			tmp, tmp, tmp) == WATER_OBJECT)
+			return 1;
 	return 0;
 }
 
