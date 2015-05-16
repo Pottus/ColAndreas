@@ -114,12 +114,13 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineAngle(AMX *amx, cell *para
 
 	if (collisionWorld->performRayTestAngle(Start, End, Result, RX, RY, RZ, model))
 	{
-		//Get our adderesses for the last 5
+		//Get our adderesses for the last 6
 		amx_GetAddr(amx, params[7], &addr[0]);
 		amx_GetAddr(amx, params[8], &addr[1]);
 		amx_GetAddr(amx, params[9], &addr[2]);
 		amx_GetAddr(amx, params[10], &addr[3]);
 		amx_GetAddr(amx, params[11], &addr[4]);
+		amx_GetAddr(amx, params[12], &addr[5]);
 
 		*addr[0] = amx_ftoc(Result.getX());
 		*addr[1] = amx_ftoc(Result.getY());
