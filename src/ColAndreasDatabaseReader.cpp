@@ -15,7 +15,7 @@ void DeleteCollisionData()
 }
 
 
-bool ReadColandreasDatabaseFile(string FileLocation)
+bool ReadColandreasDatabaseFile(std::string FileLocation)
 {
 	bool returnValue = false;
 
@@ -39,7 +39,7 @@ bool ReadColandreasDatabaseFile(string FileLocation)
 		GetBytes(buffer, FileExtension, FileIndex, 5);
 		
 		//If is a ColAndreas binary file.
-		if (strcmp(FileExtension, "cadb") == 0)
+		if (strcmp(FileExtension, "cadf") == 0)
 		{
 			GetBytes(buffer, ModelCount, FileIndex, 2);
 			GetBytes(buffer, IPLCount, FileIndex, 4);
