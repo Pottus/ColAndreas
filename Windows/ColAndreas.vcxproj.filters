@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\DynamicWorld.cpp">
+      <Filter>DynamicWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ColAndreasDatabaseReader.cpp">
+      <Filter>ColAndreasDatabaseReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ColAndreas.cpp">
+      <Filter>ColAndreasMain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Natives.cpp">
+      <Filter>Natives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ColObject.cpp">
+      <Filter>ColObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SDK\amxplugin.cpp">
+      <Filter>SDK</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\DynamicWorld.h">
+      <Filter>DynamicWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LodArray.h">
+      <Filter>DynamicWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\WaterArray.h">
+      <Filter>DynamicWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ColAndreasDatabaseReader.h">
+      <Filter>ColAndreasDatabaseReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ColAndreas.h">
+      <Filter>ColAndreasMain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Natives.h">
+      <Filter>Natives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ColObject.h">
+      <Filter>ColObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SDK\plugincommon.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SDK\amx\amx.h">
+      <Filter>SDK\amx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SDK\amx\sclinux.h">
+      <Filter>SDK\amx</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="SDK">
+      <UniqueIdentifier>{5747b0cf-3e18-4784-a4cd-797d42dfe807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DynamicWorld">
+      <UniqueIdentifier>{77b2f53c-1511-452c-ac0b-caffaddb0b54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ColAndreasDatabaseReader">
+      <UniqueIdentifier>{3f246c59-7d40-4b36-ba38-781def05d461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ColAndreasMain">
+      <UniqueIdentifier>{fbc792bd-d7bd-4012-a60a-f8ea10488e9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Natives">
+      <UniqueIdentifier>{72067603-30fb-418e-bcd9-6e4293f10b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ColObject">
+      <UniqueIdentifier>{c9904f1d-e81a-4626-8797-ad2c72a6afff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\amx">
+      <UniqueIdentifier>{810b5dba-46a5-40db-8af2-cc1559b4f4ac}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\ColAndreas.def">
+      <Filter>ColAndreasMain</Filter>
+    </None>
+  </ItemGroup>
+</Project>
