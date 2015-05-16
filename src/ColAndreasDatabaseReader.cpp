@@ -37,9 +37,9 @@ bool ReadColandreasDatabaseFile(string FileLocation)
 
 		char FileExtension[5];
 		GetBytes(buffer, FileExtension, FileIndex, 5);
-
+		
 		//If is a ColAndreas binary file.
-		if (strcmp(FileExtension, "Cskp") == 0)
+		if (strcmp(FileExtension, "cadb") == 0)
 		{
 			GetBytes(buffer, ModelCount, FileIndex, 2);
 			GetBytes(buffer, IPLCount, FileIndex, 4);

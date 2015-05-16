@@ -68,7 +68,7 @@ btCompoundShape* ColAndreasColObject::getCompoundShape()
 
 bool LoadCollisionData(btDynamicsWorld* collisionWorld)
 {
-	if (ReadColandreasDatabaseFile("scriptfiles/colandreas/ColAndreasDB.Cskp"))
+	if (ReadColandreasDatabaseFile("scriptfiles/colandreas/ColAndreas.cadb"))
 	{
 		for (uint16_t i = 0; i < ModelCount; i++)
 		{
