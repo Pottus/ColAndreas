@@ -445,6 +445,21 @@ stock CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 	return 0;
 }
 
+// Check if player is facing water
+stock CA_IsPlayerFacingWater(playerid, Float:dist=3.0, Float:height=3.0)
+{
+    new Float:x, Float:y, Float:z, Float:r;
+    GetPlayerPos(playerid, x, y, z);
+    GetPlayerFacingAngle(playerid,r);
+
+    if(CA_RayCastLine(
+        x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z, 
+        x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z-height, 
+        tmp, tmp, tmp) == WATER_OBJECT)
+        return 1;
+    return 0;
+}
+
 // Checks if a player is blocked by a wall
 stock CA_IsPlayerBlocked(playerid, Float:dist=1.5, Float:height=0.5)
 {
