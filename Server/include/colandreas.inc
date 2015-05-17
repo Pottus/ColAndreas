@@ -486,6 +486,27 @@ stock Float:CA_GetRoomHeight(Float:x, Float:y, Float:z)
 	return 0.0;
 }
 
+stock Float:CA_GetColSphereRadius(objectmodel)
+{
+	new Float:tmp, rad;
+	if(0 <= objectmodel <= 19999)
+	{
+		CA_GetModelBoundingSphere(objectmodel, tmp, tmp, tmp, rad);
+		return rad;
+	}
+	return 0.0;
+}
+
+stock CA_GetColSphereOffset(objectmodel, &Float:x, &Float:y, &Float:z)
+{
+	new Float:tmp;
+	if(0 <= objectmodel <= 19999)
+	{
+		CA_GetModelBoundingSphere(objectmodel, x, y, z, tmp);
+		return 1;
+	}
+	return 0;
+}
 
 // Hooked functions
 public OnFilterScriptExit()
