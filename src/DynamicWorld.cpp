@@ -31,7 +31,7 @@ ColAndreasWorld::~ColAndreasWorld()
 		delete mapWaterMesh;
 }
 
-btScalar ColAndreasWorld::getDist3D(btVector3& c1, btVector3& c2)
+btScalar ColAndreasWorld::getDist3D(const btVector3& c1, const btVector3& c2)
 {
 	btScalar dx = c2.getX() - c1.getX();
 	btScalar dy = c2.getY() - c1.getY();
@@ -185,7 +185,7 @@ int ColAndreasWorld::performRayTestReflection(const btVector3& Start, const btVe
 
 		// Calculates the reflection vector of the given Raycast
 		btVector3 Normal = RayCallback.m_hitNormalWorld;
-		btScalar Magnitude = this->getDist3D(btVector3(Start), btVector3(Position));
+		btScalar Magnitude = this->getDist3D(Start, Position);
 		btVector3 UVector = (Position - Start) / btVector3(Magnitude, Magnitude, Magnitude);
 		Result = UVector - 2 * UVector.dot(Normal) * Normal;
 		
