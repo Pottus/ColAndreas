@@ -19,7 +19,7 @@ public:
 	ObjectManager* objectManager;
 
 	// Converts GTA rotations to quaternion
-	btScalar getDist3D(btVector3& p1, btVector3& p2);
+	btScalar getDist3D(const btVector3& p1, const btVector3& p2);
 	void EulerToQuat(btVector3& rotation, btQuaternion& result);
 	void QuatToEuler(btQuaternion& rotation, btVector3& result);
 	int performRayTest(const btVector3& Start, const btVector3& End, btVector3& Result, uint16_t& model);
