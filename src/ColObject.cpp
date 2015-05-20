@@ -281,6 +281,12 @@ void InitCollisionMap(btDynamicsWorld* collisionWorld, RemovedBuildingManager* r
 {
 	for (uint16_t i = 0; i < IPLCount; i++)
 	{
+		if (ModelPlacements[i].Modelid > 19999)
+		{
+			logprintf("ERROR::InitCollisionMap::Invalid ModelID::%i", ModelPlacements[i].Modelid);
+			continue;
+		}
+
 		uint16_t index = ModelRef[ModelPlacements[i].Modelid];
 
 		if (i % 100 == 0)
@@ -295,6 +301,7 @@ void InitCollisionMap(btDynamicsWorld* collisionWorld, RemovedBuildingManager* r
 
 			ColAndreasMapObject* tmpObject;
 			tmpObject = new ColAndreasMapObject(ModelPlacements[i].Modelid, btQuaternion(ModelPlacements[i].Rotation.x, ModelPlacements[i].Rotation.y, ModelPlacements[i].Rotation.z, ModelPlacements[i].Rotation.w), btVector3(ModelPlacements[i].Position.x, ModelPlacements[i].Position.y, ModelPlacements[i].Position.z), collisionWorld);
+
 		}
 	}
 }
