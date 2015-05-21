@@ -119,17 +119,15 @@ ColAndreasMapObject::~ColAndreasMapObject()
 
 void ColAndreasMapObject::setMapObjectPosition(btVector3& position)
 {
-	colMapRigidBody->setWorldTransform(btTransform(colMapRigidBody->getWorldTransform().getRotation(), position));
-	collisionWorld->removeRigidBody(colMapRigidBody);
-	collisionWorld->addRigidBody(colMapRigidBody);
+	//getMotionState() updates the world transform automatically without any kind of manual input.
+	colMapRigidBody->getMotionState()->setWorldTransform(btTransform(colMapRigidBody->getWorldTransform().getRotation(), position));
 }
 
 
 void ColAndreasMapObject::setMapObjectRotation(btQuaternion& rotation)
 {
-	colMapRigidBody->setWorldTransform(btTransform(rotation, colMapRigidBody->getWorldTransform().getOrigin()));
-	collisionWorld->removeRigidBody(colMapRigidBody);
-	collisionWorld->addRigidBody(colMapRigidBody);
+	//getMotionState() updates the world transform automatically without any kind of manual input.
+	colMapRigidBody->getMotionState()->setWorldTransform(btTransform(rotation, colMapRigidBody->getWorldTransform().getOrigin()));
 }
 
 
