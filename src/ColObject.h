@@ -47,7 +47,7 @@ public:
 private:
 	// Object Data
 	btRigidBody* colMapRigidBody;
-	btDefaultMotionState* colMapObjectPosition;
+	btMotionState* colMapObjectPosition;
 	uint16_t colindex = 0;
 	btDynamicsWorld* collisionWorld;
 };
