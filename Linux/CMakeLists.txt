@@ -34,4 +34,4 @@ file(GLOB CA_Source
 
 add_library(ColAndreas SHARED ${CA_Source})
 set_target_properties(ColAndreas PROPERTIES PREFIX "")
-target_link_libraries(ColAndreas ${BULLET_COLLISION_LIBRARY} ${BULLET_DYNAMICS_LIBRARY} ${BULLET_MATH_LIBRARY})
+target_link_libraries(ColAndreas ${BULLET_LIBRARIES})
