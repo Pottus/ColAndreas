@@ -34,7 +34,7 @@ public OnGameModeInit()
 	// Initialize the plugin
 	CA_Init();
 
-	// Objects can only be added AFTER calling CA_Init
+	// Create objects and add them to the simulation
 	CreateDynamicObject_SC();
 
 	return 1;
