@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 
 project(ColAndreas)
 
+set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS OFF)
 find_package(Bullet REQUIRED)
 
 add_definitions(-DLINUX)
@@ -12,7 +13,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 set(CMAKE_C_FLAGS "-m32")
 set(CMAKE_CXX_FLAGS "-m32 -std=c++11 -Wno-write-strings")
-set(CMAKE_SHARED_LINKER_FLAGS "-m32 -fshort-wchar -shared")
+set(CMAKE_SHARED_LINKER_FLAGS "-m32 -fshort-wchar -static-libgcc -static-libstdc++ -Wl,-static")
 
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -O0 -g3")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -g3")
