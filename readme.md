@@ -24,18 +24,18 @@ Go to the [releases page](https://github.com/Pottus/ColAndreas/releases) and gra
 	* **Windows:** Copy *ColAndreas.dll* to the *plugins* folder of your server and add "ColAndreas" to the *plugins* line in *server.cfg*
 	* **Linux:** Copy *ColAndreas.so* or *ColAndreas_static.so* (see the note above) and add "ColAndreas.so" or "ColAndreas_static.so" to the *plugins* line in *server.cfg*
 3. Copy *ColAndreas.inc* to the folder *pawno/include*
-4. Call `CA_Init()` from `OnGameModeInit` in order to initialize the plugin:
+4. Use `CA_Init()` to load the SA world:
 ```pawn
 public OnGameModeInit()
 {
 	// Objects need to be removed BEFORE calling CA_Init
 	CA_RemoveBuilding();
 
-	// Initialize the plugin
+	// Load the SA map
 	CA_Init();
 
 	// Create objects and add them to the simulation
-	CreateDynamicObject_SC();
+	CA_CreateDynamicObjectEx_SC();
 
 	return 1;
 }
