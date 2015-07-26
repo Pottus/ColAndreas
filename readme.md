@@ -41,40 +41,69 @@ public OnGameModeInit()
 }
 ```
 
-##Building
+##Building (Windows)
 
-####Windows
+####Requirements
+* [Visual Studio](https://www.visualstudio.com/) 2013: [Download](https://go.microsoft.com/fwlink/?LinkId=532495&type=WEB&clcid=0x409)
+* [CMake](http://www.cmake.org/) build system: [Download](http://www.cmake.org/files/v3.3/cmake-3.3.0-win32-x86.exe)
 
-* Use the provided solution files (.sln) for building the project using Visual Studio.
+####Plugin
+* Compile Bullet from source:
+	* Download the source code from [here](https://github.com/bulletphysics/bullet3/archive/2.83.5.tar.gz).
+	* Extract it to any location.
+	* Open the *"VS2013 x86 Native Tools Command Prompt"* [(?)](https://msdn.microsoft.com/en-us/library/ms229859(v=vs.110).aspx)
+	* Switch to the directory where you extracted the Bullet source code using the *cd* command.
+	* Build the project:
+```bash
+mkdir build
+cd build
 
-####Linux
+# Choose a folder for installing the Bullet libraries and headers
+# Change it to your preferred path
+set BULLET=C:\libs\bullet
 
-#####Requirements
+cmake -DBUILD_EXTRAS=OFF -DBUILD_BULLET3=OFF -DBUILD_UNIT_TESTS=OFF -DBUILD_BULLET2_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DINSTALL_LIBS=ON -DCMAKE_INSTALL_PREFIX=%BULLET% -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" ..
+
+nmake
+nmake install
+```
+* Generate ColAndreas with CMake:
+	* Download the source code from [here](https://github.com/Pottus/ColAndreas/archive/master.zip).
+	* Extract it to any location.
+	* Using the same command prompt as before, switch to the ColAndreas directory using *cd*.
+	* Generate the solution:
+```bash
+mkdir vs
+cd vs
+
+cmake -DBULLET_ROOT=%BULLET% ..
+```
+* Open the solution (*ColAndreas.sln*) using Visual Studio and compile it.
+
+####Wizard
+* Use the provided solution file: *WizardApp/ColAndreasWizard/ColAndreasWizard.sln*
+
+###Building (Linux)
+
+####Requirements
 * A C++ compiler with C++11 support ([GCC](https://gcc.gnu.org/)/[Clang](https://clang.llvm.org/))
 * [CMake](http://www.cmake.org/) build system.
 * [Bullet Physics](http://bulletphysics.org/) development files.
-* **Optional:** [git](https://git-scm.com/) version control.
+* [Git](https://git-scm.com/) version control.
 
-#####Dynamic version
+####Dynamic version
 * Install the required packages:
 	* **Ubuntu:** `sudo apt-get install libbullet-dev:i386 cmake g++-multilib git`
 	* **IMPORTANT:** You require the 32bit version of Bullet, even if you're using a 64bit OS.
 * Get the source code:
 ```bash
-# Using git
 git clone https://github.com/Pottus/ColAndreas.git
 cd ColAndreas
-
-# Or if you prefer the .zip file
-wget https://github.com/Pottus/ColAndreas/archive/master.zip
-unzip master.zip
-rm master.zip
-cd ColAndreas-master
 ```
 * Create a build folder and run CMake
 ```bash
-mkdir Linux/build
-cd Linux/build
+mkdir build
+cd build
 
 # Replace "Release" with "Debug" if you want debug symbols
 cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -83,9 +112,9 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 ```bash
 make -j4
 ```
-* The compiled file will be placed in the folder *Linux/build*
+* The compiled file will be placed in the *build* folder.
 
-#####Static version
+####Static version
 * Install the required packages:
 	* **Ubuntu:** `sudo apt-get install cmake g++-multilib git`
 * Compile Bullet from source:
@@ -119,10 +148,10 @@ cd ../..
 git clone https://github.com/Pottus/ColAndreas.git
 cd ColAndreas
 
-mkdir Linux/build
-cd Linux/build
+mkdir build
+cd build
 
-cmake -DCMAKE_BUILD_TYPE=Release -DBULLET_ROOT=$(pwd)/../../../bullet3-2.83.5/output ..
+cmake -DCMAKE_BUILD_TYPE=Release -DBULLET_ROOT=$(pwd)/../../bullet3-2.83.5/output ..
 make -j4
 ```
-* The compiled file will be placed in the folder *Linux/build*
+* The compiled file will be placed in the *build* folder.
