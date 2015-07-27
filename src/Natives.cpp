@@ -244,6 +244,12 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastMultiLine(AMX *amx, cell *para
 
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_CreateObject(AMX *amx, cell *params)
 {
+	if(!colDataLoaded)
+	{
+		logprintf("ERROR: CA_CreateObject : Collision data not found.");
+		return -1;
+	}
+	
 	uint16_t modelid = static_cast<uint16_t>(params[1]);
 	uint16_t addtomanager = static_cast<uint16_t>(params[8]);
 
@@ -329,6 +335,10 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RemoveBuilding(AMX *amx, cell *params
 		tmp.r_Radius = amx_ctof(params[5]);
 		collisionWorld->removedManager->addBuilding(tmp);
 		return 1;
+	}
+	else
+	{
+		logprintf("ERROR: CA_RemoveBuilding : Map has already been initialized. Use this before CA_Init.");
 	}
 	return 0;
 }
