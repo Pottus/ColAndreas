@@ -9,6 +9,8 @@ if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE "Release" CACHE STRING " " FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
+option(BuildWizard "Compile the Wizard application." OFF)
+
 if(WIN32)
 	add_definitions(-DWIN32 -D_WIN32)
 
@@ -54,4 +56,8 @@ target_link_libraries(ColAndreas ${BULLET_LIBRARIES})
 
 if(NOT WIN32 AND ${BULLET_COLLISION_LIBRARY} MATCHES ".a$")
 	set_target_properties(ColAndreas PROPERTIES SUFFIX "_static.so")
+endif()
+
+if(BuildWizard)
+	add_subdirectory(WizardApp)
 endif()
