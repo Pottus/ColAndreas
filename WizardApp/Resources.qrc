@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+	<file alias="splash.gif">res/ColAndreas.gif</file>
+	<file alias="header.gif">res/CA-placeholder-camo.gif</file>
+	<file alias="icon.ico">res/CA-icon.ico</file>
+	<file alias="license.html">res/GPL3.html</file>
+</qresource>
+</RCC>
