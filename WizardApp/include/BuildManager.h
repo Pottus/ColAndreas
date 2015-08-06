@@ -20,31 +20,31 @@
 *
 * [uL]Slice, Writing the original collision reader function
 */
-using namespace System::Threading;
-#include <Windows.h>
+
+#pragma once
+
+#ifdef WIN32
+	#include <Windows.h>
+#endif
+
 #include <array>
-#include <stdio.h>
-#include <tchar.h>
+#include <cstdio>
 #include <fstream> 
 #include <iostream>
 #include <stdint.h>
 #include <algorithm>    // std::find
 #include <string>
 #include <vector>
-//#include"dirent.h"
 #include <assert.h>
 #include <array>
 
-#include <vcclr.h>
+#include <ATree.hpp>
 
-using namespace System;
 #define GetBytes(Source, Destination, Index, BytesToCopy) memcpy(&Destination, (Source + Index), BytesToCopy), Index+=BytesToCopy
 
-
-public class BuildManager
+class BuildManager
 {
-private:
-
+public:
 	typedef struct
 	{
 		float x;
@@ -111,43 +111,34 @@ private:
 		float DrawDist;
 	} Modelid_Modelname_Struct;
 
-
+private:
 	uint8_t ERROR_CODE;//uint8_t
 	std::string GTAInstallDirectory;
-	std::string OutfileDirectroy;
+	std::string OutfileDirectory;
 
 	std::vector<BuildManager::IPLObject> IPLArray;
 	std::vector<BuildManager::ColModel> COLArray;
+	ATree<int> modelnameLookup;
+	std::map<int, std::string> modelidLookup;
 	std::vector<BuildManager::Modelid_Modelname_Struct> Modelid_Modelname_Vector;
 
-	//These index's are not nescisary, vector has functionality for this already.
-	uint32_t Modelid_Modelname_VectorIndex;
-	uint32_t IPLArrayVectorIndex;
-	uint16_t COLArrayVectorIndex;
-
-	std::tr1::array<std::string, 3> ImageFileNames;
-	std::tr1::array<std::string, 2> CollisionFileNames;
-	std::tr1::array<std::string, 31> ItemPlacementFileNames;
-	std::tr1::array<std::string, 54> ItemDefinitionFileNames;
-
-	gcroot<System::ComponentModel::BackgroundWorker ^>  backgroundWorkerRefrence;
+	std::vector<std::string> ImageFileNames;
+	std::vector<std::string> CollisionFileNames;
+	std::vector<std::string> ItemPlacementFileNames;
+	std::vector<std::string> ItemDefinitionFileNames;
 
 	bool ReadItemDefinitionFile(const char fname[]);
-	bool ReadItemPlacmentData(const char fname[]);
-	void ReadBinaryItemPlacmentData(char* RawIPLData);
-	BuildManager::ColModel ReadColModel(char* data);
-
+	bool ReadItemPlacementData(const char fname[]);
+	void ReadBinaryItemPlacementData(char* RawIPLData);
 
 	bool ReadColFile(const char fname[]);
 	void InitDirectoryNames();
 
 	bool UsingSAMPObjects;
 	bool UsingCustomObjects;
+	
 public:
-
-
-	BuildManager(std::string _GTAInstallDirectory, std::string _OutfileDirectroy, System::ComponentModel::BackgroundWorker ^ _backgroundWorkerPointer, bool _UsingSAMPObjects, bool _UsingCustomObjects);
-
+	BuildManager(std::string &GTADirectory, std::string &OutDirectory, bool SAMPObjects, bool CustomObjects);
 
 	bool ExtractImageFiles();
 	bool ExtractCollisionFiles();
@@ -156,6 +147,4 @@ public:
 	void PrepareDatabaseStructures();
 
 	bool WriteBinaryFile(const char fname[]);
-
-
 };
