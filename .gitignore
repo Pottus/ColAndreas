@@ -1,9 +1,6 @@
 # Build files
 build/
-WizardApp/ColAndreasWizard/Debug/
-WizardApp/ColAndreasWizard/Release/
-WizardApp/ColAndreasWizard/ColAndreasWizard/Debug/
-WizardApp/ColAndreasWizard/ColAndreasWizard/Release/
+output/
 
 # Windows image file caches
 Thumbs.db
@@ -11,7 +8,6 @@ ehthumbs.db
 
 # Folder config file
 Desktop.ini
-Pre Compiled/
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
