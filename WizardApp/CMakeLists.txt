@@ -6,7 +6,6 @@ find_package(Qt5 COMPONENTS Core Gui Widgets)
 if(NOT WIN32)
 	set(CMAKE_C_FLAGS "")
 	set(CMAKE_CXX_FLAGS "-std=c++11 -Wno-write-strings")
-	set(CMAKE_EXE_LINKER_FLAGS "-fshort-wchar -shared")
 endif(NOT WIN32)
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include" "${CMAKE_BINARY_DIR}/WizardApp" ${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS})

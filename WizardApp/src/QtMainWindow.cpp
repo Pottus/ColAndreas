@@ -34,6 +34,8 @@ MainWindow::MainWindow() : QMainWindow()
 	ui->setupUi(this);
 	
 	this->setWindowIcon(QIcon(":/icon.ico"));
+	this->setWindowTitle("ColAndreas Wizard - " CA_VERSION);
+	
 	ui->headerImage->setPixmap(QPixmap(":/header.gif"));
 	ui->statusBar->hide();
 	ui->buttonBack->hide();
