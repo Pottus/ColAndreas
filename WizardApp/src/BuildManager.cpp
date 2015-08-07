@@ -598,7 +598,11 @@ bool BuildManager::WriteBinaryFile(const char fname[])
 	{
 		//Filetype in header (standard binary file format) "Otherwise you could give it any old file and it would load it."
 		char FileExtension[5] = "cadf";
-		ColAndreasBinaryfile.write((char*) &FileExtension, 5);
+		ColAndreasBinaryfile.write((char*) &FileExtension, 4);
+		
+		//Version
+		uint16_t dbVersion = CA_DATABASE_VERSION;
+		ColAndreasBinaryfile.write((char*) &dbVersion, 2);
 
 		//Number of collision files
 		uint16_t colCount = COLArray.size();

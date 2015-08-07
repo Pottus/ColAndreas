@@ -48,7 +48,8 @@ PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData)
 	}
 
 	logprintf("*********************");
-	logprintf("**ColAndreas Loaded**");
+	logprintf("  ColAndreas Loaded");
+	logprintf("  " CA_VERSION);
 	logprintf("*********************");
 
 	return true;
