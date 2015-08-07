@@ -97,7 +97,7 @@ typedef struct
 	Quaternion Rotation;//16 bytes
 } ItemPlacementstructure;//30 bytes total
 
-#define GetBytes(Source, Destination, Index, BytesToCopy) memcpy(&Destination, (Source + Index), BytesToCopy), Index+=BytesToCopy
+#define GetBytes(Source, Destination, Index, BytesToCopy) memcpy(&(Destination), (Source + Index), BytesToCopy), Index+=BytesToCopy
 
 //function to read database file
 /*

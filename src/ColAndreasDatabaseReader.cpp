@@ -57,11 +57,7 @@ bool ReadColandreasDatabaseFile(std::string FileLocation)
 						CollisionModels[i].SphereData = new structSphereData[CollisionModels[i].SphereCount];
 
 						for (uint16_t j = 0; j < CollisionModels[i].SphereCount; j++) {
-							GetBytes(buffer, CollisionModels[i].SphereData[j].Offset.x, FileIndex, 4);
-							GetBytes(buffer, CollisionModels[i].SphereData[j].Offset.y, FileIndex, 4);
-							GetBytes(buffer, CollisionModels[i].SphereData[j].Offset.z, FileIndex, 4);
-
-							GetBytes(buffer, CollisionModels[i].SphereData[j].Radius, FileIndex, 4);
+							GetBytes(buffer, CollisionModels[i].SphereData[j], FileIndex, sizeof(structSphereData));
 						}
 					}
 
@@ -69,39 +65,28 @@ bool ReadColandreasDatabaseFile(std::string FileLocation)
 						CollisionModels[i].BoxData = new structBoxData[CollisionModels[i].BoxCount];
 
 						for (uint16_t j = 0; j < CollisionModels[i].BoxCount; j++) {
-							GetBytes(buffer, CollisionModels[i].BoxData[j], FileIndex, 24);
+							GetBytes(buffer, CollisionModels[i].BoxData[j], FileIndex, sizeof(structBoxData));
 						}
 					}
 
 					if (CollisionModels[i].FaceCount > 0)
 					{
-
 						CollisionModels[i].FacesData = new structFacesData[CollisionModels[i].FaceCount];
 
 						for (uint16_t j = 0; j < CollisionModels[i].FaceCount; j++) {
-							GetBytes(buffer, CollisionModels[i].FacesData[j], FileIndex, 36);
+							GetBytes(buffer, CollisionModels[i].FacesData[j], FileIndex, sizeof(structFacesData));
 						}
 					}
 				}
 			}
-
-			FileIndex = FileIndex + 8;
-
-
+			
 			if (IPLCount > 0) {
 				ModelPlacements = new ItemPlacementstructure[IPLCount];
 
 				for (uint32_t i = 0; i < IPLCount; i++) {
-					GetBytes(buffer, ModelPlacements[i].Modelid, FileIndex, 2);
-
-					GetBytes(buffer, ModelPlacements[i].Position.x, FileIndex, 4);
-					GetBytes(buffer, ModelPlacements[i].Position.y, FileIndex, 4);
-					GetBytes(buffer, ModelPlacements[i].Position.z, FileIndex, 4);
-
-					GetBytes(buffer, ModelPlacements[i].Rotation.x, FileIndex, 4);
-					GetBytes(buffer, ModelPlacements[i].Rotation.y, FileIndex, 4);
-					GetBytes(buffer, ModelPlacements[i].Rotation.z, FileIndex, 4);
-					GetBytes(buffer, ModelPlacements[i].Rotation.w, FileIndex, 4);
+					GetBytes(buffer, ModelPlacements[i].Modelid, FileIndex, sizeof(uint16_t));
+					GetBytes(buffer, ModelPlacements[i].Position, FileIndex, sizeof(Vector));
+					GetBytes(buffer, ModelPlacements[i].Rotation, FileIndex, sizeof(Quaternion));
 				}
 			}
 
