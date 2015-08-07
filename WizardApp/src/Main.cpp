@@ -7,6 +7,11 @@
 #include <QSplashScreen>
 #include <QTimer>
 
+#ifdef WIN32
+	#include <QtPlugin>
+	Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
+#endif
+
 #include <QtMainWindow.hpp>
 #include <BuildManager.h>
 

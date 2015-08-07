@@ -1,7 +1,6 @@
 
 #ifdef WIN32
 	#include <Windows.h>
-	#define snprintf sprintf_s
 #else
 	#include <unistd.h>
 	#include <sys/types.h>
@@ -73,9 +72,9 @@ MainWindow::MainWindow() : QMainWindow()
 		DWORD size = MAX_PATH;
 		char path[MAX_PATH];
 
-		if(RegQueryValueEx(key, "ExePath", NULL, NULL, &path, &size) == ERROR_SUCCESS)
+		if(RegQueryValueEx(key, "ExePath", NULL, NULL, (BYTE*) path, &size) == ERROR_SUCCESS)
 		{
-			gamePath.append(path, size);
+			gamePath.append(path);
 			gamePath.remove('"');
 			
 			if(gamePath.endsWith('/') || gamePath.endsWith('\\'))
