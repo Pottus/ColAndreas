@@ -31,7 +31,8 @@
 #include <cstdio>
 #include <fstream> 
 #include <iostream>
-#include <stdint.h>
+#include <cctype>
+#include <cstdint>
 #include <algorithm>    // std::find
 #include <string>
 #include <vector>

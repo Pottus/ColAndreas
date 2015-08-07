@@ -156,7 +156,7 @@ bool ColFile::Load(BuildManager::ColModel *output)
 				if(fileItems.numFaces)
 				{
 					uint16_t topIndex = 0;
-					uint16_t faceIndexes[fileItems.numFaces][3];
+					uint16_t (*faceIndexes)[3] = new uint16_t[fileItems.numFaces][3];
 					
 					output->faces = new BuildManager::ColFace[fileItems.numFaces];					
 					handle->seekg(beginPos + 4 + fileItems.offFaces);
@@ -192,6 +192,8 @@ bool ColFile::Load(BuildManager::ColModel *output)
 						output->faces[i].b = &(vertices[faceIndexes[i][1]]);
 						output->faces[i].c = &(vertices[faceIndexes[i][2]]);
 					}
+					
+					delete [] faceIndexes;
 				}
 				else output->faces = NULL;
 				

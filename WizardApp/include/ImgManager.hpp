@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <vector>
+#include <cstdint>
 
 struct ImgHeader
 {
