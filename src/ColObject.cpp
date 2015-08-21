@@ -258,7 +258,7 @@ bool RemovedBuildingManager::isRemoved(uint16_t model, Vector position)
 {
 	for (uint16_t i = 0; i < removedBuildings.size(); i++)
 	{
-		if (model == removedBuildings[i].r_Model)
+		if (model == removedBuildings[i].r_Model || model == -1)
 		{
 			btScalar dist = btDistance(btVector3(btScalar(position.x), btScalar(position.y), btScalar(position.z)),
 				btVector3(btScalar(removedBuildings[i].r_X), btScalar(removedBuildings[i].r_Y), btScalar(removedBuildings[i].r_Z)));
