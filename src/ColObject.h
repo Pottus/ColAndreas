@@ -75,7 +75,8 @@ public:
 	int removeObjectManager(const uint16_t index);
 	int setObjectPosition(const uint16_t index, btVector3& position);
 	int setObjectRotation(const uint16_t index, btQuaternion& rotation);
-	int getBoundingSphere(uint16_t modelid, btVector3& center, btScalar& radius);	
+	int getBoundingSphere(uint16_t modelid, btVector3& center, btScalar& radius);
+	int getBoundingBox(uint16_t modelid, btVector3& min, btVector3& max);	
 private:
 	bool slotUsed[MAX_MAP_OBJECTS];
 	ColAndreasMapObject* mapObjects[MAX_MAP_OBJECTS];

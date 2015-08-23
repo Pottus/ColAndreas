@@ -389,6 +389,39 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetModelBoundingSphere(AMX *amx, cell
 }
 
 
+cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetModelBoundingBox(AMX *amx, cell *params)
+{
+	uint16_t modelid = static_cast<uint16_t>(params[1]);
+	
+	if (modelid >= 0 && modelid < 20000)
+	{
+		btVector3 Min;
+		btVector3 Max;
+
+		if (collisionWorld->objectManager->getBoundingBox(modelid, Min, Max))
+		{
+			cell* addr[6];
+			amx_GetAddr(amx, params[2], &addr[0]);
+			amx_GetAddr(amx, params[3], &addr[1]);
+			amx_GetAddr(amx, params[4], &addr[2]);
+			amx_GetAddr(amx, params[5], &addr[3]);
+			amx_GetAddr(amx, params[6], &addr[4]);
+			amx_GetAddr(amx, params[7], &addr[5]);
+			
+			*addr[0] = amx_ftoc(Min.getX());
+			*addr[1] = amx_ftoc(Min.getY());
+			*addr[2] = amx_ftoc(Min.getZ());
+			*addr[3] = amx_ftoc(Max.getX());
+			*addr[4] = amx_ftoc(Max.getY());
+			*addr[5] = amx_ftoc(Max.getZ());
+
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
 // CA_RayCastReflectionVector(Float:startx, Float:starty, Float:startz, Float:endx, Float:endy, Float:endz, &Float:vector);
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastReflectionVector(AMX *amx, cell *params)
 {

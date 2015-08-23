@@ -85,6 +85,7 @@ AMX_NATIVE_INFO PluginNatives[] =
 	{ "CA_SetObjectPos", ColAndreasNatives::CA_SetObjectPos },
 	{ "CA_SetObjectRot", ColAndreasNatives::CA_SetObjectRot },
 	{ "CA_GetModelBoundingSphere", ColAndreasNatives::CA_GetModelBoundingSphere },
+	{ "CA_GetModelBoundingBox", ColAndreasNatives::CA_GetModelBoundingBox },
 
 	// Extended Natives
 	{ "CA_RayCastLineEx", ColAndreasNatives::CA_RayCastLineEx },
