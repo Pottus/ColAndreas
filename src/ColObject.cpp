@@ -250,6 +250,29 @@ int ObjectManager::getBoundingSphere(uint16_t modelid, btVector3& center, btScal
 }
 
 
+int ObjectManager::getBoundingBox(uint16_t modelid, btVector3& min, btVector3& max)
+{
+	uint16_t colindex = ModelRef[modelid];
+	btTransform t;
+	t.setIdentity();
+
+	// Check for LOD objects
+	if (colindex == 65535)
+	{
+		if (LodReference[modelid] > 0)
+			colindex = ModelRef[LodReference[modelid]];
+	}
+
+
+	if (colindex != 65535)
+	{
+		colObjects[colindex]->getCompoundShape()->getAabb(t, min, max);
+		return 1;
+	}
+	return 0;
+}
+
+
 RemovedBuildingManager::RemovedBuildingManager()
 {
 }
