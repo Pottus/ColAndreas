@@ -436,16 +436,23 @@ stock CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 {
 	new Float:x, Float:y, Float:z, Float:tmp;
 	GetPlayerPos(playerid, x, y, z);
-	if(CA_RayCastLine(x+dist, y, z, x+dist, y, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x-dist, y, z, x-dist, y, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x, y+dist, z, x, y+dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x, y-dist, z, x, y-dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-		CA_RayCastLine(x+dist, y+dist, z, x+dist, y+dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x-dist, y-dist, z, x-dist, y-dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x-dist, y+dist, z, x-dist, y+dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x+dist, y-dist, z, x+dist, y-dist, z-height, tmp, tmp, tmp) == WATER_OBJECT)
-		return 1;
+	
+	for(new i; i < 6; i++) 
+		if(CA_RayCastLine(x + (dist * floatsin(i * 60.0, degrees)), y + (dist * floatcos(i * 60.0, degrees)), z + height, x + (dist * floatsin(i * 60.0, degrees)), y + (dist * floatcos(i * 60.0, degrees)), z - height, tmp, tmp, tmp) == WATER_OBJECT)
+			return 1;
 	return 0;
+}
+
+// Check if player is facing water
+stock CA_IsPlayerFacingWater(playerid, Float:dist=3.0, Float:height=3.0)
+{
+    new Float:x, Float:y, Float:z, Float:r;
+    GetPlayerPos(playerid, x, y, z);
+    GetPlayerFacingAngle(playerid, r);
+
+    if(CA_RayCastLine(x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z, x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z - height, tmp, tmp, tmp) == WATER_OBJECT)
+        return 1;
+    return 0;
 }
 
 // Checks if a player is blocked by a wall
