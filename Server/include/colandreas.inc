@@ -436,16 +436,29 @@ stock CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 {
 	new Float:x, Float:y, Float:z, Float:tmp;
 	GetPlayerPos(playerid, x, y, z);
-	if(CA_RayCastLine(x+dist, y, z, x+dist, y, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x-dist, y, z, x-dist, y, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x, y+dist, z, x, y+dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x, y-dist, z, x, y-dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-		CA_RayCastLine(x+dist, y+dist, z, x+dist, y+dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x-dist, y-dist, z, x-dist, y-dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x-dist, y+dist, z, x-dist, y+dist, z-height, tmp, tmp, tmp) == WATER_OBJECT ||
-	    CA_RayCastLine(x+dist, y-dist, z, x+dist, y-dist, z-height, tmp, tmp, tmp) == WATER_OBJECT)
-		return 1;
+	
+	for(new i; i<12; i++) 
+		if(CA_RayCastLine(
+			x + (dist * floatsin(i*30.0, degrees)), y + (dist * floatcos(i*30.0, degrees)), z+height, 
+			x + (dist * floatsin(i*30.0, degrees)), y + (dist * floatcos(i*30.0, degrees)), z-height, 
+			tmp, tmp, tmp) == WATER_OBJECT)
+			return 1;
 	return 0;
+}
+
+// Check if player is facing water
+stock CA_IsPlayerFacingWater(playerid, Float:dist=3.0, Float:height=3.0)
+{
+    new Float:x, Float:y, Float:z, Float:r;
+    GetPlayerPos(playerid, x, y, z);
+    GetPlayerFacingAngle(playerid,r);
+
+    if(CA_RayCastLine(
+        x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z, 
+        x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z-height, 
+        tmp, tmp, tmp) == WATER_OBJECT)
+        return 1;
+    return 0;
 }
 
 // Checks if a player is blocked by a wall
@@ -474,6 +487,27 @@ stock Float:CA_GetRoomHeight(Float:x, Float:y, Float:z)
 	return 0.0;
 }
 
+stock Float:CA_GetColSphereRadius(objectmodel)
+{
+	new Float:tmp, rad;
+	if(0 <= objectmodel <= 19999)
+	{
+		CA_GetModelBoundingSphere(objectmodel, tmp, tmp, tmp, rad);
+		return rad;
+	}
+	return 0.0;
+}
+
+stock CA_GetColSphereOffset(objectmodel, &Float:x, &Float:y, &Float:z)
+{
+	new Float:tmp;
+	if(0 <= objectmodel <= 19999)
+	{
+		CA_GetModelBoundingSphere(objectmodel, x, y, z, tmp);
+		return 1;
+	}
+	return 0;
+}
 
 // Hooked functions
 public OnFilterScriptExit()
