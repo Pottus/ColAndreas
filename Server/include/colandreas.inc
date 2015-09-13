@@ -372,7 +372,7 @@ stock CA_FindZ_For2DCoord(Float:x, Float:y, &Float:z)
 	return 0;
 }
 
-Explode ray casts in every direction
+// Explode ray casts in every direction
 stock CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intensity = 20.0, Float:collisions[][3])
 {
 	if(intensity < 1.0 || intensity > 360.0 || (((360.0 / intensity) - floatround((360.0 / intensity), floatround_floor)) * intensity))
