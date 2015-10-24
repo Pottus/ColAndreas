@@ -67,7 +67,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineEx(AMX *amx, cell *params)
 	btVector3 Position;
 	btQuaternion Rotation;
 	btVector3 Result;
-	uint16_t Model = -1;
+	uint16_t Model = 0;
 
 	if (collisionWorld->performRayTestEx(Start, End, Result, Rotation, Position, Model))
 	{
@@ -148,7 +148,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineAngleEx(AMX *amx, cell *pa
 	btScalar RX;
 	btScalar RY;
 	btScalar RZ;
-	uint16_t Model = -1;
+	uint16_t Model = 0;
 
 	if (collisionWorld->performRayTestAngleEx(Start, End, Result, RX, RY, RZ, ObjectRotation, ObjectPosition, Model))
 	{
