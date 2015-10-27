@@ -21,6 +21,7 @@ public:
 	static cell AMX_NATIVE_CALL CA_SetObjectRot(AMX *amx, cell *params);
 	static cell AMX_NATIVE_CALL CA_GetModelBoundingSphere(AMX *amx, cell *params);
 	static cell AMX_NATIVE_CALL CA_GetModelBoundingBox(AMX *amx, cell *params);
+	static cell AMX_NATIVE_CALL CA_ContactTest(AMX *amx, cell *params);
 
 	// Extended natives
 	static cell AMX_NATIVE_CALL CA_RayCastLineEx(AMX *amx, cell *params);

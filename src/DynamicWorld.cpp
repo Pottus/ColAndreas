@@ -211,6 +211,23 @@ int ColAndreasWorld::performRayTestNormal(const btVector3& Start, const btVector
 	return 0;
 }
 
+int ColAndreasWorld::performContactTest(uint16_t modelid, btVector3& objectPos, btQuaternion& objectRot)
+{
+	ContactCollisionSensor callback;
+	
+	uint16_t colindex = ModelRef[modelid];
+	btDefaultMotionState* colMapObjectPosition = new btDefaultMotionState(btTransform(objectRot, objectPos));
+	btRigidBody::btRigidBodyConstructionInfo meshRigidBodyCI(0, colMapObjectPosition, colConvex[colindex], btVector3(0, 0, 0));
+	btRigidBody* colMapRigidBody = new btRigidBody(meshRigidBodyCI);
+	
+	dynamicsWorld->contactTest(colMapRigidBody, callback);
+	
+	delete colMapRigidBody->getMotionState();
+	delete colMapRigidBody;
+	
+	return callback.collided;
+}
+
 void ColAndreasWorld::colandreasInitMap()
 {
 	// Create water map mesh

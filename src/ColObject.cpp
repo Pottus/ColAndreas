@@ -6,8 +6,9 @@
 #define WATER_MESH_ID 20000
 
 std::vector <ColAndreasColObject*> colObjects;
+std::vector <btCompoundShape*> colConvex;
 
-ColAndreasColObject::ColAndreasColObject(uint16_t colindex)
+ColAndreasColObject::ColAndreasColObject(uint16_t colindex, bool thirdparty = false)
 {
 	colMapObject = new btCompoundShape();
 
@@ -31,7 +32,6 @@ ColAndreasColObject::ColAndreasColObject(uint16_t colindex)
 	{
 		// Create a triangular mesh
 		trimesh = new btTriangleMesh();
-
 		for (int i = 0; i < CollisionModels[colindex].FaceCount; i++)
 		{
 			// Add triangle faces
@@ -40,7 +40,14 @@ ColAndreasColObject::ColAndreasColObject(uint16_t colindex)
 				btVector3(CollisionModels[colindex].FacesData[i].FaceC.x, CollisionModels[colindex].FacesData[i].FaceC.y, CollisionModels[colindex].FacesData[i].FaceC.z));
 		}
 		meshshape = new btBvhTriangleMeshShape(trimesh, true);
-		colMapObject->addChildShape(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)), meshshape);
+		if (thirdparty) //will be true for convex objects
+		{
+			btConvexTriangleMeshShape* convexMesh;
+			convexMesh = new btConvexTriangleMeshShape(trimesh);
+			colMapObject->addChildShape(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)), convexMesh); //producing a convex mesh
+		}
+		else
+			colMapObject->addChildShape(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)), meshshape);
 	}
 }
 
@@ -77,7 +84,9 @@ bool LoadCollisionData(btDynamicsWorld* collisionWorld)
 				printf("\33Loading: %0.1f\r", ((double)i / ModelCount) * 100);
 			}
 			ColAndreasColObject* colObject = new ColAndreasColObject(i);
+			ColAndreasColObject* convex = new ColAndreasColObject(i, true); //true for convex mesh
 			colObjects.push_back(colObject);
+			colConvex.push_back(convex->getCompoundShape()); //storing convex bodies
 		}
 		return true;
 	}

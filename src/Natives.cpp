@@ -67,7 +67,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineEx(AMX *amx, cell *params)
 	btVector3 Position;
 	btQuaternion Rotation;
 	btVector3 Result;
-	uint16_t Model = -1;
+	uint16_t Model = 0;
 
 	if (collisionWorld->performRayTestEx(Start, End, Result, Rotation, Position, Model))
 	{
@@ -148,7 +148,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineAngleEx(AMX *amx, cell *pa
 	btScalar RX;
 	btScalar RY;
 	btScalar RZ;
-	uint16_t Model = -1;
+	uint16_t Model = 0;
 
 	if (collisionWorld->performRayTestAngleEx(Start, End, Result, RX, RY, RZ, ObjectRotation, ObjectPosition, Model))
 	{
@@ -494,4 +494,17 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineNormal(AMX *amx, cell *par
 		return model;
 	}
 	return 0;
+}
+
+cell AMX_NATIVE_CALL ColAndreasNatives::CA_ContactTest(AMX *amx, cell *params)
+{
+	uint16_t modelid = static_cast<uint16_t>(params[1]);
+	
+	btVector3 position = btVector3(amx_ctof(params[2]), amx_ctof(params[3]), amx_ctof(params[4]));
+	btVector3 rotation = btVector3(amx_ctof(params[5]), amx_ctof(params[6]), amx_ctof(params[7]));
+	
+	btQuaternion quatrotation;
+	collisionWorld->EulerToQuat(rotation, quatrotation);
+	
+	return collisionWorld->performContactTest(modelid, position, quatrotation);
 }

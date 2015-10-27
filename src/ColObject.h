@@ -17,12 +17,13 @@ struct removeBuildingData
 	float r_Radius;
 };
 
+static uint16_t colindex = 0;
 
 // Collision Objects
 class ColAndreasColObject
 {
 public:
-	ColAndreasColObject(uint16_t colindex);
+	ColAndreasColObject(uint16_t colindex, bool thirdparty);
 	~ColAndreasColObject();
 	btCompoundShape* getCompoundShape();
 private:
@@ -48,7 +49,6 @@ private:
 	// Object Data
 	btRigidBody* colMapRigidBody;
 	btDefaultMotionState* colMapObjectPosition;
-	uint16_t colindex = 0;
 	btDynamicsWorld* collisionWorld;
 };
 
@@ -100,6 +100,7 @@ uint16_t GetModelRef(uint16_t model);
 
 // Pointer reference
 extern std::vector <ColAndreasColObject*> colObjects;
+extern std::vector <btCompoundShape*> colConvex; //for the sake of contact tests
 
 typedef struct {
 	btVector3 pos;

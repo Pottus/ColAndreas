@@ -77,6 +77,7 @@ AMX_NATIVE_INFO PluginNatives[] =
 	{ "CA_RayCastMultiLine", ColAndreasNatives::CA_RayCastMultiLine },
 	{ "CA_RayCastReflectionVector", ColAndreasNatives::CA_RayCastReflectionVector },
 	{ "CA_RayCastLineNormal", ColAndreasNatives::CA_RayCastLineNormal },
+	{ "CA_ContactTest", ColAndreasNatives::CA_ContactTest },
 	{ "CA_CreateObject", ColAndreasNatives::CA_CreateObject },
 	{ "CA_DestroyObject", ColAndreasNatives::CA_DestroyObject },
 	{ "CA_EulerToQuat", ColAndreasNatives::CA_EulerToQuat },

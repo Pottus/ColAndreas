@@ -5,6 +5,22 @@
 #include "ColObject.h"
 #include "ColAndreas.h"
 
+const btScalar DEG_TO_RAD = btScalar(0.0174532925);
+const btScalar RADIAN_TO_DEG = btScalar(57.29577951);
+
+struct ContactCollisionSensor : public btCollisionWorld::ContactResultCallback //collision sensor callback
+{
+	int collided;
+	ContactCollisionSensor() : btCollisionWorld::ContactResultCallback(), collided(0)
+	{
+	}
+
+	virtual btScalar addSingleResult(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0, int partId0, int index0, const btCollisionObjectWrapper* colObj1, int partId1, int index1)
+	{
+		collided = 1; //if in contact sets the value to 1 else 0
+		return 0;
+	}
+};
 
 class ColAndreasWorld
 {
@@ -29,7 +45,7 @@ public:
 	int performRayTestAll(const btVector3& Start, const btVector3& End, btAlignedObjectArray < btVector3 >& Result, int ModelIDs[], int size);
 	int performRayTestReflection(const btVector3& Start, const btVector3& End, btVector3& Position, btVector3& Result, uint16_t& model);
 	int performRayTestNormal(const btVector3& Start, const btVector3& End, btVector3& Result, btVector3& Normal, uint16_t& model);
-
+	int performContactTest(uint16_t modelid, btVector3& objectPos, btQuaternion& objectRot);
 
 	uint16_t createColAndreasMapObject(uint16_t addtomanager, uint16_t modelid, const btQuaternion& objectRot, const btVector3& objectPos);
 	uint16_t getModelRef(uint16_t model);
@@ -43,8 +59,6 @@ private:
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
 	btSequentialImpulseConstraintSolver* solver;
-	const btScalar DEG_TO_RAD = btScalar(0.0174532925);
-	const btScalar RADIAN_TO_DEG = btScalar(57.29577951);
 };
 
 extern ColAndreasWorld* collisionWorld;
