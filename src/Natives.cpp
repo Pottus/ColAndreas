@@ -421,6 +421,19 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetModelBoundingBox(AMX *amx, cell *p
 	return 0;
 }
 
+cell AMX_NATIVE_CALL ColAndreasNatives::CA_SetObjectExtraID(AMX *amx, cell *params)
+{
+	uint16_t index = static_cast<uint16_t>(params[1]);
+	collisionWorld->setMyExtraID(index, params[2]); //sets an external id
+	return 1;
+}
+
+cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetObjectExtraID(AMX *amx, cell *params)
+{
+	uint16_t index = static_cast<uint16_t>(params[1]);
+	return collisionWorld->getMyExtraID(index); //returns an external id
+}
+
 
 // CA_RayCastReflectionVector(Float:startx, Float:starty, Float:startz, Float:endx, Float:endy, Float:endz, &Float:vector);
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastReflectionVector(AMX *amx, cell *params)

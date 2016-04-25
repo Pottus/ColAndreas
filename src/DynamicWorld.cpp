@@ -252,6 +252,16 @@ uint16_t ColAndreasWorld::getModelRef(uint16_t model)
 {
 	return GetModelRef(model);
 }
+ 		 
+void ColAndreasWorld::setMyExtraID(uint16_t index, int objectid)
+{
+	objectManager->setExtraID(index, objectid);
+}
+
+int ColAndreasWorld::getMyExtraID(uint16_t index)
+{
+	return objectManager->getExtraID(index);
+}
 
 bool ColAndreasWorld::loadCollisionData()
 {

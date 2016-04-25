@@ -117,6 +117,9 @@ ColAndreasMapObject::ColAndreasMapObject(uint16_t modelid, const btQuaternion& o
 
 	// Add rigid body to world
 	collisionWorld->addRigidBody(colMapRigidBody);
+	
+	// Create the tracker object
+	tracker = new ColAndreasObjectTracker();
 }
 
 ColAndreasMapObject::~ColAndreasMapObject()
@@ -189,6 +192,27 @@ ObjectManager::ObjectManager()
 	{
 		slotUsed[i] = false;
 	}
+}
+ 		 
+int ObjectManager::setExtraID(const uint16_t index, int objectid)
+{
+	if (slotUsed[index])
+	{
+		//mapObjects[index]->tracker->m_modelID = modelid;
+		//mapObjects[index]->tracker->m_extraID = extraID;
+		mapObjects[index]->tracker->m_objectID = objectid;
+		return 1;
+	}
+	return 0;
+}
+
+int ObjectManager::getExtraID(const uint16_t index)
+{
+	if (slotUsed[index])
+	{
+		return mapObjects[index]->tracker->m_objectID;
+	}
+	return -1;
 }
 
 

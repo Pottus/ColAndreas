@@ -18,6 +18,14 @@ struct removeBuildingData
 };
 
 static uint16_t colindex = 0;
+ 		 
+// Data structure to track in-game objects with respect to their colindex
+struct ColAndreasObjectTracker
+{
+	int32_t m_objectID;
+	//uint16_t m_modelID;
+	//int32_t m_extraID;
+};
 
 // Collision Objects
 class ColAndreasColObject
@@ -45,6 +53,7 @@ public:
 	~ColAndreasMapObject();
 	void setMapObjectPosition(btVector3& position);
 	void setMapObjectRotation(btQuaternion& rotation);
+	ColAndreasObjectTracker* tracker;
 private:
 	// Object Data
 	btRigidBody* colMapRigidBody;
@@ -76,7 +85,9 @@ public:
 	int setObjectPosition(const uint16_t index, btVector3& position);
 	int setObjectRotation(const uint16_t index, btQuaternion& rotation);
 	int getBoundingSphere(uint16_t modelid, btVector3& center, btScalar& radius);
-	int getBoundingBox(uint16_t modelid, btVector3& min, btVector3& max);	
+	int getBoundingBox(uint16_t modelid, btVector3& min, btVector3& max);	      
+	int setExtraID(const uint16_t index, int objectid);
+	int getExtraID(const uint16_t index);
 private:
 	bool slotUsed[MAX_MAP_OBJECTS];
 	ColAndreasMapObject* mapObjects[MAX_MAP_OBJECTS];
