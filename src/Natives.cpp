@@ -57,6 +57,60 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLine(AMX *amx, cell *params)
 }
 
 
+cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineID(AMX *amx, cell *params)
+{
+	cell* addr[3];
+
+	// Adding a small value prevents a potential crash if all values are the same
+	btVector3 Start = btVector3(btScalar(amx_ctof(params[1]) + 0.00001), btScalar(amx_ctof(params[2]) + 0.00001), btScalar(amx_ctof(params[3]) + 0.00001));
+	btVector3 End = btVector3(btScalar(amx_ctof(params[4])), btScalar(amx_ctof(params[5])), btScalar(amx_ctof(params[6])));
+	btVector3 Result;
+	uint16_t Index = 0;
+
+	if (collisionWorld->performRayTestID(Start, End, Result, Index))
+	{
+		//Get our adderesses for the last 3
+		amx_GetAddr(amx, params[7], &addr[0]);
+		amx_GetAddr(amx, params[8], &addr[1]);
+		amx_GetAddr(amx, params[9], &addr[2]);
+
+		*addr[0] = amx_ftoc(Result.getX());
+		*addr[1] = amx_ftoc(Result.getY());
+		*addr[2] = amx_ftoc(Result.getZ());
+
+		return Index;
+	}
+	return 0;
+}
+
+
+cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineExtraID(AMX *amx, cell *params)
+{
+	cell* addr[3];
+
+	// Adding a small value prevents a potential crash if all values are the same
+	btVector3 Start = btVector3(btScalar(amx_ctof(params[2]) + 0.00001), btScalar(amx_ctof(params[3]) + 0.00001), btScalar(amx_ctof(params[4]) + 0.00001));
+	btVector3 End = btVector3(btScalar(amx_ctof(params[5])), btScalar(amx_ctof(params[6])), btScalar(amx_ctof(params[7])));
+	btVector3 Result;
+	uint16_t Data = 0;
+
+	if (collisionWorld->performRayTestExtraID(Start, End, Result, params[1], Data))
+	{
+		//Get our adderesses for the last 3
+		amx_GetAddr(amx, params[8], &addr[0]);
+		amx_GetAddr(amx, params[9], &addr[1]);
+		amx_GetAddr(amx, params[10], &addr[2]);
+
+		*addr[0] = amx_ftoc(Result.getX());
+		*addr[1] = amx_ftoc(Result.getY());
+		*addr[2] = amx_ftoc(Result.getZ());
+
+		return Data;
+	}
+	return 0;
+}
+
+
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineEx(AMX *amx, cell *params)
 {
 	cell* addr[10];
@@ -424,14 +478,14 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetModelBoundingBox(AMX *amx, cell *p
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_SetObjectExtraID(AMX *amx, cell *params)
 {
 	uint16_t index = static_cast<uint16_t>(params[1]);
-	collisionWorld->setMyExtraID(index, params[2]); //sets an external id
+	collisionWorld->setMyExtraID(index, params[2], params[3]);
 	return 1;
 }
 
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetObjectExtraID(AMX *amx, cell *params)
 {
 	uint16_t index = static_cast<uint16_t>(params[1]);
-	return collisionWorld->getMyExtraID(index); //returns an external id
+	return collisionWorld->getMyExtraID(index, params[2]);
 }
 
 

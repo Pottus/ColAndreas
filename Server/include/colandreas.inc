@@ -15,6 +15,12 @@ native CA_Init();
 Cast a line from p1 to p2 and return the point of collision
 native CA_RayCastLine(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, &Float:x, &Float:y, &Float:z)
 
+Cast a line from p1 to p2 and return the point of collision (returns ColAndreas index)
+native CA_RayCastLineID(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, &Float:x, &Float:y, &Float:z)
+
+Cast a line from p1 to p2 and return the point of collision (returns extra ID of type [0-9])
+native CA_RayCastLineExtraID(type, Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, &Float:x, &Float:y, &Float:z)
+
 Cast a line that will return multiple layers of collision results (Results are unsorted in terms sequence of collisions)
 native CA_RayCastMultiLine(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, Float:retx[], Float:rety[], Float:retz[], Float:retdist[], ModelIDs[], size = sizeof(retx));
 
@@ -92,10 +98,24 @@ There is currently no support for virtual worlds / interior or per player with s
 // Used for other scripts to check if ColAndreas is being used
 #define COLANDREAS
 
+// Default extra ID types
+#define EXTRA_1  0
+#define EXTRA_2  1
+#define EXTRA_3  2
+#define EXTRA_4  3
+#define EXTRA_5  4
+#define EXTRA_6  5
+#define EXTRA_7  6
+#define EXTRA_8  7
+#define EXTRA_9  8
+#define EXTRA_10 9
+
 // Natives
 native CA_Init();
 native CA_RemoveBuilding(modelid, Float:x, Float:y, Float:z, Float:radius);
 native CA_RayCastLine(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, &Float:x, &Float:y, &Float:z);
+native CA_RayCastLineID(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, &Float:x, &Float:y, &Float:z);
+native CA_RayCastLineExtraID(type, Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, &Float:x, &Float:y, &Float:z);
 native CA_RayCastMultiLine(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, Float:retx[], Float:rety[], Float:retz[], Float:retdist[], ModelIDs[], size = sizeof(retx));
 native CA_RayCastLineAngle(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, &Float:x, &Float:y, &Float:z, &Float:rx, &Float:ry, &Float:rz);
 native CA_RayCastReflectionVector(Float:startx, Float:starty, Float:startz, Float:endx, Float:endy, Float:endz, &Float:x, &Float:y, &Float:z, &Float:nx, &Float:ny, &Float:nz);

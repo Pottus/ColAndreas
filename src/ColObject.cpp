@@ -109,7 +109,7 @@ ColAndreasMapObject::ColAndreasMapObject(uint16_t modelid, const btQuaternion& o
 	// Create the rigid body
 	colMapRigidBody = new btRigidBody(meshRigidBodyCI);
 
-	// Set the user as the GTA model id for easy look up
+	// Set the user index as the GTA model id for easy look up
 	colMapRigidBody->setUserIndex(modelid);
 
 	// Pointer reference to object
@@ -120,6 +120,9 @@ ColAndreasMapObject::ColAndreasMapObject(uint16_t modelid, const btQuaternion& o
 	
 	// Create the tracker object
 	tracker = new ColAndreasObjectTracker();
+
+	// Set the user pointer as the tracker id for easy look up
+	colMapRigidBody->setUserPointer(tracker);
 }
 
 ColAndreasMapObject::~ColAndreasMapObject()
@@ -194,23 +197,21 @@ ObjectManager::ObjectManager()
 	}
 }
  		 
-int ObjectManager::setExtraID(const uint16_t index, int objectid)
+int ObjectManager::setExtraID(const uint16_t index, int type, int data)
 {
-	if (slotUsed[index])
+	if (slotUsed[index] && type >= 0 && type < 10)
 	{
-		//mapObjects[index]->tracker->m_modelID = modelid;
-		//mapObjects[index]->tracker->m_extraID = extraID;
-		mapObjects[index]->tracker->m_objectID = objectid;
+		mapObjects[index]->tracker->extraData[type] = data;
 		return 1;
 	}
 	return 0;
 }
 
-int ObjectManager::getExtraID(const uint16_t index)
+int ObjectManager::getExtraID(const uint16_t index, int type)
 {
-	if (slotUsed[index])
+	if (slotUsed[index] && type >= 0 && type < 10)
 	{
-		return mapObjects[index]->tracker->m_objectID;
+		return mapObjects[index]->tracker->extraData[type];
 	}
 	return -1;
 }
@@ -224,6 +225,7 @@ int ObjectManager::addObjectManager(ColAndreasMapObject* mapObject)
 		{
 			slotUsed[i] = true;
 			mapObjects[i] = mapObject;
+			mapObjects[i]->tracker->realIndex = i;
 			return i;
 		}
 	}

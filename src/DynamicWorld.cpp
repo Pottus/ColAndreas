@@ -82,6 +82,41 @@ int ColAndreasWorld::performRayTest(const btVector3& Start, const btVector3& End
 	return 0;
 }
 
+int ColAndreasWorld::performRayTestExtraID(const btVector3& Start, const btVector3& End, btVector3& Result, const int type, uint16_t& data)
+{
+	if(type >= 0 && type < 10)
+	{
+		btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
+
+		dynamicsWorld->rayTest(Start, End, RayCallback);
+
+		if (RayCallback.hasHit())
+		{
+			Result = RayCallback.m_hitPointWorld;
+			ColAndreasObjectTracker* tracker = (ColAndreasObjectTracker*)RayCallback.m_collisionObject->getUserIndex();
+			data = tracker->extraData[type];
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int ColAndreasWorld::performRayTestID(const btVector3& Start, const btVector3& End, btVector3& Result, uint16_t& index)
+{
+	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
+
+	dynamicsWorld->rayTest(Start, End, RayCallback);
+
+	if (RayCallback.hasHit())
+	{
+		Result = RayCallback.m_hitPointWorld;
+		ColAndreasObjectTracker* tracker = (ColAndreasObjectTracker*)RayCallback.m_collisionObject->getUserIndex();
+		index = tracker->realIndex;
+		return 1;
+	}
+	return 0;
+}
+
 int ColAndreasWorld::performRayTestEx(const btVector3& Start, const btVector3& End, btVector3& Result, btQuaternion& Rotation, btVector3& Position, uint16_t& model)
 {
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
@@ -253,14 +288,14 @@ uint16_t ColAndreasWorld::getModelRef(uint16_t model)
 	return GetModelRef(model);
 }
  		 
-void ColAndreasWorld::setMyExtraID(uint16_t index, int objectid)
+void ColAndreasWorld::setMyExtraID(uint16_t index, int type, int data)
 {
-	objectManager->setExtraID(index, objectid);
+	objectManager->setExtraID(index, type, data);
 }
 
-int ColAndreasWorld::getMyExtraID(uint16_t index)
+int ColAndreasWorld::getMyExtraID(uint16_t index, int type)
 {
-	return objectManager->getExtraID(index);
+	return objectManager->getExtraID(index, type);
 }
 
 bool ColAndreasWorld::loadCollisionData()

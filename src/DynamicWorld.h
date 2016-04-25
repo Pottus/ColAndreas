@@ -38,9 +38,11 @@ public:
 	btScalar getDist3D(const btVector3& p1, const btVector3& p2);
 	void EulerToQuat(btVector3& rotation, btQuaternion& result);
 	void QuatToEuler(btQuaternion& rotation, btVector3& result);
-	void setMyExtraID(uint16_t index, int objectid);
-	int getMyExtraID(uint16_t index);
+	void setMyExtraID(uint16_t index, int type, int data);
+	int getMyExtraID(uint16_t index, int type);
 	int performRayTest(const btVector3& Start, const btVector3& End, btVector3& Result, uint16_t& model);
+	int performRayTestExtraID(const btVector3& Start, const btVector3& End, btVector3& Result, const int type, uint16_t& data);
+	int performRayTestID(const btVector3& Start, const btVector3& End, btVector3& Result, uint16_t& index);
 	int performRayTestEx(const btVector3& Start, const btVector3& End, btVector3& Result, btQuaternion& Rotation, btVector3& Position, uint16_t& model);
 	int performRayTestAngle(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, uint16_t& model);
 	int performRayTestAngleEx(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, btQuaternion& Rotation, btVector3& Position, uint16_t& model);
