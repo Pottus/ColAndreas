@@ -99,16 +99,16 @@ There is currently no support for virtual worlds / interior or per player with s
 #define COLANDREAS
 
 // Default extra ID types
-#define EXTRA_1  0
-#define EXTRA_2  1
-#define EXTRA_3  2
-#define EXTRA_4  3
-#define EXTRA_5  4
-#define EXTRA_6  5
-#define EXTRA_7  6
-#define EXTRA_8  7
-#define EXTRA_9  8
-#define EXTRA_10 9
+#define CA_EXTRA_1  0
+#define CA_EXTRA_2  1
+#define CA_EXTRA_3  2
+#define CA_EXTRA_4  3
+#define CA_EXTRA_5  4
+#define CA_EXTRA_6  5
+#define CA_EXTRA_7  6
+#define CA_EXTRA_8  7
+#define CA_EXTRA_9  8
+#define CA_EXTRA_10 9
 
 // Natives
 native CA_Init();
