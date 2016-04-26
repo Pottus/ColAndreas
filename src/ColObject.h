@@ -22,8 +22,19 @@ static uint16_t colindex = 0;
 // Data structure to track in-game objects with respect to their colindex
 struct ColAndreasObjectTracker
 {
-	int32_t realIndex;
-	int32_t extraData[10];
+    int32_t realIndex;
+    int32_t extraData[10];
+
+    ColAndreasObjectTracker(){
+        realIndex = -1;
+        for(int i = 0; i < 10; i++)
+            extraData[i] = -1;
+    }
+    ~ColAndreasObjectTracker() {
+        realIndex = -1;
+        for(int i = 0; i < 10; i++)
+            extraData[i] = -1;
+    }
 };
 
 // Collision Objects

@@ -127,6 +127,8 @@ ColAndreasMapObject::ColAndreasMapObject(uint16_t modelid, const btQuaternion& o
 
 ColAndreasMapObject::~ColAndreasMapObject()
 {
+	delete tracker;
+
 	collisionWorld->removeRigidBody(colMapRigidBody);
 	delete colMapRigidBody;
 	delete colMapObjectPosition;
