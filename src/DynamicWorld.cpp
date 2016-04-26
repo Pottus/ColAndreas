@@ -84,19 +84,21 @@ int ColAndreasWorld::performRayTest(const btVector3& Start, const btVector3& End
 
 int ColAndreasWorld::performRayTestExtraID(const btVector3& Start, const btVector3& End, btVector3& Result, const int type, uint16_t& data)
 {
-	if(type >= 0 && type < 10)
+	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
+
+	dynamicsWorld->rayTest(Start, End, RayCallback);
+
+	if (RayCallback.hasHit())
 	{
-		btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
-
-		dynamicsWorld->rayTest(Start, End, RayCallback);
-
-		if (RayCallback.hasHit())
+		Result = RayCallback.m_hitPointWorld;
+		if(type >= 0 && type < 10)
 		{
-			Result = RayCallback.m_hitPointWorld;
-			ColAndreasObjectTracker* tracker = (ColAndreasObjectTracker*)RayCallback.m_collisionObject->getUserIndex();
+			ColAndreasObjectTracker* tracker = (ColAndreasObjectTracker*)RayCallback.m_collisionObject->getUserPointer();
 			data = tracker->extraData[type];
-			return 1;
 		}
+		else
+			data = -1;
+		return 1;
 	}
 	return 0;
 }
@@ -110,7 +112,7 @@ int ColAndreasWorld::performRayTestID(const btVector3& Start, const btVector3& E
 	if (RayCallback.hasHit())
 	{
 		Result = RayCallback.m_hitPointWorld;
-		ColAndreasObjectTracker* tracker = (ColAndreasObjectTracker*)RayCallback.m_collisionObject->getUserIndex();
+		ColAndreasObjectTracker* tracker = (ColAndreasObjectTracker*)RayCallback.m_collisionObject->getUserPointer();
 		index = tracker->realIndex;
 		return 1;
 	}
