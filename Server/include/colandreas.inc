@@ -531,7 +531,7 @@ stock CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 // Check if player is facing water
 stock CA_IsPlayerFacingWater(playerid, Float:dist=3.0, Float:height=3.0)
 {
-    new Float:x, Float:y, Float:z, Float:r;
+    new Float:x, Float:y, Float:z, Float:r, Float:tmp;
     GetPlayerPos(playerid, x, y, z);
     GetPlayerFacingAngle(playerid, r);
 
