@@ -139,14 +139,14 @@ native CA_SetObjectPos(index, Float:x, Float:y, Float:z);
 native CA_SetObjectRot(index, Float:rx, Float:ry, Float:rz);
 
 // ColAndreas currently supports 50000 user collision objects (This can be raised as needed)
-#defin		MAX_CA_OBJECT		10000
+#define		MAX_CA_OBJECT		10000
 
 // Water object ID
-#defin		WATER_OBJEC		20000
+#define		WATER_OBJEC		20000
 
 // Object types (Player objects are supported as dynamic only)
-#defin		OBJECT_TYPE_OBJEC	0
-#defin		OBJECT_TYPE_DYNAMI	1
+#define		OBJECT_TYPE_OBJEC	0
+#define		OBJECT_TYPE_DYNAMI	1
 
 
 #if !defined INFINITY
