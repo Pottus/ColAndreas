@@ -96,7 +96,12 @@ There is currently no support for virtual worlds / interior or per player with s
 */
 
 // Used for other scripts to check if ColAndreas is being used
+#if defined COLANDREAS
+	#endinput
+#endif
 #define COLANDREAS
+
+#define COLANDREAS_VERSION	(10400) //a.b.c 10000*a+100*b+c
 
 // Default extra ID types
 #define CA_EXTRA_1  0
@@ -139,7 +144,13 @@ native CA_SetObjectPos(index, Float:x, Float:y, Float:z);
 native CA_SetObjectRot(index, Float:rx, Float:ry, Float:rz);
 
 // ColAndreas currently supports 50000 user collision objects (This can be raised as needed)
-#define		MAX_CA_OBJECTS		10000
+#if defined MAX_CA_OBJECTS
+    #if MAX_CA_OBJECTS > 50000
+        #error [ColAndreas] MAX_CA_OBJECTS is too high, maximum value is 50000
+    #endif
+#else
+   #define MAX_CA_OBJECTS 10000
+#endif
 
 // Water object ID
 #define		WATER_OBJECT		20000
