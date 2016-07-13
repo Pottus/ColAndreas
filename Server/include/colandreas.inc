@@ -184,7 +184,7 @@ enum CAOBJECTINFO
 static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 
 //Streamer
-#if defined CreateDynamicObject
+#if defined STREAMER_TYPE_OBJECT
 
 	// Static collision object functions (The index is not returned these can not be deleted!)
 	stock CA_CreateDynamicObjectEx_SC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:streamdistance = STREAMER_OBJECT_SD, Float:drawdistance = STREAMER_OBJECT_DD, worlds[] = { -1 }, interiors[] = { -1 }, players[] = { -1 }, STREAMER_TAG_AREA areas[] = { STREAMER_TAG_AREA -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players, maxareas = sizeof areas)
