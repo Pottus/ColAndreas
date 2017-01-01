@@ -155,3 +155,19 @@ cmake -DCMAKE_BUILD_TYPE=Release -DBULLET_ROOT=$(pwd)/../../bullet3-2.83.5/outpu
 make -j4
 ```
 * The compiled file will be placed in the *build* folder.
+
+####`linux_build.sh` script (compiles both dynamic and static versions of ColAndreas)
+* **IMPORTANT:** Compile ColAndreas by running this script only if you encounter problems using the methods explained above.
+* Install the required packages:
+	* **Ubuntu:** `sudo apt-get install cmake g++-multilib git`
+* Clone ColAndreas repository:
+```bash
+git clone https://github.com/Pottus/ColAndreas.git
+cd ColAndreas
+```
+* Run `linux_build.sh`:
+```bash
+chmod +x linux_build.sh
+./linux_build.sh
+```
+* The compiled files will be placed in the *build* folder.
