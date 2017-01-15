@@ -1061,11 +1061,11 @@ CA_RemoveBarriers()
 
 Removes all dynamic breakable objects, also only works BEFORE using CA_Init()
 CA_RemoveBreakableBuildings()
-/*
+
 Checks if a player is in the water depth returns the lowest collision point found playerdepth returns
 how deep the player is below the surface
 CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
-
+/*
 Checks if a player is near water (returns 0 if they are actually in the water) distance is the radius to check
 Height is how high above the water to detect
 CA_IsNearWater(playerid, Float:dist=3.0, Float:height=3.0)
