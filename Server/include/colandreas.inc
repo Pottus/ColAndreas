@@ -195,7 +195,7 @@ native CA_RayCastLineNormal(Float:startx, Float:starty, Float:startz, Float:endx
 <param name="Float:x, Float:y, Float:z">The object position to test</param>
 <param name="Float:rx, Float:ry, Float:rz">The object rotation to test</param>
 <returns>
-	0 if the object model doesn't collide with the world with the specified 
+	0 if the object model doesn't collide with the world with the specified
     1 otherwise
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -706,7 +706,7 @@ stock CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intens
 			Float:x = -Radius * floatcos(LAT) * floatcos(LON),
 			Float:y = Radius * floatcos(LAT) * floatsin(LON),
 			Float:z = Radius * floatsin(LAT);
-		
+
 		if(CA_RayCastLine(cX, cY, cZ, cX + x, cY + y, cZ + z, x, y, z))
 		{
 			collisions[index][0] = x;
@@ -715,7 +715,7 @@ stock CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intens
 			index++;
 		}
 	}
-	
+
 	return index;
 }
 
@@ -760,7 +760,7 @@ stock CA_RemoveBarriers()
 		4523, 4517, 4516, 4515, 4514, 4513, 4512, 4511, 4510,
 		4509, 4508, 4507, 4506, 4505, 4504, 1662
  	};
- 	
+
  	for(new i = 0; i < sizeof(BarrierIDS); i++)
 		CA_RemoveBuilding(BarrierIDS[i], 0.0, 0.0, 0.0, 4242.6407);
 
@@ -781,25 +781,25 @@ stock CA_RemoveBarriers()
 \**--------------------------------------------------------------------------**/
 stock CA_RemoveBreakableBuildings()
 {
-	static const BreakableIDs[] = { 
-		625, 626, 627, 628, 629, 630, 631, 632, 633, 642, 643, 644, 646, 650, 716, 717, 737, 738, 792, 858, 881, 882, 883, 
-		884, 885, 886, 887, 888, 889, 890, 891, 892, 893, 894, 895, 904, 905, 941, 955, 956, 959, 961, 990, 993, 996, 1209, 
-		1211, 1213, 1219, 1220, 1221, 1223, 1224, 1225, 1226, 1227, 1228, 1229, 1230, 1231, 1232, 1235, 1238, 1244, 1251, 
-		1255, 1257, 1262, 1264, 1265, 1270, 1280, 1281, 1282, 1283, 1284, 1285, 1286, 1287, 1288, 1289, 1290, 1291, 1293, 
-		1294, 1297, 1300, 1302, 1315, 1328, 1329, 1330, 1338, 1350, 1351, 1352, 1370, 1373, 1374, 1375, 1407, 1408, 1409, 
-		1410, 1411, 1412, 1413, 1414, 1415, 1417, 1418, 1419, 1420, 1421, 1422, 1423, 1424, 1425, 1426, 1428, 1429, 1431, 
-		1432, 1433, 1436, 1437, 1438, 1440, 1441, 1443, 1444, 1445, 1446, 1447, 1448, 1449, 1450, 1451, 1452, 1456, 1457, 
-		1458, 1459, 1460, 1461, 1462, 1463, 1464, 1465, 1466, 1467, 1468, 1469, 1470, 1471, 1472, 1473, 1474, 1475, 1476, 
-		1477, 1478, 1479, 1480, 1481, 1482, 1483, 1514, 1517, 1520, 1534, 1543, 1544, 1545, 1551, 1553, 1554, 1558, 1564, 
-		1568, 1582, 1583, 1584, 1588, 1589, 1590, 1591, 1592, 1645, 1646, 1647, 1654, 1664, 1666, 1667, 1668, 1669, 1670, 
-		1672, 1676, 1684, 1686, 1775, 1776, 1949, 1950, 1951, 1960, 1961, 1962, 1975, 1976, 1977, 2647, 2663, 2682, 2683, 
-		2885, 2886, 2887, 2900, 2918, 2920, 2925, 2932, 2933, 2942, 2943, 2945, 2947, 2958, 2959, 2966, 2968, 2971, 2977, 
-		2987, 2988, 2989, 2991, 2994, 3006, 3018, 3019, 3020, 3021, 3022, 3023, 3024, 3029, 3032, 3036, 3058, 3059, 3067, 
-		3083, 3091, 3221, 3260, 3261, 3262, 3263, 3264, 3265, 3267, 3275, 3276, 3278, 3280, 3281, 3282, 3302, 3374, 3409, 
-		3460, 3516, 3794, 3795, 3797, 3853, 3855, 3864, 3884, 11103, 12840, 16627, 16628, 16629, 16630, 16631, 16632, 
-		16633, 16634, 16635, 16636, 16732, 17968 
+	static const BreakableIDs[] = {
+		625, 626, 627, 628, 629, 630, 631, 632, 633, 642, 643, 644, 646, 650, 716, 717, 737, 738, 792, 858, 881, 882, 883,
+		884, 885, 886, 887, 888, 889, 890, 891, 892, 893, 894, 895, 904, 905, 941, 955, 956, 959, 961, 990, 993, 996, 1209,
+		1211, 1213, 1219, 1220, 1221, 1223, 1224, 1225, 1226, 1227, 1228, 1229, 1230, 1231, 1232, 1235, 1238, 1244, 1251,
+		1255, 1257, 1262, 1264, 1265, 1270, 1280, 1281, 1282, 1283, 1284, 1285, 1286, 1287, 1288, 1289, 1290, 1291, 1293,
+		1294, 1297, 1300, 1302, 1315, 1328, 1329, 1330, 1338, 1350, 1351, 1352, 1370, 1373, 1374, 1375, 1407, 1408, 1409,
+		1410, 1411, 1412, 1413, 1414, 1415, 1417, 1418, 1419, 1420, 1421, 1422, 1423, 1424, 1425, 1426, 1428, 1429, 1431,
+		1432, 1433, 1436, 1437, 1438, 1440, 1441, 1443, 1444, 1445, 1446, 1447, 1448, 1449, 1450, 1451, 1452, 1456, 1457,
+		1458, 1459, 1460, 1461, 1462, 1463, 1464, 1465, 1466, 1467, 1468, 1469, 1470, 1471, 1472, 1473, 1474, 1475, 1476,
+		1477, 1478, 1479, 1480, 1481, 1482, 1483, 1514, 1517, 1520, 1534, 1543, 1544, 1545, 1551, 1553, 1554, 1558, 1564,
+		1568, 1582, 1583, 1584, 1588, 1589, 1590, 1591, 1592, 1645, 1646, 1647, 1654, 1664, 1666, 1667, 1668, 1669, 1670,
+		1672, 1676, 1684, 1686, 1775, 1776, 1949, 1950, 1951, 1960, 1961, 1962, 1975, 1976, 1977, 2647, 2663, 2682, 2683,
+		2885, 2886, 2887, 2900, 2918, 2920, 2925, 2932, 2933, 2942, 2943, 2945, 2947, 2958, 2959, 2966, 2968, 2971, 2977,
+		2987, 2988, 2989, 2991, 2994, 3006, 3018, 3019, 3020, 3021, 3022, 3023, 3024, 3029, 3032, 3036, 3058, 3059, 3067,
+		3083, 3091, 3221, 3260, 3261, 3262, 3263, 3264, 3265, 3267, 3275, 3276, 3278, 3280, 3281, 3282, 3302, 3374, 3409,
+		3460, 3516, 3794, 3795, 3797, 3853, 3855, 3864, 3884, 11103, 12840, 16627, 16628, 16629, 16630, 16631, 16632,
+		16633, 16634, 16635, 16636, 16732, 17968
 	};
- 	
+
  	for(new i = 0; i < sizeof(BreakableIDs); i++)
 		CA_RemoveBuilding(BreakableIDs[i], 0.0, 0.0, 0.0, 4242.6407);
 
@@ -871,8 +871,8 @@ stock CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 {
 	new Float:x, Float:y, Float:z, Float:tmp;
 	GetPlayerPos(playerid, x, y, z);
-	
-	for(new i; i < 6; i++) 
+
+	for(new i; i < 6; i++)
 		if(CA_RayCastLine(x + (dist * floatsin(i * 60.0, degrees)), y + (dist * floatcos(i * 60.0, degrees)), z + height, x + (dist * floatsin(i * 60.0, degrees)), y + (dist * floatcos(i * 60.0, degrees)), z - height, tmp, tmp, tmp) == WATER_OBJECT)
 			return 1;
 	return 0;
@@ -973,21 +973,21 @@ stock Float:CA_GetRoomCenter(Float:x, Float:y, Float:z, &Float:m_x, &Float:m_y)
 		!CA_RayCastLine(x, y, z, x + 1000.0 * floatcos(120.0, degrees), y + 1000.0 * floatsin(120.0, degrees), z, pt2x, pt2y, tmp) ||
 		!CA_RayCastLine(x, y, z, x + 1000.0 * floatcos(-120.0, degrees), y + 1000.0 * floatsin(-120.0, degrees), z, pt3x, pt3y, tmp))
 		return -1.0;
-	
+
 	new Float:yDelta_a = pt2y - pt1y,
 		Float:xDelta_a = pt2x - pt1x,
 		Float:yDelta_b = pt3y - pt2y,
 		Float:xDelta_b = pt3x - pt2x;
-	
+
 	if (floatabs(xDelta_a) <= 0.000000001 && floatabs(yDelta_b) <= 0.000000001) {
 		m_x = 0.5 * (pt2x + pt3x);
 		m_y = 0.5 * (pt1y + pt2y);
 		return VectorSize(m_x - pt1x, m_y - pt1y, 0.0);
 	}
-	
+
 	new Float:aSlope = yDelta_a / xDelta_a,
 		Float:bSlope = yDelta_b / xDelta_b;
-	
+
 	if (floatabs(aSlope-bSlope) <= 0.000000001)
 		return -1.0;
 
@@ -1037,7 +1037,7 @@ public OnGameModeExit()
 #define OnGameModeExit CA_OnGameModeExit
 
 forward CA_OnGameModeExit();
-
+/*
 Create a object with collision in ColAndreas dynamic
 CA_CreateObject_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:drawdistance = 300.0)
 
@@ -1065,7 +1065,7 @@ CA_RemoveBreakableBuildings()
 Checks if a player is in the water depth returns the lowest collision point found playerdepth returns
 how deep the player is below the surface
 CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
-/*
+
 Checks if a player is near water (returns 0 if they are actually in the water) distance is the radius to check
 Height is how high above the water to detect
 CA_IsNearWater(playerid, Float:dist=3.0, Float:height=3.0)
