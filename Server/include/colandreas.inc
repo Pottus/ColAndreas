@@ -2,6 +2,12 @@
 // ColAndreas Plugin Include ///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+//For keep compatibility with older versions
+#if defined COLANDREAS
+	#endinput
+#endif
+#define COLANDREAS
+
 #if defined COLANDREAS_VERSION
 	#endinput
 #endif
