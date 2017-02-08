@@ -2,10 +2,11 @@
 // ColAndreas Plugin Include ///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined COLANDREAS_VERSION
+#if defined COLANDREAS
 	#endinput
 #endif
 #define COLANDREAS_VERSION (10400) //a.b.c 10000*a+100*b+c
+#define COLANDREAS (COLANDREAS_VERSION)
 
 // Default extra ID types
 #define CA_EXTRA_1  0
