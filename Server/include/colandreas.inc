@@ -1,12 +1,69 @@
-////////////////////////////////////////////////////////////////////////////////
-// ColAndreas Plugin Include ///////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
+/****************************************************************************************************
+ *                                                                                                  *
+ * ColAndreas Plugin Include                                                                        *
+ * Copyright © 2017 [uL]Chris42O, [uL]Slice, [uL]Pottus, [uL]Crayder                                *
+ *                                                                                                  *
+ ****************************************************************************************************/
+ 
+/*
+Create a object with collision in ColAndreas dynamic
+CA_CreateObject_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:drawdistance = 300.0)
+
+Destroy a object with collision in ColAndreas
+CA_DestroyObject_DC(index)
+
+Destoys all objects streamer/regular
+CA_DestroyAllObjects_DC()
+
+MapAndreas replacement function
+CA_FindZ_For2DCoord(Float:x, Float:y, &Float:z)
+
+Explode ray casts in every direction
+CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intensity = 20.0, Float:collisions[][3])
+
+Removes all barries this function only works BEFORE using CA_Init()
+CA_RemoveBarriers()
+
+Removes all dynamic breakable objects, also only works BEFORE using CA_Init()
+CA_RemoveBreakableBuildings()
+
+Checks if a player is in the water depth returns the lowest collision point found playerdepth returns
+how deep the player is below the surface
+CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
+
+Get Object/DynamicObject id from index
+CA_GetObjectID(index)
+
+Get object type from index
+CA_GetObjectType(index)
+
+Get object ColAndreas id from index
+CA_GetObjectInternalID(index)
+
+Notes:
+
+Recommended loading order
+- RemoveBuildings
+- Init static map
+- Add static objects
+
+There is currently no support for virtual worlds / interior or per player with streamer objects
+
+*/
 
 #if defined COLANDREAS
 	#endinput
 #endif
 #define COLANDREAS_VERSION (10400) //a.b.c 10000*a+100*b+c
 #define COLANDREAS (COLANDREAS_VERSION)
+
+//Detect Streamer v2.9.0
+#if ((defined Streamer_AppendArrayData) && (defined INVALID_STREAMER_ID))
+	#define ColAndreas_Streamer
+	#if (!defined STREAMER_TYPE_ACTOR)
+		#error You need Streamer v2.9.0+ (github.com/samp-incognito/samp-streamer-plugin/releases)
+	#endif
+#endif
 
 // Default extra ID types
 #define CA_EXTRA_1  0
@@ -33,12 +90,11 @@
 #define		WATER_OBJECT		20000
 
 // Object types (Player objects are supported as dynamic only)
-#define		OBJECT_TYPE_OBJECT	0
-#define		OBJECT_TYPE_DYNAMIC	1
+#define		OBJECT_TYPE_OBJECT		0
+#define		OBJECT_TYPE_DYNAMIC		1
 
-
-#if !defined INFINITY
-	#define INFINITY (Float:0x7F800000)
+#if !defined FLOAT_INFINITY
+    #define FLOAT_INFINITY 		(Float:0x7F800000)
 #endif
 
 /**--------------------------------------------------------------------------**\
@@ -393,7 +449,7 @@ enum CAOBJECTINFO
 static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 
 //Streamer
-#if defined STREAMER_TYPE_OBJECT
+#if defined ColAndreas_Streamer
 
 	// Static collision object functions (The index is not returned these can not be deleted!)
 	stock CA_CreateDynamicObjectEx_SC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:streamdistance = STREAMER_OBJECT_SD, Float:drawdistance = STREAMER_OBJECT_DD, worlds[] = { -1 }, interiors[] = { -1 }, players[] = { -1 }, STREAMER_TAG_AREA areas[] = { STREAMER_TAG_AREA -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players, maxareas = sizeof areas)
@@ -480,6 +536,18 @@ static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 	}
 #endif
 
+stock CA_GetObjectID(index){
+	return CA_ObjectList[index][ObjectID];
+}
+
+stock CA_GetObjectType(index){
+	return CA_ObjectList[index][ObjectType];
+}
+
+stock CA_GetObjectInternalID(index){
+	return CA_ObjectList[index][ColdAndreadsID];
+}
+
 /**--------------------------------------------------------------------------**\
 <summary>
 	CA_CreateObject_DC
@@ -550,7 +618,7 @@ stock CA_DestroyObject_DC(index)
 			new next;
 			Iter_SafeRemove(CA_Objects, index, next);
 			if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_OBJECT) DestroyObject(CA_ObjectList[index][ObjectID]);
-			#if defined STREAMER_TYPE_OBJECT
+			#if defined ColAndreas_Streamer
 			else if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_DYNAMIC) DestroyDynamicObject(CA_ObjectList[index][ObjectID]);
 			#endif
 			CA_DestroyObject(CA_ObjectList[index][ColdAndreadsID]);
@@ -560,7 +628,7 @@ stock CA_DestroyObject_DC(index)
 	if(CA_ObjectList[index][ObjectUsed])
 	{
 		if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_OBJECT) DestroyObject(CA_ObjectList[index][ObjectID]);
-		#if defined STREAMER_TYPE_OBJECT
+		#if defined ColAndreas_Streamer
 		else if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_DYNAMIC) DestroyDynamicObject(CA_ObjectList[index][ObjectID]);
 		#endif
 		CA_ObjectList[index][ObjectUsed] = false;
@@ -591,7 +659,7 @@ stock CA_SetObjectPos_DC(index, Float:x, Float:y, Float:z)
 		if(Iter_Contains(CA_Objects, index))
 		{
 			if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_OBJECT) SetObjectPos(CA_ObjectList[index][ObjectID], x, y, z);
-			#if defined STREAMER_TYPE_OBJECT
+			#if defined ColAndreas_Streamer
 				else if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_DYNAMIC) SetDynamicObjectPos(CA_ObjectList[index][ObjectID], x, y, z);
 			#endif
 			CA_SetObjectPos(CA_ObjectList[index][ColdAndreadsID], x, y, z);
@@ -600,7 +668,7 @@ stock CA_SetObjectPos_DC(index, Float:x, Float:y, Float:z)
 	if(CA_ObjectList[index][ObjectUsed])
 	{
 		if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_OBJECT) SetObjectPos(CA_ObjectList[index][ObjectID], x, y, z);
-		#if defined STREAMER_TYPE_OBJECT
+		#if defined ColAndreas_Streamer
 		else if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_DYNAMIC) SetDynamicObjectPos(CA_ObjectList[index][ObjectID], x, y, z);
 		#endif
 		SetObjectPos(CA_ObjectList[index][ObjectID], x, y, z);
@@ -631,7 +699,7 @@ stock CA_SetObjectRot_DC(index, Float:rx, Float:ry, Float:rz)
 		if(Iter_Contains(CA_Objects, index))
 		{
 			if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_OBJECT) SetObjectRot(CA_ObjectList[index][ObjectID], rx, ry, rz);
-			#if defined STREAMER_TYPE_OBJECT
+			#if defined ColAndreas_Streamer
 				else if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_DYNAMIC) SetDynamicObjectRot(CA_ObjectList[index][ObjectID], rx, ry, rz);
 			#endif
 			CA_SetObjectRot(CA_ObjectList[index][ColdAndreadsID], rx, ry, rz);
@@ -640,7 +708,7 @@ stock CA_SetObjectRot_DC(index, Float:rx, Float:ry, Float:rz)
 	if(CA_ObjectList[index][ObjectUsed])
 	{
 		if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_OBJECT) SetObjectRot(CA_ObjectList[index][ObjectID], rx, ry, rz);
-		#if defined STREAMER_TYPE_OBJECT
+		#if defined ColAndreas_Streamer
 			else if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_DYNAMIC) SetDynamicObjectRot(CA_ObjectList[index][ObjectID], rx, ry, rz);
 		#endif
 		CA_SetObjectRot(CA_ObjectList[index][ColdAndreadsID], rx, ry, rz);
@@ -830,7 +898,7 @@ stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 		{
 			if(modelids[i] == WATER_OBJECT)
 			{
-				depth = INFINITY;
+				depth = FLOAT_INFINITY;
 
 				for(new j = 0; j < collisions; j++)
 				{
@@ -1038,50 +1106,3 @@ public OnGameModeExit()
 #define OnGameModeExit CA_OnGameModeExit
 
 forward CA_OnGameModeExit();
-/*
-Create a object with collision in ColAndreas dynamic
-CA_CreateObject_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:drawdistance = 300.0)
-
-Destroy a object with collision in ColAndreas
-CA_DestroyObject_DC(index)
-
-Destoys all objects streamer/regular
-CA_DestroyAllObjects_DC()
-
-MapAndreas replacement function
-CA_FindZ_For2DCoord(Float:x, Float:y, &Float:z)
-
-Explode ray casts in every direction
-CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intensity = 20.0, Float:collisions[][3])
-
-Checks if a player is standing on any surface (prevent animation exploit when falling)
-CA_IsOnSurface(playerid, Float:tolerance=1.5)
-
-Removes all barries this function only works BEFORE using CA_Init()
-CA_RemoveBarriers()
-
-Removes all dynamic breakable objects, also only works BEFORE using CA_Init()
-CA_RemoveBreakableBuildings()
-
-Checks if a player is in the water depth returns the lowest collision point found playerdepth returns
-how deep the player is below the surface
-CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
-
-Checks if a player is near water (returns 0 if they are actually in the water) distance is the radius to check
-Height is how high above the water to detect
-CA_IsNearWater(playerid, Float:dist=3.0, Float:height=3.0)
-
-// Check if a player is blocked by a wall
-CA_IsBlocked(playerid, Float:dist=1.5, Float:height=0.5)
-
-
-Notes:
-
-Recommended loading order
-- RemoveBuildings
-- Init static map
-- Add static objects
-
-There is currently no support for virtual worlds / interior or per player with streamer objects
-
-*/
