@@ -45,6 +45,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData)
 	else
 	{
 		logprintf("No collision data found.");
+		logprintf("File /scriptfiles/colandreas/ColAndreas.cadb not exist.");
 	}
 
 	logprintf("*********************");
