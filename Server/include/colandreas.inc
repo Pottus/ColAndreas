@@ -41,6 +41,9 @@
 	#define INFINITY (Float:0x7F800000)
 #endif
 
+// Maximum number of raycasts in CA_RayCastMultiLine
+#define MAX_MULTICAST_SIZE 99 
+
 /**--------------------------------------------------------------------------**\
 <summary>
 	CA_Init
@@ -133,7 +136,7 @@ native CA_RayCastLineExtraID(type, Float:StartX, Float:StartY, Float:StartZ, Flo
 <param name="ModelIDs[]">The object models that the ray collided</param>
 <param name="size = sizeof(retx)">The maximum number of points to collide</param>
 <returns>
-	-1 if the ray collided with more points than than permitted by the `size` parameter
+	-1 if the ray collided with more points than than permitted by the `size` parameter or `size` is higher than MAX_MULTICAST_SIZE value
 	0 if the ray didn't collide with anything
 	The number of points collided
 </returns>
@@ -824,7 +827,7 @@ stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 	new Float:x, Float:y, Float:z, Float:retx[10], Float:rety[10], Float:retz[10], Float: retdist[10], modelids[10];
 	GetPlayerPos(playerid, x, y, z);
 	new collisions = CA_RayCastMultiLine(x, y, z+1000.0, x, y, z-1000.0, retx, rety, retz, retdist, modelids, 10);
-	if(collisions)
+	if(collisions > 0)
 	{
 		for(new i = 0; i < collisions; i++)
 		{
