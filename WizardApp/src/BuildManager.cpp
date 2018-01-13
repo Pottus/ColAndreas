@@ -150,7 +150,7 @@ void BuildManager::InitDirectoryNames()
 	ItemDefinitionFileNames.push_back("\\data\\maps\\vegas\\VegasN.ide");
 	ItemDefinitionFileNames.push_back("\\data\\maps\\vegas\\VegasS.ide");
 	ItemDefinitionFileNames.push_back("\\data\\maps\\vegas\\VegasW.ide");
-	ItemDefinitionFileNames.push_back("\\data\\maps\\vegas\\vegaxref.ide");
+	//ItemDefinitionFileNames.push_back("\\data\\maps\\vegas\\vegaxref.ide");
 
 	ItemDefinitionFileNames.push_back("\\data\\maps\\veh_mods\\veh_mods.ide");
 	
