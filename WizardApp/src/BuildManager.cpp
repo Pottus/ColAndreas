@@ -89,6 +89,8 @@ void BuildManager::InitDirectoryNames()
 	ItemPlacementFileNames.push_back("\\data\\maps\\vegas\\vegasS.ipl");
 	ItemPlacementFileNames.push_back("\\data\\maps\\vegas\\vegasW.ipl");
 	ItemPlacementFileNames.push_back("\\data\\maps\\vegas\\vegaxref.ipl");
+	
+	if(UsingSAMPObjects) ItemPlacementFileNames.push_back("\\SAMP\\SAMP.ipl");
 
 	//----------[ IDE ]----------//
 	
