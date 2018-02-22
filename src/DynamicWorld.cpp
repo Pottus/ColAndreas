@@ -113,8 +113,11 @@ int ColAndreasWorld::performRayTestID(const btVector3& Start, const btVector3& E
 	{
 		Result = RayCallback.m_hitPointWorld;
 		ColAndreasObjectTracker* tracker = (ColAndreasObjectTracker*)RayCallback.m_collisionObject->getUserPointer();
-		index = tracker->realIndex;
-		return 1;
+		if(tracker)
+		{
+			index = tracker->realIndex;
+			return 1;
+		}
 	}
 	return 0;
 }
