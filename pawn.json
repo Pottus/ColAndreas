@@ -1,0 +1,22 @@
+{
+    "user": "Pottus",
+    "repo": "ColAndreas",
+    "include_path": "Server/include",
+    "resources": [
+        {
+            "name": "^ColAndreas_static.so$",
+            "platform": "linux",
+            "archive": true,
+            "plugins": ["colandreas_static.so"]
+        },
+        {
+            "name": "^ColAndreas.dll$",
+            "platform": "windows",
+            "archive": true,
+            "plugins": ["ColAndreas.dll"]
+        }
+    ],
+    "runtime": {
+        "plugins": ["Pottus/ColAndreas"]
+    }
+}
