@@ -7,7 +7,7 @@ gives the server knowledge of the game environment itself.
 
 ##Download
 
-Go to the [releases page](https://github.com/Pottus/ColAndreas/releases) and grab the latest *ColAndreas_Precompiled* zip file, it contains the Windows and Linux versions of the plugin, the include file for PAWN and the Wizard executable.
+Go to the [releases page](https://github.com/Pottus/ColAndreas/releases) and grab the latest *ColAndreas_Precompiled* zip file, it contains the Windows and Linux versions of the plugin, the include file for PAWN and the Wizard executable. The wizard generated file goes in /scriptfiles/ColAndreas/ with the name of ColAndreas.cadb!
 
 ##Linux note
 
