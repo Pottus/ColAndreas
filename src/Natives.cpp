@@ -331,6 +331,14 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_DestroyObject(AMX *amx, cell *params)
 	return collisionWorld->objectManager->removeObjectManager(index);
 }
 
+cell AMX_NATIVE_CALL ColAndreasNatives::CA_IsValidObject(AMX *amx, cell *params)
+{
+	uint16_t index = static_cast<uint16_t>(params[1]);
+
+	if (index >= MAX_MAP_OBJECTS) return -1;
+	return collisionWorld->objectManager->validObjectManager(index);
+}
+
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_EulerToQuat(AMX *amx, cell *params)
 {
 	cell* addr[4];
