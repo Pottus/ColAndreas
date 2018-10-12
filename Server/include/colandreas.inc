@@ -44,6 +44,9 @@
 // Maximum number of raycasts in CA_RayCastMultiLine
 #define MAX_MULTICAST_SIZE 99 
 
+// Maximum number of type in CA_SetObjectExtraID and CA_GetObjectExtraID
+#define MAX_EXTRAID_SIZE 10
+
 /**--------------------------------------------------------------------------**\
 <summary>
 	CA_Init
