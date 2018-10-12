@@ -245,6 +245,15 @@ int ObjectManager::removeObjectManager(const uint16_t index)
 	return 0;
 }
 
+int ObjectManager::validObjectManager(const uint16_t index)
+{
+	if (slotUsed[index])
+	{
+		return 1;
+	}
+	return 0;
+}
+
 int ObjectManager::setObjectPosition(const uint16_t index, btVector3& position)
 {
 	if (slotUsed[index])
