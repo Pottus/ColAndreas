@@ -92,6 +92,7 @@ public:
 	ObjectManager();
 	int addObjectManager(ColAndreasMapObject* mapObject);
 	int removeObjectManager(const uint16_t index);
+	int validObjectManager(const uint16_t index);
 	int setObjectPosition(const uint16_t index, btVector3& position);
 	int setObjectRotation(const uint16_t index, btQuaternion& rotation);
 	int getBoundingSphere(uint16_t modelid, btVector3& center, btScalar& radius);

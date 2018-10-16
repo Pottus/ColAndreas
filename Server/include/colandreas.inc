@@ -354,6 +354,19 @@ native CA_DestroyObject(index);
 
 /**--------------------------------------------------------------------------**\
 <summary>
+	CA_IsValidObject
+</summary>
+<param name="index">Checks if an object with the ID provided exists.</param>
+<returns>
+	-1 if the specified model has no collision
+	0 if the object does not exist
+	1 if the object exists
+</returns>
+\**--------------------------------------------------------------------------**/
+native CA_IsValidObject(index);
+
+/**--------------------------------------------------------------------------**\
+<summary>
 	CA_SetObjectPos
 </summary>
 <param name="index">The index of the object to be moved</param>

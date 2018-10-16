@@ -116,8 +116,12 @@ int ColAndreasWorld::performRayTestID(const btVector3& Start, const btVector3& E
 		if(tracker)
 		{
 			index = tracker->realIndex;
-			return 1;
 		}
+		else
+		{
+			index = -1;
+		}
+		return 1;
 	}
 	return 0;
 }
