@@ -37,8 +37,8 @@
 #define		OBJECT_TYPE_DYNAMIC	1
 
 
-#if !defined INFINITY
-	#define INFINITY (Float:0x7F800000)
+#if !defined FLOAT_INFINITY
+	#define FLOAT_INFINITY (Float:0x7F800000)
 #endif
 
 // Maximum number of raycasts in CA_RayCastMultiLine
@@ -846,7 +846,7 @@ stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 		{
 			if(modelids[i] == WATER_OBJECT)
 			{
-				depth = INFINITY;
+				depth = FLOAT_INFINITY;
 
 				for(new j = 0; j < collisions; j++)
 				{
