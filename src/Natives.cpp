@@ -1,5 +1,6 @@
 #include "Natives.h"
 #include "DynamicWorld.h"
+#include <renderware.h>
 
 // Maximum number of raycasts
 #define MAX_MULTICAST_SIZE 99
@@ -294,6 +295,36 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastMultiLine(AMX *amx, cell *para
 		return -1;
 	}
 	return 0;
+}
+
+cell AMX_NATIVE_CALL ColAndreasNatives::CA_LoadFromDff(AMX *amx, cell *params)
+{
+	if (!colDataLoaded)
+	{
+		logprintf("ERROR: CA_LoadFromDff : ColAndreas.cadb not loaded; you need it even if you only want custom models collision");
+		return -1;
+	}
+
+	int32_t modelid = static_cast<int32_t>(params[1]);
+	char* _dffModelName;
+	amx_StrParam(amx, params[2], _dffModelName);
+	std::string dffModelName = std::string("models/") + _dffModelName;
+
+	rw::Clump dffData;
+	ifstream file(dffModelName, ios::binary);
+	if (file.fail()) 
+	{
+		logprintf("ERROR: CA_LoadFromDff: File %s not found in models directory.", _dffModelName);
+		return -1;
+	}
+
+	if (dffData.read(file, modelid))
+	{
+		logprintf("ColAndreas: Loaded custom model collision. ID: %d, Model Name: %s", modelid, _dffModelName);
+	}
+
+	// Model had no collision
+	return -1;
 }
 
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_CreateObject(AMX *amx, cell *params)
