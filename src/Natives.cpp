@@ -458,7 +458,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetModelBoundingSphere(AMX *amx, cell
 {
 	int32_t modelid = static_cast<int32_t>(params[1]);
 	
-	if (modelid >= 0 && modelid < 20000)
+	if ((modelid >= 0 && modelid < 20000) || (modelid >= -1000 && modelid < -30000))
 	{
 		btScalar Radius;
 		btVector3 Center;
@@ -487,7 +487,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetModelBoundingBox(AMX *amx, cell *p
 {
 	int32_t modelid = static_cast<int32_t>(params[1]);
 	
-	if (modelid >= 0 && modelid < 20000)
+	if ((modelid >= 0 && modelid < 20000) || (modelid >= -1000 && modelid < -30000))
 	{
 		btVector3 Min;
 		btVector3 Max;
