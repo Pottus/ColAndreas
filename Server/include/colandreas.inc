@@ -325,6 +325,23 @@ native CA_RayCastLineAngleEx(Float:StartX, Float:StartY, Float:StartZ, Float:End
 
 /**--------------------------------------------------------------------------**\
 <summary>
+	CA_LoadFromDff
+</summary>
+<param name="newid">Custom model id to be added to col. pool</param>
+<param name="dffFileName">Dff file path you want to load its collision</param>
+<returns>
+	-1 if plugin couldn't find/open file (relatd to permissions or wrong path)
+	0 if dff file had no collision or corrupted data
+	1 if loading dff file and reading collision data was successful
+</returns>
+<remarks>
+	Loads collision from given dff file to support SA-MP 0.3DL custom models.
+</remarks>
+\**--------------------------------------------------------------------------**/
+native CA_LoadFromDff(newid, const dffFileName[]);
+
+/**--------------------------------------------------------------------------**\
+<summary>
 	CA_CreateObject
 </summary>
 <param name="modelid">The collision model to create</param>
