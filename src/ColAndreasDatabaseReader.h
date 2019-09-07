@@ -77,6 +77,7 @@ typedef struct {
 typedef struct
 {
 	uint16_t Modelid;
+	int16_t CustomModelid;
 
 	//define our counts
 	uint16_t SphereCount;
