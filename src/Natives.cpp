@@ -321,10 +321,11 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_LoadFromDff(AMX *amx, cell *params)
 	if (dffData.read(file, modelid))
 	{
 		logprintf("ColAndreas: Loaded custom model collision. ID: %d, Model Name: %s", modelid, _dffModelName);
+		return 1;
 	}
 
-	// Model had no collision
-	return -1;
+	logprintf("ColAndreas: Unable to load collision from given dff file (Corrupted data or no collision). ID: %d, Model Name: %s", modelid, _dffModelName);
+	return 0;
 }
 
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_CreateObject(AMX *amx, cell *params)
