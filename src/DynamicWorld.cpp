@@ -67,7 +67,7 @@ void ColAndreasWorld::QuatToEuler(btQuaternion& rotation, btVector3& result)
 	result.setZ((-atan2(2 * ((rotation.getX() * rotation.getY()) + (rotation.getW() * rotation.getZ())), (rotation.getW() * rotation.getW()) + (rotation.getX() * rotation.getX()) - (rotation.getY() * rotation.getY()) - (rotation.getZ() * rotation.getZ())) * RADIAN_TO_DEG) );
 }
 
-int ColAndreasWorld::performRayTest(const btVector3& Start, const btVector3& End, btVector3& Result, uint16_t& model)
+int ColAndreasWorld::performRayTest(const btVector3& Start, const btVector3& End, btVector3& Result, int32_t& model)
 {
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
 
@@ -126,7 +126,7 @@ int ColAndreasWorld::performRayTestID(const btVector3& Start, const btVector3& E
 	return 0;
 }
 
-int ColAndreasWorld::performRayTestEx(const btVector3& Start, const btVector3& End, btVector3& Result, btQuaternion& Rotation, btVector3& Position, uint16_t& model)
+int ColAndreasWorld::performRayTestEx(const btVector3& Start, const btVector3& End, btVector3& Result, btQuaternion& Rotation, btVector3& Position, int32_t& model)
 {
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
 
@@ -144,7 +144,7 @@ int ColAndreasWorld::performRayTestEx(const btVector3& Start, const btVector3& E
 }
 
 
-int ColAndreasWorld::performRayTestAngle(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, uint16_t& model)
+int ColAndreasWorld::performRayTestAngle(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, int32_t& model)
 {
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
 
@@ -164,7 +164,7 @@ int ColAndreasWorld::performRayTestAngle(const btVector3& Start, const btVector3
 	return 0;
 }
 
-int ColAndreasWorld::performRayTestAngleEx(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, btQuaternion& Rotation, btVector3& Position, uint16_t& model)
+int ColAndreasWorld::performRayTestAngleEx(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, btQuaternion& Rotation, btVector3& Position, int32_t& model)
 {
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
 
@@ -216,7 +216,7 @@ int ColAndreasWorld::performRayTestAll(const btVector3& Start, const btVector3& 
 }
 
 // Return reflection vector
-int ColAndreasWorld::performRayTestReflection(const btVector3& Start, const btVector3& End, btVector3& Position, btVector3& Result, uint16_t& model)
+int ColAndreasWorld::performRayTestReflection(const btVector3& Start, const btVector3& End, btVector3& Position, btVector3& Result, int32_t& model)
 {
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
 
@@ -239,7 +239,7 @@ int ColAndreasWorld::performRayTestReflection(const btVector3& Start, const btVe
 }
 
 
-int ColAndreasWorld::performRayTestNormal(const btVector3& Start, const btVector3& End, btVector3& Result, btVector3& Normal, uint16_t& model)
+int ColAndreasWorld::performRayTestNormal(const btVector3& Start, const btVector3& End, btVector3& Result, btVector3& Normal, int32_t& model)
 {
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
 
@@ -255,7 +255,7 @@ int ColAndreasWorld::performRayTestNormal(const btVector3& Start, const btVector
 	return 0;
 }
 
-int ColAndreasWorld::performContactTest(uint16_t modelid, btVector3& objectPos, btQuaternion& objectRot)
+int ColAndreasWorld::performContactTest(int32_t modelid, btVector3& objectPos, btQuaternion& objectRot)
 {
 	ContactCollisionSensor callback;
 	
@@ -281,7 +281,7 @@ void ColAndreasWorld::colandreasInitMap()
 	InitCollisionMap(this->dynamicsWorld, this->removedManager);
 }
 
-uint16_t ColAndreasWorld::createColAndreasMapObject(uint16_t addtomanager, uint16_t modelid, const btQuaternion& objectRot, const btVector3& objectPos)
+uint16_t ColAndreasWorld::createColAndreasMapObject(uint16_t addtomanager, int32_t modelid, const btQuaternion& objectRot, const btVector3& objectPos)
 {
 	ColAndreasMapObject* mapObject = new ColAndreasMapObject(modelid, objectRot, objectPos, this->dynamicsWorld);
 	if (addtomanager)
@@ -292,7 +292,7 @@ uint16_t ColAndreasWorld::createColAndreasMapObject(uint16_t addtomanager, uint1
 	return -1;
 }
 
-uint16_t ColAndreasWorld::getModelRef(uint16_t model)
+uint16_t ColAndreasWorld::getModelRef(int32_t model)
 {
 	return GetModelRef(model);
 }

@@ -59,7 +59,7 @@ private:
 class ColAndreasMapObject
 {
 public:
-	ColAndreasMapObject(uint16_t modelid, const btQuaternion& objectRot, const btVector3& objectPos, btDynamicsWorld* world);
+	ColAndreasMapObject(int32_t modelid, const btQuaternion& objectRot, const btVector3& objectPos, btDynamicsWorld* world);
 	~ColAndreasMapObject();
 	void setMapObjectPosition(btVector3& position);
 	void setMapObjectRotation(btQuaternion& rotation);
@@ -95,8 +95,8 @@ public:
 	int validObjectManager(const uint16_t index);
 	int setObjectPosition(const uint16_t index, btVector3& position);
 	int setObjectRotation(const uint16_t index, btQuaternion& rotation);
-	int getBoundingSphere(uint16_t modelid, btVector3& center, btScalar& radius);
-	int getBoundingBox(uint16_t modelid, btVector3& min, btVector3& max);	      
+	int getBoundingSphere(int32_t modelid, btVector3& center, btScalar& radius);
+	int getBoundingBox(int32_t modelid, btVector3& min, btVector3& max);
 	int setExtraID(const uint16_t index, int type, int data);
 	int getExtraID(const uint16_t index, int type);
 private:
@@ -118,7 +118,7 @@ private:
 
 bool LoadCollisionData(btDynamicsWorld* collisionWorld);
 void InitCollisionMap(btDynamicsWorld* collisionWorld, RemovedBuildingManager* removeManager);
-uint16_t GetModelRef(uint16_t model);
+uint16_t GetModelRef(int32_t model);
 
 // Pointer reference
 extern std::vector <ColAndreasColObject*> colObjects;
