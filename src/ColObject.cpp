@@ -94,7 +94,7 @@ bool LoadCollisionData(btDynamicsWorld* collisionWorld)
 }
 
 
-ColAndreasMapObject::ColAndreasMapObject(uint16_t modelid, const btQuaternion& objectRot, const btVector3& objectPos, btDynamicsWorld* world)
+ColAndreasMapObject::ColAndreasMapObject(int32_t modelid, const btQuaternion& objectRot, const btVector3& objectPos, btDynamicsWorld* world)
 {
 	colindex = ModelRef[modelid];
 
@@ -275,7 +275,7 @@ int ObjectManager::setObjectRotation(const uint16_t index, btQuaternion& rotatio
 }
 
 
-int ObjectManager::getBoundingSphere(uint16_t modelid, btVector3& center, btScalar& radius)
+int ObjectManager::getBoundingSphere(int32_t modelid, btVector3& center, btScalar& radius)
 {
 	uint16_t colindex = ModelRef[modelid];
 
@@ -296,7 +296,7 @@ int ObjectManager::getBoundingSphere(uint16_t modelid, btVector3& center, btScal
 }
 
 
-int ObjectManager::getBoundingBox(uint16_t modelid, btVector3& min, btVector3& max)
+int ObjectManager::getBoundingBox(int32_t modelid, btVector3& min, btVector3& max)
 {
 	uint16_t colindex = ModelRef[modelid];
 	btTransform t;
@@ -375,7 +375,7 @@ void InitCollisionMap(btDynamicsWorld* collisionWorld, RemovedBuildingManager* r
 	}
 }
 
-uint16_t GetModelRef(uint16_t model) 
+uint16_t GetModelRef(int32_t model)
 {
 	if (model <= 20000 && ModelRef[model] != 65535)
 		return ModelRef[model];

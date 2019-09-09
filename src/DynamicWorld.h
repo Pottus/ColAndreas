@@ -40,19 +40,19 @@ public:
 	void QuatToEuler(btQuaternion& rotation, btVector3& result);
 	void setMyExtraID(uint16_t index, int type, int data);
 	int getMyExtraID(uint16_t index, int type);
-	int performRayTest(const btVector3& Start, const btVector3& End, btVector3& Result, uint16_t& model);
+	int performRayTest(const btVector3& Start, const btVector3& End, btVector3& Result, int32_t& model);
 	int performRayTestExtraID(const btVector3& Start, const btVector3& End, btVector3& Result, const int type, uint16_t& data);
 	int performRayTestID(const btVector3& Start, const btVector3& End, btVector3& Result, uint16_t& index);
-	int performRayTestEx(const btVector3& Start, const btVector3& End, btVector3& Result, btQuaternion& Rotation, btVector3& Position, uint16_t& model);
-	int performRayTestAngle(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, uint16_t& model);
-	int performRayTestAngleEx(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, btQuaternion& Rotation, btVector3& Position, uint16_t& model);
+	int performRayTestEx(const btVector3& Start, const btVector3& End, btVector3& Result, btQuaternion& Rotation, btVector3& Position, int32_t& model);
+	int performRayTestAngle(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, int32_t& model);
+	int performRayTestAngleEx(const btVector3& Start, const btVector3& End, btVector3& Result, btScalar& RX, btScalar& RY, btScalar& RZ, btQuaternion& Rotation, btVector3& Position, int32_t& model);
 	int performRayTestAll(const btVector3& Start, const btVector3& End, btAlignedObjectArray < btVector3 >& Result, int ModelIDs[], int size);
-	int performRayTestReflection(const btVector3& Start, const btVector3& End, btVector3& Position, btVector3& Result, uint16_t& model);
-	int performRayTestNormal(const btVector3& Start, const btVector3& End, btVector3& Result, btVector3& Normal, uint16_t& model);
-	int performContactTest(uint16_t modelid, btVector3& objectPos, btQuaternion& objectRot);
+	int performRayTestReflection(const btVector3& Start, const btVector3& End, btVector3& Position, btVector3& Result, int32_t& model);
+	int performRayTestNormal(const btVector3& Start, const btVector3& End, btVector3& Result, btVector3& Normal, int32_t& model);
+	int performContactTest(int32_t modelid, btVector3& objectPos, btQuaternion& objectRot);
 
-	uint16_t createColAndreasMapObject(uint16_t addtomanager, uint16_t modelid, const btQuaternion& objectRot, const btVector3& objectPos);
-	uint16_t getModelRef(uint16_t model);
+	uint16_t createColAndreasMapObject(uint16_t addtomanager, int32_t modelid, const btQuaternion& objectRot, const btVector3& objectPos);
+	uint16_t getModelRef(int32_t model);
 	void colandreasInitMap();
 	bool loadCollisionData();
 

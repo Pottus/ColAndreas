@@ -1,5 +1,6 @@
 #include "Natives.h"
 #include "DynamicWorld.h"
+#include <renderware.h>
 
 // Maximum number of raycasts
 #define MAX_MULTICAST_SIZE 99
@@ -38,7 +39,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLine(AMX *amx, cell *params)
 	btVector3 Start = btVector3(btScalar(amx_ctof(params[1]) + 0.00001), btScalar(amx_ctof(params[2]) + 0.00001), btScalar(amx_ctof(params[3]) + 0.00001));
 	btVector3 End = btVector3(btScalar(amx_ctof(params[4])), btScalar(amx_ctof(params[5])), btScalar(amx_ctof(params[6])));
 	btVector3 Result;
-	uint16_t Model = 0;
+	int32_t Model = 0;
 
 	if (collisionWorld->performRayTest(Start, End, Result, Model))
 	{
@@ -121,7 +122,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineEx(AMX *amx, cell *params)
 	btVector3 Position;
 	btQuaternion Rotation;
 	btVector3 Result;
-	uint16_t Model = 0;
+	int32_t Model = 0;
 
 	if (collisionWorld->performRayTestEx(Start, End, Result, Rotation, Position, Model))
 	{
@@ -164,7 +165,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineAngle(AMX *amx, cell *para
 	btScalar RX;
 	btScalar RY;
 	btScalar RZ;
-	uint16_t model = 0;
+	int32_t model = 0;
 
 	if (collisionWorld->performRayTestAngle(Start, End, Result, RX, RY, RZ, model))
 	{
@@ -202,7 +203,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineAngleEx(AMX *amx, cell *pa
 	btScalar RX;
 	btScalar RY;
 	btScalar RZ;
-	uint16_t Model = 0;
+	int32_t Model = 0;
 
 	if (collisionWorld->performRayTestAngleEx(Start, End, Result, RX, RY, RZ, ObjectRotation, ObjectPosition, Model))
 	{
@@ -296,6 +297,37 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastMultiLine(AMX *amx, cell *para
 	return 0;
 }
 
+cell AMX_NATIVE_CALL ColAndreasNatives::CA_LoadFromDff(AMX *amx, cell *params)
+{
+	if (!colDataLoaded)
+	{
+		logprintf("ERROR: CA_LoadFromDff : ColAndreas.cadb not loaded; you need it even if you only want custom models collision");
+		return -1;
+	}
+
+	int32_t modelid = static_cast<int32_t>(params[1]);
+	char* _dffModelName;
+	amx_StrParam(amx, params[2], _dffModelName);
+	std::string dffModelName = std::string("models/") + _dffModelName;
+
+	rw::Clump dffData;
+	ifstream file(dffModelName, ios::binary);
+	if (file.fail()) 
+	{
+		logprintf("ERROR: CA_LoadFromDff: File %s not found in models directory.", _dffModelName);
+		return -1;
+	}
+
+	if (dffData.read(file, modelid))
+	{
+		logprintf("ColAndreas: Loaded custom model collision. ID: %d, Model Name: %s", modelid, _dffModelName);
+		return 1;
+	}
+
+	logprintf("ColAndreas: Unable to load collision from given dff file (Corrupted data or no collision). ID: %d, Model Name: %s", modelid, _dffModelName);
+	return 0;
+}
+
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_CreateObject(AMX *amx, cell *params)
 {
 	if(!colDataLoaded)
@@ -304,7 +336,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_CreateObject(AMX *amx, cell *params)
 		return -1;
 	}
 	
-	uint16_t modelid = static_cast<uint16_t>(params[1]);
+	int32_t modelid = static_cast<int32_t>(params[1]);
 	uint16_t addtomanager = static_cast<uint16_t>(params[8]);
 
 	if (collisionWorld->getModelRef(modelid) != 65535)
@@ -424,9 +456,9 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_SetObjectRot(AMX *amx, cell *params)
 
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetModelBoundingSphere(AMX *amx, cell *params)
 {
-	uint16_t modelid = static_cast<uint16_t>(params[1]);
+	int32_t modelid = static_cast<int32_t>(params[1]);
 	
-	if (modelid >= 0 && modelid < 20000)
+	if ((modelid >= 0 && modelid < 20000) || (modelid >= -1000 && modelid < -30000))
 	{
 		btScalar Radius;
 		btVector3 Center;
@@ -453,9 +485,9 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetModelBoundingSphere(AMX *amx, cell
 
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_GetModelBoundingBox(AMX *amx, cell *params)
 {
-	uint16_t modelid = static_cast<uint16_t>(params[1]);
+	int32_t modelid = static_cast<int32_t>(params[1]);
 	
-	if (modelid >= 0 && modelid < 20000)
+	if ((modelid >= 0 && modelid < 20000) || (modelid >= -1000 && modelid < -30000))
 	{
 		btVector3 Min;
 		btVector3 Max;
@@ -507,7 +539,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastReflectionVector(AMX *amx, cel
 	btVector3 End = btVector3(btScalar(amx_ctof(params[4])), btScalar(amx_ctof(params[5])), btScalar(amx_ctof(params[6])));
 	btVector3 Result;
 	btVector3 Position;
-	uint16_t model;
+	int32_t model;
 
 	if (collisionWorld->performRayTestReflection(Start, End, Position, Result, model))
 	{
@@ -545,7 +577,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineNormal(AMX *amx, cell *par
 	btVector3 End = btVector3(btScalar(amx_ctof(params[4])), btScalar(amx_ctof(params[5])), btScalar(amx_ctof(params[6])));
 	btVector3 Result;
 	btVector3 Position;
-	uint16_t model;
+	int32_t model;
 
 	if (collisionWorld->performRayTestNormal(Start, End, Position, Result, model))
 	{
@@ -573,7 +605,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RayCastLineNormal(AMX *amx, cell *par
 
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_ContactTest(AMX *amx, cell *params)
 {
-	uint16_t modelid = static_cast<uint16_t>(params[1]);
+	int32_t modelid = static_cast<int32_t>(params[1]);
 	
 	btVector3 position = btVector3(amx_ctof(params[2]), amx_ctof(params[3]), amx_ctof(params[4]));
 	btVector3 rotation = btVector3(amx_ctof(params[5]), amx_ctof(params[6]), amx_ctof(params[7]));

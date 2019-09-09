@@ -80,6 +80,7 @@ AMX_NATIVE_INFO PluginNatives[] =
 	{ "CA_RayCastReflectionVector", ColAndreasNatives::CA_RayCastReflectionVector },
 	{ "CA_RayCastLineNormal", ColAndreasNatives::CA_RayCastLineNormal },
 	{ "CA_ContactTest", ColAndreasNatives::CA_ContactTest },
+	{ "CA_LoadFromDff", ColAndreasNatives::CA_LoadFromDff },
 	{ "CA_CreateObject", ColAndreasNatives::CA_CreateObject },
 	{ "CA_DestroyObject", ColAndreasNatives::CA_DestroyObject },
 	{ "CA_IsValidObject", ColAndreasNatives::CA_IsValidObject },
