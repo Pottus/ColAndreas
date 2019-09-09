@@ -99,7 +99,7 @@ bool ReadColandreasDatabaseFile(std::string FileLocation)
 					ModelRef[i] = 65535;
 				}
 
-				for (int i = -1000; i < -30000; i++)
+				for (int i = -1000; i > -30000; i--)
 				{
 					ModelRef[i] = 65535;
 				}
