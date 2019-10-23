@@ -4,15 +4,15 @@
     "include_path": "Server/include",
     "resources": [
         {
-            "name": "^ColAndreas_static.so$",
+            "name": "^ColAndreas_ubuntu.zip$",
             "platform": "linux",
-            "archive": false,
-            "plugins": ["colandreas_static.so"]
+            "archive": true,
+            "plugins": ["ColAndreas.so"]
         },
         {
-            "name": "^ColAndreas.dll$",
+            "name": "^ColAndreas_win32.zip$",
             "platform": "windows",
-            "archive": false,
+            "archive": true,
             "plugins": ["ColAndreas.dll"]
         }
     ],
