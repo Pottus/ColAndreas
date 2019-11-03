@@ -112,6 +112,7 @@ public:
 	RemovedBuildingManager();
 	bool isRemoved(uint16_t model, Vector position);
 	void addBuilding(removeBuildingData removeData);
+	void restoreBuilding(removeBuildingData targetData);
 private:
 	std::vector <removeBuildingData> removedBuildings;
 };

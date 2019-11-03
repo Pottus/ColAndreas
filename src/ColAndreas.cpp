@@ -87,6 +87,7 @@ AMX_NATIVE_INFO PluginNatives[] =
 	{ "CA_EulerToQuat", ColAndreasNatives::CA_EulerToQuat },
 	{ "CA_QuatToEuler", ColAndreasNatives::CA_QuatToEuler },
 	{ "CA_RemoveBuilding", ColAndreasNatives::CA_RemoveBuilding },
+	{ "CA_RestoreBuilding", ColAndreasNatives::CA_RestoreBuilding },
 	{ "CA_SetObjectPos", ColAndreasNatives::CA_SetObjectPos },
 	{ "CA_SetObjectRot", ColAndreasNatives::CA_SetObjectRot },
 	{ "CA_GetModelBoundingSphere", ColAndreasNatives::CA_GetModelBoundingSphere },
