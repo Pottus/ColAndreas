@@ -346,21 +346,24 @@ void RemovedBuildingManager::restoreBuilding(removeBuildingData targetData)
 {
 	for (uint16_t i = 0; i < RemovedGameObjects.size(); i++)
 	{
-		if ((targetData.r_Model == RemovedGameObjects[i]->Modelid || targetData.r_Model == -1) && RemovedGameObjects[i] != nullptr)
+		if (RemovedGameObjects[i] != nullptr)
 		{
-			btScalar dist = btDistance(btVector3(btScalar(targetData.r_X), btScalar(targetData.r_Y), btScalar(targetData.r_Z)),
-				btVector3(btScalar(RemovedGameObjects[i]->Position.x), btScalar(RemovedGameObjects[i]->Position.y), btScalar(RemovedGameObjects[i]->Position.z)));
-
-			if (dist <= btScalar(targetData.r_Radius))
+			if ((targetData.r_Model == RemovedGameObjects[i]->Modelid || targetData.r_Model == -1))
 			{
-				uint16_t index = ModelRef[RemovedGameObjects[i]->Modelid];
-				if(index == 65535) continue;
+				btScalar dist = btDistance(btVector3(btScalar(targetData.r_X), btScalar(targetData.r_Y), btScalar(targetData.r_Z)),
+					btVector3(btScalar(RemovedGameObjects[i]->Position.x), btScalar(RemovedGameObjects[i]->Position.y), btScalar(RemovedGameObjects[i]->Position.z)));
 
-				collisionWorld->createColAndreasMapObject(0, RemovedGameObjects[i]->Modelid,
-					btQuaternion(RemovedGameObjects[i]->Rotation.x, RemovedGameObjects[i]->Rotation.y, RemovedGameObjects[i]->Rotation.z, RemovedGameObjects[i]->Rotation.w),
-					btVector3(RemovedGameObjects[i]->Position.x, RemovedGameObjects[i]->Position.y, RemovedGameObjects[i]->Position.z));
+				if (dist <= btScalar(targetData.r_Radius))
+				{
+					uint16_t index = ModelRef[RemovedGameObjects[i]->Modelid];
+					if (index == 65535) continue;
 
-				RemovedGameObjects[i] = nullptr;
+					collisionWorld->createColAndreasMapObject(0, RemovedGameObjects[i]->Modelid,
+						btQuaternion(RemovedGameObjects[i]->Rotation.x, RemovedGameObjects[i]->Rotation.y, RemovedGameObjects[i]->Rotation.z, RemovedGameObjects[i]->Rotation.w),
+						btVector3(RemovedGameObjects[i]->Position.x, RemovedGameObjects[i]->Position.y, RemovedGameObjects[i]->Position.z));
+
+					RemovedGameObjects[i] = nullptr;
+				}
 			}
 		}
 	}
