@@ -77,6 +77,23 @@ native CA_RemoveBuilding(modelid, Float:x, Float:y, Float:z, Float:radius);
 
 /**--------------------------------------------------------------------------**\
 <summary>
+	CA_RestoreBuilding
+</summary>
+<param name="modelid">The removed model to be restored</param>
+<param name="Float:x, Float:y, Float:z">The coordinates in which the objects will be restored</param>
+<param name="Float:radius">The radius around the specified point to restore from</param>
+<returns>
+	0 when the map is not initialized
+	1 when successfully restored
+</returns>
+<remarks>
+    You must use this function after using `CA_Init`
+</remarks>
+\**--------------------------------------------------------------------------**/
+native CA_RestoreBuilding(modelid, Float:x, Float:y, Float:z, Float:radius);
+
+/**--------------------------------------------------------------------------**\
+<summary>
 	CA_RayCastLine
 </summary>
 <param name="Float:StartX, Float:StartY, Float:StartZ">The beginning point of the ray</param>
