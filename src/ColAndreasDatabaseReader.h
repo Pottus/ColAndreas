@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <cstring>
+#include <vector>
 #include <map>
 
 using namespace std;
@@ -112,6 +113,7 @@ returns a boolean true if function suceeded, otherwise false.
 bool ReadColandreasDatabaseFile(std::string FileLocation);
 extern std::map<uint16_t, CollisionModelstructure> CollisionModels;
 extern ItemPlacementstructure* ModelPlacements;
+extern std::vector<ItemPlacementstructure*> RemovedGameObjects;
 extern uint16_t ModelCount;
 extern uint32_t IPLCount;
 extern std::map<int32_t, uint16_t> ModelRef;

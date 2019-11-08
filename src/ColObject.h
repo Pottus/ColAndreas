@@ -10,7 +10,7 @@
 
 struct removeBuildingData
 {
-	uint16_t r_Model;
+	int16_t r_Model;
 	float r_X;
 	float r_Y;
 	float r_Z;
@@ -110,8 +110,9 @@ class RemovedBuildingManager
 {
 public:
 	RemovedBuildingManager();
-	bool isRemoved(uint16_t model, Vector position);
+	bool isRemoved(int16_t model, Vector position);
 	void addBuilding(removeBuildingData removeData);
+	void restoreBuilding(removeBuildingData targetData);
 private:
 	std::vector <removeBuildingData> removedBuildings;
 };

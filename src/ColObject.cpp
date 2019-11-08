@@ -1,5 +1,6 @@
 #include "ColObject.h"
 #include "WaterArray.h"
+#include "DynamicWorld.h"
 #include "ColAndreasDatabaseReader.h"
 
 // SAMP objects only go up 19999
@@ -323,7 +324,7 @@ RemovedBuildingManager::RemovedBuildingManager()
 {
 }
 
-bool RemovedBuildingManager::isRemoved(uint16_t model, Vector position)
+bool RemovedBuildingManager::isRemoved(int16_t model, Vector position)
 {
 	for (uint16_t i = 0; i < removedBuildings.size(); i++)
 	{
@@ -339,6 +340,33 @@ bool RemovedBuildingManager::isRemoved(uint16_t model, Vector position)
 		}
 	}
 	return 0;
+}
+
+void RemovedBuildingManager::restoreBuilding(removeBuildingData targetData)
+{
+	for (uint16_t i = 0; i < RemovedGameObjects.size(); i++)
+	{
+		if (RemovedGameObjects[i] != nullptr)
+		{
+			if ((targetData.r_Model == RemovedGameObjects[i]->Modelid || targetData.r_Model == -1))
+			{
+				btScalar dist = btDistance(btVector3(btScalar(targetData.r_X), btScalar(targetData.r_Y), btScalar(targetData.r_Z)),
+					btVector3(btScalar(RemovedGameObjects[i]->Position.x), btScalar(RemovedGameObjects[i]->Position.y), btScalar(RemovedGameObjects[i]->Position.z)));
+
+				if (dist <= btScalar(targetData.r_Radius))
+				{
+					uint16_t index = ModelRef[RemovedGameObjects[i]->Modelid];
+					if (index == 65535) continue;
+
+					collisionWorld->createColAndreasMapObject(0, RemovedGameObjects[i]->Modelid,
+						btQuaternion(RemovedGameObjects[i]->Rotation.x, RemovedGameObjects[i]->Rotation.y, RemovedGameObjects[i]->Rotation.z, RemovedGameObjects[i]->Rotation.w),
+						btVector3(RemovedGameObjects[i]->Position.x, RemovedGameObjects[i]->Position.y, RemovedGameObjects[i]->Position.z));
+
+					RemovedGameObjects[i] = nullptr;
+				}
+			}
+		}
+	}
 }
 
 void RemovedBuildingManager::addBuilding(removeBuildingData removeData)
@@ -371,6 +399,9 @@ void InitCollisionMap(btDynamicsWorld* collisionWorld, RemovedBuildingManager* r
 			ColAndreasMapObject* tmpObject;
 			tmpObject = new ColAndreasMapObject(ModelPlacements[i].Modelid, btQuaternion(ModelPlacements[i].Rotation.x, ModelPlacements[i].Rotation.y, ModelPlacements[i].Rotation.z, ModelPlacements[i].Rotation.w), btVector3(ModelPlacements[i].Position.x, ModelPlacements[i].Position.y, ModelPlacements[i].Position.z), collisionWorld);
 
+		}
+		else {
+			RemovedGameObjects.push_back(new ItemPlacementstructure(ModelPlacements[i]));
 		}
 	}
 }

@@ -3,7 +3,7 @@
 
 std::map<uint16_t, CollisionModelstructure> CollisionModels;
 ItemPlacementstructure* ModelPlacements;
-
+std::vector<ItemPlacementstructure*> RemovedGameObjects;
 uint16_t ModelCount = 0;
 uint32_t IPLCount = 0;
 std::map<int32_t, uint16_t> ModelRef;
