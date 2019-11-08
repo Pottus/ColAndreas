@@ -324,7 +324,7 @@ RemovedBuildingManager::RemovedBuildingManager()
 {
 }
 
-bool RemovedBuildingManager::isRemoved(uint16_t model, Vector position)
+bool RemovedBuildingManager::isRemoved(int16_t model, Vector position)
 {
 	for (uint16_t i = 0; i < removedBuildings.size(); i++)
 	{

@@ -421,7 +421,7 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RemoveBuilding(AMX *amx, cell *params
 	if (!colInit)
 	{
 		removeBuildingData tmp;
-		tmp.r_Model = static_cast<uint16_t>(params[1]);
+		tmp.r_Model = static_cast<int16_t>(params[1]);
 
 		tmp.r_X = amx_ctof(params[2]);
 		tmp.r_Y = amx_ctof(params[3]);
