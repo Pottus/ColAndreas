@@ -439,16 +439,23 @@ cell AMX_NATIVE_CALL ColAndreasNatives::CA_RemoveBuilding(AMX *amx, cell *params
 
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_RestoreBuilding(AMX *amx, cell *params)
 {
+	if (colInit)
+	{
+		removeBuildingData tmp;
+		tmp.r_Model = static_cast<int16_t>(params[1]);
 
-	removeBuildingData tmp;
-	tmp.r_Model = static_cast<uint16_t>(params[1]);
-
-	tmp.r_X = amx_ctof(params[2]);
-	tmp.r_Y = amx_ctof(params[3]);
-	tmp.r_Z = amx_ctof(params[4]);
-	tmp.r_Radius = amx_ctof(params[5]);
-	collisionWorld->removedManager->restoreBuilding(tmp);
-	return 1;
+		tmp.r_X = amx_ctof(params[2]);
+		tmp.r_Y = amx_ctof(params[3]);
+		tmp.r_Z = amx_ctof(params[4]);
+		tmp.r_Radius = amx_ctof(params[5]);
+		collisionWorld->removedManager->restoreBuilding(tmp);
+		return 1;
+	}
+	else
+	{
+		logprintf("ERROR: CA_RestoreBuilding : Map is not initialized yet. Use this after CA_Init.");
+	}
+	return 0;
 }
 
 cell AMX_NATIVE_CALL ColAndreasNatives::CA_SetObjectPos(AMX *amx, cell *params)
