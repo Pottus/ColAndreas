@@ -8,7 +8,7 @@
 #define _colandreas_included
 #pragma library colandreas
 
-#define COLANDREAS_VERSION (10400) //a.b.c 10000*a+100*b+c
+#define COLANDREAS_VERSION (10500) //a.b.c 10000*a+100*b+c
 #define COLANDREAS (COLANDREAS_VERSION)
 
 // Default extra ID types
