@@ -752,21 +752,23 @@ stock CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intens
 		return 0;
 
 	new index;
-	for(new Float:lat = -180.0; lat < 180.0; lat += (intensity * 0.75))
-	for(new Float:lon = -90.0; lon < 90.0; lon += intensity)
+	for(new Float:lat = -180.0, Float:lon = -90.0; lat < 180.0; lat += (intensity * 0.75))
 	{
-		new Float:LAT = lat * 3.141593 / 180.0,
-			Float:LON = lon * 3.141593 / 180.0,
-			Float:x = -Radius * floatcos(LAT) * floatcos(LON),
-			Float:y = Radius * floatcos(LAT) * floatsin(LON),
-			Float:z = Radius * floatsin(LAT);
-
-		if(CA_RayCastLine(cX, cY, cZ, cX + x, cY + y, cZ + z, x, y, z))
+		for(lon = -90.0; lon < 90.0; lon += intensity)
 		{
-			collisions[index][0] = x;
-			collisions[index][1] = y;
-			collisions[index][2] = z;
-			index++;
+			new Float:LAT = lat * 3.141593 / 180.0,
+				Float:LON = lon * 3.141593 / 180.0,
+				Float:x = -Radius * floatcos(LAT) * floatcos(LON),
+				Float:y = Radius * floatcos(LAT) * floatsin(LON),
+				Float:z = Radius * floatsin(LAT);
+
+			if(CA_RayCastLine(cX, cY, cZ, cX + x, cY + y, cZ + z, x, y, z))
+			{
+				collisions[index][0] = x;
+				collisions[index][1] = y;
+				collisions[index][2] = z;
+				index++;
+			}
 		}
 	}
 
@@ -879,13 +881,13 @@ stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 	new collisions = CA_RayCastMultiLine(x, y, z+1000.0, x, y, z-1000.0, retx, rety, retz, retdist, modelids, 10);
 	if(collisions > 0)
 	{
-		for(new i = 0; i < collisions; i++)
+		for(new i = 0, j = 0; i < collisions; i++)
 		{
 			if(modelids[i] == WATER_OBJECT)
 			{
 				depth = FLOAT_INFINITY;
 
-				for(new j = 0; j < collisions; j++)
+				for(j = 0; j < collisions; j++)
 				{
 					if(retz[j] < depth)
 					depth = retz[j];
