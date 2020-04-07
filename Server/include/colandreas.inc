@@ -910,6 +910,52 @@ stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 
 /**--------------------------------------------------------------------------**\
 <summary>
+	CA_IsVehicleInWater
+</summary>
+<param name="vehicleid">The vehicleid to check</param>
+<param name="&Float:depth">The depth</param>
+<param name="&Float:vehicledepth">The depth of the vehicle</param>
+<returns>
+    0 if the vehicle is not in water
+    1 if the vehicle is in water
+</returns>
+\**--------------------------------------------------------------------------**/
+stock CA_IsVehicleInWater(vehicleid, &Float:depth, &Float:vehicledepth)
+{
+	new Float:x, Float:y, Float:z, Float:retx[10], Float:rety[10], Float:retz[10], Float:retdist[10], modelids[10];
+	GetVehiclePos(vehicleid, x, y, z);
+	new collisions = CA_RayCastMultiLine(x, y, z + 1000.0, x, y, z - 1000.0, retx, rety, retz, retdist, modelids, 10);
+	if(collisions)
+	{
+		for(new i = 0, j = 0; i < collisions; i++)
+		{
+			if(modelids[i] == WATER_OBJECT)
+			{
+				depth = FLOAT_INFINITY;
+
+				for(j = 0; j < collisions; j++)
+				{
+					if(retz[j] < depth)
+					depth = retz[j];
+				}
+
+				depth = retz[i] - depth;
+				if(depth < 0.001 && depth > -0.001)
+					depth = 100.0;
+				vehicledepth = retz[i] - z;
+
+				if(vehicledepth < -2.0)
+					return 0;
+
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+/**--------------------------------------------------------------------------**\
+<summary>
 	CA_IsPlayerNearWater
 </summary>
 <param name="playerid">The playerid to check</param>
@@ -927,6 +973,32 @@ stock CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 {
 	new Float:x, Float:y, Float:z, Float:tmp;
 	GetPlayerPos(playerid, x, y, z);
+
+	for(new i; i < 6; i++)
+		if(CA_RayCastLine(x + (dist * floatsin(i * 60.0, degrees)), y + (dist * floatcos(i * 60.0, degrees)), z + height, x + (dist * floatsin(i * 60.0, degrees)), y + (dist * floatcos(i * 60.0, degrees)), z - height, tmp, tmp, tmp) == WATER_OBJECT)
+			return 1;
+	return 0;
+}
+
+/**--------------------------------------------------------------------------**\
+<summary>
+	CA_IsVehicleNearWater
+</summary>
+<param name="vehicleid">The vehicleid to check</param>
+<param name="Float:dist = 3.0">The distance to check for water</param>
+<param name="Float:height = 3.0">The height the vehicle can be from the water</param>
+<returns>
+    0 if the vehicle is not in water
+    1 if the vehicle is in water
+</returns>
+<remarks>
+    Checks for water all around the vehicle
+</remarks>
+\**--------------------------------------------------------------------------**/
+stock CA_IsVehicleNearWater(vehicleid, Float:dist=3.0, Float:height=3.0)
+{
+	new Float:x, Float:y, Float:z, Float:tmp;
+	GetVehiclePos(vehicleid, x, y, z);
 
 	for(new i; i < 6; i++)
 		if(CA_RayCastLine(x + (dist * floatsin(i * 60.0, degrees)), y + (dist * floatcos(i * 60.0, degrees)), z + height, x + (dist * floatsin(i * 60.0, degrees)), y + (dist * floatcos(i * 60.0, degrees)), z - height, tmp, tmp, tmp) == WATER_OBJECT)
@@ -954,6 +1026,32 @@ stock CA_IsPlayerFacingWater(playerid, Float:dist=3.0, Float:height=3.0)
 	new Float:x, Float:y, Float:z, Float:r, Float:tmp;
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, r);
+
+	if(CA_RayCastLine(x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z, x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z - height, tmp, tmp, tmp) == WATER_OBJECT)
+		return 1;
+	return 0;
+}
+
+/**--------------------------------------------------------------------------**\
+<summary>
+	CA_IsVehicleFacingWater
+</summary>
+<param name="vehicleid">The vehicleid to check</param>
+<param name="Float:dist = 3.0">The distance to check for water</param>
+<param name="Float:height = 3.0">The height the vehicle can be from the water</param>
+<returns>
+    0 if the vehicle is not in water
+    1 if the vehicle is in water
+</returns>
+<remarks>
+    Checks for water only in front of the vehicle
+</remarks>
+\**--------------------------------------------------------------------------**/
+stock CA_IsVehicleFacingWater(vehicleid, Float:dist=3.0, Float:height=3.0)
+{
+	new Float:x, Float:y, Float:z, Float:r, Float:tmp;
+	GetVehiclePos(vehicleid, x, y, z);
+	GetVehicleZAngle(vehicleid, r);
 
 	if(CA_RayCastLine(x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z, x + (dist * floatsin(-r, degrees)), y + (dist * floatcos(-r, degrees)), z - height, tmp, tmp, tmp) == WATER_OBJECT)
 		return 1;
