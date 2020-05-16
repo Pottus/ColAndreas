@@ -6,6 +6,7 @@
 	#endinput
 #endif
 #define _colandreas_included
+
 #pragma library colandreas
 
 #define COLANDREAS_VERSION (10500) //a.b.c 10000*a+100*b+c
@@ -39,13 +40,12 @@
 #define		OBJECT_TYPE_OBJECT	0
 #define		OBJECT_TYPE_DYNAMIC	1
 
-
 #if !defined FLOAT_INFINITY
 	#define FLOAT_INFINITY (Float:0x7F800000)
 #endif
 
 // Maximum number of raycasts in CA_RayCastMultiLine
-#define MAX_MULTICAST_SIZE 99 
+#define MAX_MULTICAST_SIZE 99
 
 /**--------------------------------------------------------------------------**\
 <summary>
@@ -447,7 +447,6 @@ static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 
 //Streamer
 #if defined STREAMER_TYPE_OBJECT
-
 	// Static collision object functions (The index is not returned these can not be deleted!)
 	stock STREAMER_TAG_OBJECT:CA_CreateDynamicObjectEx_SC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:streamdistance = STREAMER_OBJECT_SD, Float:drawdistance = STREAMER_OBJECT_DD, worlds[] = { -1 }, interiors[] = { -1 }, players[] = { -1 }, STREAMER_TAG_AREA:areas[] = { STREAMER_TAG_AREA:-1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players, maxareas = sizeof areas)
 	{
@@ -1151,7 +1150,6 @@ stock Float:CA_GetRoomCenter(Float:x, Float:y, Float:z, &Float:m_x, &Float:m_y)
 	return VectorSize(m_x - pt1x, m_y - pt1y, 0.0);
 }
 
-
 // Hooked functions
 public OnFilterScriptExit()
 {
@@ -1172,7 +1170,6 @@ public OnFilterScriptExit()
 
 forward CA_OnFilterScriptExit();
 
-
 public OnGameModeExit()
 {
 	CA_DestroyAllObjects_DC();
@@ -1191,11 +1188,12 @@ public OnGameModeExit()
 #define OnGameModeExit CA_OnGameModeExit
 
 forward CA_OnGameModeExit();
+
 /*
-Create a object with collision in ColAndreas dynamic
+Create an object with collision in ColAndreas dynamic
 CA_CreateObject_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:drawdistance = 300.0)
 
-Destroy a object with collision in ColAndreas
+Destroy an object with collision in ColAndreas
 CA_DestroyObject_DC(index)
 
 Destoys all objects streamer/regular
@@ -1208,7 +1206,7 @@ Explode ray casts in every direction
 CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intensity = 20.0, Float:collisions[][3])
 
 Checks if a player is standing on any surface (prevent animation exploit when falling)
-CA_IsOnSurface(playerid, Float:tolerance=1.5)
+CA_IsPlayerOnSurface(playerid, Float:tolerance=1.5)
 
 Removes all barries this function only works BEFORE using CA_Init()
 CA_RemoveBarriers()
@@ -1222,10 +1220,10 @@ CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 
 Checks if a player is near water (returns 0 if they are actually in the water) distance is the radius to check
 Height is how high above the water to detect
-CA_IsNearWater(playerid, Float:dist=3.0, Float:height=3.0)
+CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 
 // Check if a player is blocked by a wall
-CA_IsBlocked(playerid, Float:dist=1.5, Float:height=0.5)
+CA_IsPlayerBlocked(playerid, Float:dist=1.5, Float:height=0.5)
 
 
 Notes:
