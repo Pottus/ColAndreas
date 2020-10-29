@@ -5,7 +5,7 @@ project(ColAndreas)
 set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS OFF)
 find_package(Bullet REQUIRED)
 
-set(CA_VERSION "v1.4.0")
+set(CA_VERSION "v1.5.0")
 set(CA_DATABASE_VERSION 2)
 add_definitions(-DCA_VERSION="${CA_VERSION}" -DCA_DATABASE_VERSION=${CA_DATABASE_VERSION})
 
