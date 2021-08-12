@@ -798,6 +798,28 @@ stock CA_IsPlayerOnSurface(playerid, Float:tolerance=1.5)
 
 /**--------------------------------------------------------------------------**\
 <summary>
+	CA_IsVehicleOnSurface
+</summary>
+<param name="vehicleid">The vehicleid to check</param>
+<param name="Float:tolerance = 1.5">The distance to check for the ground</param>
+<returns>
+    0 if the vehicle is not on the ground
+    1 if the vehicle is on the ground
+</returns>
+\**--------------------------------------------------------------------------**/
+stock CA_IsVehicleOnSurface(vehicleid, Float:tolerance=1.5)
+{
+	new Float:x, Float:y, Float:z;
+	GetVehiclePos(vehicleid, x, y, z);
+
+	// Check if vehicle is actually on the ground
+	if(!CA_RayCastLine(x, y, z, x, y, z-tolerance, x, y, z))
+		return 0;
+	return 1;
+}
+
+/**--------------------------------------------------------------------------**\
+<summary>
 	CA_RemoveBarriers
 </summary>
 <returns>
@@ -1078,6 +1100,32 @@ stock CA_IsPlayerBlocked(playerid, Float:dist=1.5, Float:height=0.5)
 
 	endx = (x + dist * floatsin(-fa,degrees));
 	endy = (y + dist * floatcos(-fa,degrees));
+	if(CA_RayCastLine(x, y, z, endx, endy, z, x, y, z))
+		return 1;
+	return 0;
+}
+
+/**--------------------------------------------------------------------------**\
+<summary>
+	CA_IsVehicleBlocked
+</summary>
+<param name="vehicleid">The vehicleid to check</param>
+<param name="Float:dist = 1.5">The distance to check for a wall</param>
+<param name="Float:height = 0.5">The height the wall can be from the ground</param>
+<returns>
+    0 if the vehicle is not blocked
+    1 if the vehicle is blocked
+</returns>
+\**--------------------------------------------------------------------------**/
+stock CA_IsVehicleBlocked(vehicleid, Float:dist=1.5, Float:height=0.5)
+{
+	new Float:x, Float:y, Float:z, Float:endx, Float:endy, Float:za;
+	GetVehiclePos(vehicleid, x, y, z);
+	z -= 1.0 + height;
+	GetVehicleZAngle(vehicleid, za);
+
+	endx = (x + dist * floatsin(-za,degrees));
+	endy = (y + dist * floatcos(-za,degrees));
 	if(CA_RayCastLine(x, y, z, endx, endy, z, x, y, z))
 		return 1;
 	return 0;
