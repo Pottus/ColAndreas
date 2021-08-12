@@ -9,43 +9,43 @@
 
 #pragma library colandreas
 
-#define COLANDREAS_VERSION (10500) //a.b.c 10000 * a + 100 * b + c
-#define COLANDREAS (COLANDREAS_VERSION)
+#define COLANDREAS_VERSION	(10500) //a.b.c 10000 * a + 100 * b + c
+#define COLANDREAS	(COLANDREAS_VERSION)
 
 // Default extra ID types
-#define CA_EXTRA_1  0
-#define CA_EXTRA_2  1
-#define CA_EXTRA_3  2
-#define CA_EXTRA_4  3
-#define CA_EXTRA_5  4
-#define CA_EXTRA_6  5
-#define CA_EXTRA_7  6
-#define CA_EXTRA_8  7
-#define CA_EXTRA_9  8
-#define CA_EXTRA_10 9
+#define CA_EXTRA_1	0
+#define CA_EXTRA_2	1
+#define CA_EXTRA_3	2
+#define CA_EXTRA_4	3
+#define CA_EXTRA_5	4
+#define CA_EXTRA_6	5
+#define CA_EXTRA_7	6
+#define CA_EXTRA_8	7
+#define CA_EXTRA_9	8
+#define CA_EXTRA_10	9
 
 // ColAndreas currently supports 50000 user collision objects (This can be raised as needed)
 #if defined MAX_CA_OBJECTS
-    #if MAX_CA_OBJECTS > 50000
-        #error [ColAndreas] MAX_CA_OBJECTS is too high, maximum value is 50000
-    #endif
+	#if MAX_CA_OBJECTS > 50000
+		#error [ColAndreas] MAX_CA_OBJECTS is too high, maximum value is 50000
+	#endif
 #else
-   #define MAX_CA_OBJECTS 10000
+	#define MAX_CA_OBJECTS	10000
 #endif
 
 // Water object ID
-#define		WATER_OBJECT		20000
+#define WATER_OBJECT		20000
 
 // Object types (Player objects are supported as dynamic only)
-#define		OBJECT_TYPE_OBJECT	0
-#define		OBJECT_TYPE_DYNAMIC	1
+#define OBJECT_TYPE_OBJECT	0
+#define OBJECT_TYPE_DYNAMIC	1
 
 #if !defined FLOAT_INFINITY
-	#define FLOAT_INFINITY (Float:0x7F800000)
+	#define FLOAT_INFINITY	(Float:0x7F800000)
 #endif
 
 // Maximum number of raycasts in CA_RayCastMultiLine
-#define MAX_MULTICAST_SIZE 99
+#define MAX_MULTICAST_SIZE	99
 
 /**--------------------------------------------------------------------------**\
 <summary>
@@ -70,7 +70,7 @@ native CA_Init();
 	1 when successfully removed
 </returns>
 <remarks>
-    You must use this function before using `CA_Init`
+	You must use this function before using `CA_Init`
 </remarks>
 \**--------------------------------------------------------------------------**/
 native CA_RemoveBuilding(modelid, Float:x, Float:y, Float:z, Float:radius);
@@ -87,7 +87,7 @@ native CA_RemoveBuilding(modelid, Float:x, Float:y, Float:z, Float:radius);
 	1 when successfully restored
 </returns>
 <remarks>
-    You must use this function after using `CA_Init`
+	You must use this function after using `CA_Init`
 </remarks>
 \**--------------------------------------------------------------------------**/
 native CA_RestoreBuilding(modelid, Float:x, Float:y, Float:z, Float:radius);
@@ -101,7 +101,7 @@ native CA_RestoreBuilding(modelid, Float:x, Float:y, Float:z, Float:radius);
 <param name="&Float:x, &Float:y, &Float:z">The point that the ray collided</param>
 <returns>
 	0 if the ray didn't collide with anything
-    WATER_OBJECT if the ray collided with water
+	WATER_OBJECT if the ray collided with water
 	The model of the object the ray collided
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -120,7 +120,7 @@ native CA_RayCastLine(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Floa
 	The index of the object the ray collided
 </returns>
 <remarks>
-    This only works with objects created with `add` enabled in `CA_CreateObject`, such as the objects created by the "_DC" functions
+	This only works with objects created with `add` enabled in `CA_CreateObject`, such as the objects created by the "_DC" functions
 </remarks>
 \**--------------------------------------------------------------------------**/
 native CA_RayCastLineID(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, &Float:x, &Float:y, &Float:z);
@@ -135,12 +135,12 @@ native CA_RayCastLineID(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Fl
 <param name="&Float:x, &Float:y, &Float:z">The point that the ray collided</param>
 <returns>
 	-1 if the ray collided with a static object or water
-    -1 if the extra ID is unmodified
+	-1 if the extra ID is unmodified
 	0 if the ray didn't collide with anything
 	The index of the object the ray collided
 </returns>
 <remarks>
-    This only works with objects created with `add` enabled in `CA_CreateObject`, such as the objects created by the "_DC" functions
+	This only works with objects created with `add` enabled in `CA_CreateObject`, such as the objects created by the "_DC" functions
 </remarks>
 \**--------------------------------------------------------------------------**/
 native CA_RayCastLineExtraID(type, Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Float:EndY, Float:EndZ, &Float:x, &Float:y, &Float:z);
@@ -173,7 +173,7 @@ native CA_RayCastMultiLine(Float:StartX, Float:StartY, Float:StartZ, Float:EndX,
 <param name="&Float:rx, &Float:ry, &Float:rz">The rotation of the face that the ray collided</param>
 <returns>
 	0 if the ray didn't collide with anything
-    WATER_OBJECT if the ray collided with water
+	WATER_OBJECT if the ray collided with water
 	The model of the object the ray collided
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -189,7 +189,7 @@ native CA_RayCastLineAngle(Float:StartX, Float:StartY, Float:StartZ, Float:EndX,
 <param name="&Float:nx, &Float:ny, &Float:nz">The reflection vector of the face that the ray collided</param>
 <returns>
 	0 if the ray didn't collide with anything
-    WATER_OBJECT if the ray collided with water
+	WATER_OBJECT if the ray collided with water
 	The model of the object the ray collided
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -205,7 +205,7 @@ native CA_RayCastReflectionVector(Float:startx, Float:starty, Float:startz, Floa
 <param name="&Float:nx, &Float:ny, &Float:nz">The surface normal of the face that the ray collided</param>
 <returns>
 	0 if the ray didn't collide with anything
-    WATER_OBJECT if the ray collided with water
+	WATER_OBJECT if the ray collided with water
 	The model of the object the ray collided
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -220,7 +220,7 @@ native CA_RayCastLineNormal(Float:startx, Float:starty, Float:startz, Float:endx
 <param name="Float:rx, Float:ry, Float:rz">The object rotation to test</param>
 <returns>
 	0 if the object model doesn't collide with the world with the specified
-    1 otherwise
+	1 otherwise
 </returns>
 \**--------------------------------------------------------------------------**/
 native CA_ContactTest(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz);
@@ -232,7 +232,7 @@ native CA_ContactTest(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Fl
 <param name="Float:rx, Float:ry, Float:rz">GTA euler rotations to be converted</param>
 <param name="&Float:x, &Float:y, &Float:z, &Float:w">The quaternion angles returned</param>
 <returns>
-    Always 1
+	Always 1
 </returns>
 \**--------------------------------------------------------------------------**/
 native CA_EulerToQuat(Float:rx, Float:ry, Float:rz, &Float:x, &Float:y, &Float:z, &Float:w);
@@ -244,7 +244,7 @@ native CA_EulerToQuat(Float:rx, Float:ry, Float:rz, &Float:x, &Float:y, &Float:z
 <param name="&Float:x, &Float:y, &Float:z, &Float:w">The quaternion angles to be converted</param>
 <param name="Float:rx, Float:ry, Float:rz">GTA euler rotations returned</param>
 <returns>
-    Always 1
+	Always 1
 </returns>
 \**--------------------------------------------------------------------------**/
 native CA_QuatToEuler(Float:x, Float:y, Float:z, Float:w, &Float:rx, &Float:ry, &Float:rz);
@@ -257,8 +257,8 @@ native CA_QuatToEuler(Float:x, Float:y, Float:z, Float:w, &Float:rx, &Float:ry, 
 <param name="&Float:offx, &Float:offy, &Float:offz">The offset of the model's bounding sphere</param>
 <param name="&Float:radius">The radius of the model's bounding sphere</param>
 <returns>
-    0 if the model is invalid
-    1 otherwise
+	0 if the model is invalid
+	1 otherwise
 </returns>
 \**--------------------------------------------------------------------------**/
 native CA_GetModelBoundingSphere(modelid, &Float:offx, &Float:offy, &Float:offz, &Float:radius);
@@ -271,8 +271,8 @@ native CA_GetModelBoundingSphere(modelid, &Float:offx, &Float:offy, &Float:offz,
 <param name="&Float:minx, &Float:miny, &Float:minz">The "minimum" point of the model's bounding box</param>
 <param name="&Float:maxx, &Float:maxy, &Float:maxz">The "maximum" point of the model's bounding box</param>
 <returns>
-    0 if the model is invalid
-    1 otherwise
+	0 if the model is invalid
+	1 otherwise
 </returns>
 \**--------------------------------------------------------------------------**/
 native CA_GetModelBoundingBox(modelid, &Float:minx, &Float:miny, &Float:minz, &Float:maxx, &Float:maxy, &Float:maxz);
@@ -285,7 +285,7 @@ native CA_GetModelBoundingBox(modelid, &Float:minx, &Float:miny, &Float:minz, &F
 <param name="type">The index of the extra ID to be set</param>
 <param name="data">The data stored in the extra ID</param>
 <returns>
-    Always 1 (which needs to be changed to be like CA_GetObjectExtraID's returns...)
+	Always 1 (which needs to be changed to be like CA_GetObjectExtraID's returns...)
 </returns>
 \**--------------------------------------------------------------------------**/
 native CA_SetObjectExtraID(index, type, data);
@@ -297,8 +297,8 @@ native CA_SetObjectExtraID(index, type, data);
 <param name="index">The index of the ColAndreas object</param>
 <param name="type">The index of the extra ID to be set</param>
 <returns>
-    -1 if the index or type is invalid
-    The data stored in the extra ID
+	-1 if the index or type is invalid
+	The data stored in the extra ID
 </returns>
 \**--------------------------------------------------------------------------**/
 native CA_GetObjectExtraID(index, type);
@@ -314,7 +314,7 @@ native CA_GetObjectExtraID(index, type);
 <param name="&Float:cx, &Float:cy, &Float:cz">The position of the object that the ray collided</param>
 <returns>
 	0 if the ray didn't collide with anything
-    WATER_OBJECT if the ray collided with water
+	WATER_OBJECT if the ray collided with water
 	The model of the object the ray collided
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -332,7 +332,7 @@ native CA_RayCastLineEx(Float:StartX, Float:StartY, Float:StartZ, Float:EndX, Fl
 <param name="&Float:orx, &Float:ory, &Float:orz">The rotation of the object that the ray collided</param>
 <returns>
 	0 if the ray didn't collide with anything
-    WATER_OBJECT if the ray collided with water
+	WATER_OBJECT if the ray collided with water
 	The model of the object the ray collided
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -367,7 +367,7 @@ native CA_LoadFromDff(newid, const dffFileName[]);
 <param name="bool:add = false">Whether or not to store this objects index for manual management</param>
 <returns>
 	-1 if the specified model has no collision (should be changed to -2, to avoid confusion with unmanaged objects)
-    -1 if `add` is false
+	-1 if `add` is false
 	The index of the created collision object
 </returns>
 <remarks>
@@ -383,7 +383,7 @@ native CA_CreateObject(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, F
 <param name="index">The index of the object to be destroyed</param>
 <returns>
 	-1 if the specified model has no collision (should be changed to -2, to avoid confusion with unmanaged objects)
-    -1 if `add` is false
+	-1 if `add` is false
 	The index of the created collision object
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -541,12 +541,12 @@ static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 <param name="Float:rx, Float:ry, Float:rz">The rotation of the object</param>
 <param name="Float:drawdistance = 300.0">Whether or not to store this objects index for manual management</param>
 <returns>
-    -1 if the object couldn't be created
-    -1 if there are too many "DC" objects
+	-1 if the object couldn't be created
+	-1 if there are too many "DC" objects
 	The "DC" index of the created object
 </returns>
 <remarks>
-    The index returned by this function can only be used by "DC" functions
+	The index returned by this function can only be used by "DC" functions
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_CreateObject_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:drawdistance = 300.0)
@@ -587,9 +587,9 @@ stock CA_CreateObject_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry,
 </summary>
 <param name="index">The DC index of the object to destroy</param>
 <returns>
-    -1 if the index is invalid
-    -1 if the object doesn't exist
-    1 or next interator index if the object was destroyed
+	-1 if the index is invalid
+	-1 if the object doesn't exist
+	1 or next interator index if the object was destroyed
 </returns>
 \**--------------------------------------------------------------------------**/
 stock CA_DestroyObject_DC(index)
@@ -630,8 +630,8 @@ stock CA_DestroyObject_DC(index)
 <param name="index">The DC index of the object to be moved</param>
 <param name="Float:x, Float:y, Float:z">The new position</param>
 <returns>
-    -1 if the index is invalid
-    -1 if the object doesn't exist
+	-1 if the index is invalid
+	-1 if the object doesn't exist
 	1 if the new position was set successfully
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -670,8 +670,8 @@ stock CA_SetObjectPos_DC(index, Float:x, Float:y, Float:z)
 <param name="index">The DC index of the object to be moved</param>
 <param name="Float:rx, Float:ry, Float:rz">The new rotation</param>
 <returns>
-    -1 if the index is invalid
-    -1 if the object doesn't exist
+	-1 if the index is invalid
+	-1 if the object doesn't exist
 	1 if the new rotation was set successfully
 </returns>
 \**--------------------------------------------------------------------------**/
@@ -707,7 +707,7 @@ stock CA_SetObjectRot_DC(index, Float:rx, Float:ry, Float:rz)
 	CA_DestroyAllObjects_DC
 </summary>
 <remarks>
-    Destroys all DC objects
+	Destroys all DC objects
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_DestroyAllObjects_DC()
@@ -734,8 +734,8 @@ stock CA_DestroyAllObjects_DC()
 	CA_FindZ_For2DCoord
 </summary>
 <remarks>
-    The ColAndreas alternative for MapAndreas's entire function
-    This function does everything MapAndreas is capable of doing, and without the ground limit
+	The ColAndreas alternative for MapAndreas's entire function
+	This function does everything MapAndreas is capable of doing, and without the ground limit
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_FindZ_For2DCoord(Float:x, Float:y, &Float:z)
@@ -748,8 +748,11 @@ stock CA_FindZ_For2DCoord(Float:x, Float:y, &Float:z)
 <summary>
 	CA_RayCastExplode
 </summary>
+<returns>
+	Every collided point as an array
+</returns>
 <remarks>
-    Explode ray casts in every direction
+	Explode ray casts in every direction
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intensity = 20.0, Float:collisions[][3])
@@ -788,8 +791,8 @@ stock CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intens
 <param name="playerid">The playerid to check</param>
 <param name="Float:tolerance = 1.5">The distance to check for the ground</param>
 <returns>
-    0 if the player is not on the ground
-    1 if the player is on the ground
+	0 if the player is not on the ground
+	1 if the player is on the ground
 </returns>
 \**--------------------------------------------------------------------------**/
 stock CA_IsPlayerOnSurface(playerid, Float:tolerance = 1.5)
@@ -810,8 +813,8 @@ stock CA_IsPlayerOnSurface(playerid, Float:tolerance = 1.5)
 <param name="vehicleid">The vehicleid to check</param>
 <param name="Float:tolerance = 1.5">The distance to check for the ground</param>
 <returns>
-    0 if the vehicle is not on the ground
-    1 if the vehicle is on the ground
+	0 if the vehicle is not on the ground
+	1 if the vehicle is on the ground
 </returns>
 \**--------------------------------------------------------------------------**/
 stock CA_IsVehicleOnSurface(vehicleid, Float:tolerance = 1.5)
@@ -833,8 +836,8 @@ stock CA_IsVehicleOnSurface(vehicleid, Float:tolerance = 1.5)
 	Always 1
 </returns>
 <remarks>
-    Removes all of the barrier object collisions
-    You must use this function before using `CA_Init`
+	Removes all of the barrier object collisions
+	You must use this function before using `CA_Init`
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_RemoveBarriers()
@@ -859,8 +862,8 @@ stock CA_RemoveBarriers()
 	Always 1
 </returns>
 <remarks>
-    Removes all of the breakable object collisions
-    You must use this function before using `CA_Init`
+	Removes all of the breakable object collisions
+	You must use this function before using `CA_Init`
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_RemoveBreakableBuildings()
@@ -898,8 +901,8 @@ stock CA_RemoveBreakableBuildings()
 <param name="&Float:depth">The lowest collision point found</param>
 <param name="&Float:playerdepth">How deep the player is below the surface</param>
 <returns>
-    0 if the player is not in water
-    1 if the player is in water
+	0 if the player is not in water
+	1 if the player is in water
 </returns>
 \**--------------------------------------------------------------------------**/
 stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
@@ -944,8 +947,8 @@ stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 <param name="&Float:depth">The lowest collision point found</param>
 <param name="&Float:vehicledepth">How deep the vehicle is below the surface</param>
 <returns>
-    0 if the vehicle is not in water
-    1 if the vehicle is in water
+	0 if the vehicle is not in water
+	1 if the vehicle is in water
 </returns>
 \**--------------------------------------------------------------------------**/
 stock CA_IsVehicleInWater(vehicleid, &Float:depth, &Float:vehicledepth)
@@ -990,11 +993,11 @@ stock CA_IsVehicleInWater(vehicleid, &Float:depth, &Float:vehicledepth)
 <param name="Float:dist = 3.0">The distance to check for water</param>
 <param name="Float:height = 3.0">The height the player can be from the water</param>
 <returns>
-    0 if the player is not near water
-    1 if the player is near water
+	0 if the player is not near water
+	1 if the player is near water
 </returns>
 <remarks>
-    Checks for water all around the player
+	Checks for water all around the player
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_IsPlayerNearWater(playerid, Float:dist = 3.0, Float:height = 3.0)
@@ -1016,11 +1019,11 @@ stock CA_IsPlayerNearWater(playerid, Float:dist = 3.0, Float:height = 3.0)
 <param name="Float:dist = 3.0">The distance to check for water</param>
 <param name="Float:height = 3.0">The height the vehicle can be from the water</param>
 <returns>
-    0 if the vehicle is not near water
-    1 if the vehicle is near water
+	0 if the vehicle is not near water
+	1 if the vehicle is near water
 </returns>
 <remarks>
-    Checks for water all around the vehicle
+	Checks for water all around the vehicle
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_IsVehicleNearWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
@@ -1042,11 +1045,11 @@ stock CA_IsVehicleNearWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
 <param name="Float:dist = 3.0">The distance to check for water</param>
 <param name="Float:height = 3.0">The height the player can be from the water</param>
 <returns>
-    0 if the player is not facing water
-    1 if the player is facing water
+	0 if the player is not facing water
+	1 if the player is facing water
 </returns>
 <remarks>
-    Checks for water only in front of the player
+	Checks for water only in front of the player
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_IsPlayerFacingWater(playerid, Float:dist = 3.0, Float:height = 3.0)
@@ -1068,11 +1071,11 @@ stock CA_IsPlayerFacingWater(playerid, Float:dist = 3.0, Float:height = 3.0)
 <param name="Float:dist = 3.0">The distance to check for water</param>
 <param name="Float:height = 3.0">The height the vehicle can be from the water</param>
 <returns>
-    0 if the vehicle is not facing water
-    1 if the vehicle is facing water
+	0 if the vehicle is not facing water
+	1 if the vehicle is facing water
 </returns>
 <remarks>
-    Checks for water only in front of the vehicle
+	Checks for water only in front of the vehicle
 </remarks>
 \**--------------------------------------------------------------------------**/
 stock CA_IsVehicleFacingWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
@@ -1094,8 +1097,8 @@ stock CA_IsVehicleFacingWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
 <param name="Float:dist = 1.5">The distance to check for a wall</param>
 <param name="Float:height = 0.5">The height the wall can be from the ground</param>
 <returns>
-    0 if the player is not blocked
-    1 if the player is blocked
+	0 if the player is not blocked
+	1 if the player is blocked
 </returns>
 \**--------------------------------------------------------------------------**/
 stock CA_IsPlayerBlocked(playerid, Float:dist = 1.5, Float:height = 0.5)
@@ -1120,8 +1123,8 @@ stock CA_IsPlayerBlocked(playerid, Float:dist = 1.5, Float:height = 0.5)
 <param name="Float:dist = 1.5">The distance to check for a wall</param>
 <param name="Float:height = 0.5">The height the wall can be from the ground</param>
 <returns>
-    0 if the vehicle is not blocked
-    1 if the vehicle is blocked
+	0 if the vehicle is not blocked
+	1 if the vehicle is blocked
 </returns>
 \**--------------------------------------------------------------------------**/
 stock CA_IsVehicleBlocked(vehicleid, Float:dist = 1.5, Float:height = 0.5)
@@ -1144,8 +1147,8 @@ stock CA_IsVehicleBlocked(vehicleid, Float:dist = 1.5, Float:height = 0.5)
 </summary>
 <param name="Float:x, Float:y, Float:z">A point in the area to be checked</param>
 <returns>
-    0.0 if there is either no floor or no ceiling
-    The distance from the ceiling to the floor
+	0.0 if there is either no floor or no ceiling
+	The distance from the ceiling to the floor
 </returns>
 \**--------------------------------------------------------------------------**/
 stock Float:CA_GetRoomHeight(Float:x, Float:y, Float:z)
@@ -1166,8 +1169,8 @@ stock Float:CA_GetRoomHeight(Float:x, Float:y, Float:z)
 <param name="Float:x, Float:y, Float:z">A point in the area to be checked</param>
 <param name="&Float:m_x, &Float:m_y">The center X and Y of the area</param>
 <returns>
-    -1.0 if there isn't enough collisions to determine the center
-    The radius of the circle formed by the test
+	-1.0 if there isn't enough collisions to determine the center
+	The radius of the circle formed by the test
 </returns>
 \**--------------------------------------------------------------------------**/
 stock Float:CA_GetRoomCenter(Float:x, Float:y, Float:z, &Float:m_x, &Float:m_y)
@@ -1285,16 +1288,16 @@ CA_IsPlayerNearWater(playerid, Float:dist = 3.0, Float:height = 3.0)
 Checks if a vehicle is near water (returns 0 if it is actually in the water)
 CA_IsVehicleNearWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
 
-//Checks for water directly in front of the player
+Checks for water directly in front of the player
 CA_IsPlayerFacingWater(playerid, Float:dist = 3.0, Float:height = 3.0)
 
-//Checks for water directly in front of the vehicle
+Checks for water directly in front of the vehicle
 CA_IsVehicleFacingWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
 
-// Check if a player is blocked by a wall
+Check if a player is blocked by a wall
 CA_IsPlayerBlocked(playerid, Float:dist = 1.5, Float:height = 0.5)
 
-// Check if a vehicle is blocked by a wall
+Check if a vehicle is blocked by a wall
 CA_IsVehicleBlocked(vehicleid, Float:dist = 1.5, Float:height = 0.5)
 
 
