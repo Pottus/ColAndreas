@@ -1256,6 +1256,9 @@ CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intensity = 
 Checks if a player is standing on any surface (prevent animation exploit when falling)
 CA_IsPlayerOnSurface(playerid, Float:tolerance=1.5)
 
+Checks if a vehicle is standing on any surface
+CA_IsVehicleOnSurface(vehicleid, Float:tolerance=1.5)
+
 Removes all barries this function only works BEFORE using CA_Init()
 CA_RemoveBarriers()
 
@@ -1266,12 +1269,23 @@ Checks if a player is in the water depth returns the lowest collision point foun
 how deep the player is below the surface
 CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 
+Checks if a vehicle is in the water depth returns the lowest collision point found vehicledepth returns
+how deep the vehicle is below the surface
+CA_IsVehicleInWater(vehicleid, &Float:depth, &Float:vehicledepth)
+
 Checks if a player is near water (returns 0 if they are actually in the water) distance is the radius to check
 Height is how high above the water to detect
 CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 
+Checks if a vehicle is near water (returns 0 if it is actually in the water) distance is the radius to check
+Height is how high above the water to detect
+CA_IsVehicleNearWater(vehicleid, Float:dist=3.0, Float:height=3.0)
+
 // Check if a player is blocked by a wall
 CA_IsPlayerBlocked(playerid, Float:dist=1.5, Float:height=0.5)
+
+// Check if a vehicle is blocked by a wall
+CA_IsVehicleBlocked(vehicleid, Float:dist=1.5, Float:height=0.5)
 
 
 Notes:
