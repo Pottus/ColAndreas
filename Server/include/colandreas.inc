@@ -9,7 +9,7 @@
 
 #pragma library colandreas
 
-#define COLANDREAS_VERSION (10500) //a.b.c 10000*a+100*b+c
+#define COLANDREAS_VERSION (10500) //a.b.c 10000 * a + 100 * b + c
 #define COLANDREAS (COLANDREAS_VERSION)
 
 // Default extra ID types
@@ -445,7 +445,7 @@ enum CAOBJECTINFO
 
 static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 
-//Streamer
+//Streamer Plugin
 #if defined STREAMER_TYPE_OBJECT
 	// Static collision object functions (The index is not returned these can not be deleted!)
 	stock STREAMER_TAG_OBJECT:CA_CreateDynamicObjectEx_SC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:streamdistance = STREAMER_OBJECT_SD, Float:drawdistance = STREAMER_OBJECT_DD, worlds[] = { -1 }, interiors[] = { -1 }, players[] = { -1 }, STREAMER_TAG_AREA:areas[] = { STREAMER_TAG_AREA:-1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players, maxareas = sizeof areas)
@@ -744,7 +744,14 @@ stock CA_FindZ_For2DCoord(Float:x, Float:y, &Float:z)
 	return 0;
 }
 
-// Explode ray casts in every direction
+/**--------------------------------------------------------------------------**\
+<summary>
+	CA_RayCastExplode
+</summary>
+<remarks>
+    Explode ray casts in every direction
+</remarks>
+\**--------------------------------------------------------------------------**/
 stock CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intensity = 20.0, Float:collisions[][3])
 {
 	if(intensity < 1.0 || intensity > 360.0 || (((360.0 / intensity) - floatround((360.0 / intensity), floatround_floor)) * intensity))
@@ -785,7 +792,7 @@ stock CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intens
     1 if the player is on the ground
 </returns>
 \**--------------------------------------------------------------------------**/
-stock CA_IsPlayerOnSurface(playerid, Float:tolerance=1.5)
+stock CA_IsPlayerOnSurface(playerid, Float:tolerance = 1.5)
 {
 	new Float:x, Float:y, Float:z;
 	GetPlayerPos(playerid, x, y, z);
@@ -807,7 +814,7 @@ stock CA_IsPlayerOnSurface(playerid, Float:tolerance=1.5)
     1 if the vehicle is on the ground
 </returns>
 \**--------------------------------------------------------------------------**/
-stock CA_IsVehicleOnSurface(vehicleid, Float:tolerance=1.5)
+stock CA_IsVehicleOnSurface(vehicleid, Float:tolerance = 1.5)
 {
 	new Float:x, Float:y, Float:z;
 	GetVehiclePos(vehicleid, x, y, z);
@@ -888,8 +895,8 @@ stock CA_RemoveBreakableBuildings()
 	CA_IsPlayerInWater
 </summary>
 <param name="playerid">The playerid to check</param>
-<param name="&Float:depth">The depth</param>
-<param name="&Float:playerdepth">The depth of the player</param>
+<param name="&Float:depth">The lowest collision point found</param>
+<param name="&Float:playerdepth">How deep the player is below the surface</param>
 <returns>
     0 if the player is not in water
     1 if the player is in water
@@ -934,8 +941,8 @@ stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 	CA_IsVehicleInWater
 </summary>
 <param name="vehicleid">The vehicleid to check</param>
-<param name="&Float:depth">The depth</param>
-<param name="&Float:vehicledepth">The depth of the vehicle</param>
+<param name="&Float:depth">The lowest collision point found</param>
+<param name="&Float:vehicledepth">How deep the vehicle is below the surface</param>
 <returns>
     0 if the vehicle is not in water
     1 if the vehicle is in water
@@ -983,14 +990,14 @@ stock CA_IsVehicleInWater(vehicleid, &Float:depth, &Float:vehicledepth)
 <param name="Float:dist = 3.0">The distance to check for water</param>
 <param name="Float:height = 3.0">The height the player can be from the water</param>
 <returns>
-    0 if the player is not in water
-    1 if the player is in water
+    0 if the player is not near water
+    1 if the player is near water
 </returns>
 <remarks>
     Checks for water all around the player
 </remarks>
 \**--------------------------------------------------------------------------**/
-stock CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
+stock CA_IsPlayerNearWater(playerid, Float:dist = 3.0, Float:height = 3.0)
 {
 	new Float:x, Float:y, Float:z, Float:tmp;
 	GetPlayerPos(playerid, x, y, z);
@@ -1009,14 +1016,14 @@ stock CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
 <param name="Float:dist = 3.0">The distance to check for water</param>
 <param name="Float:height = 3.0">The height the vehicle can be from the water</param>
 <returns>
-    0 if the vehicle is not in water
-    1 if the vehicle is in water
+    0 if the vehicle is not near water
+    1 if the vehicle is near water
 </returns>
 <remarks>
     Checks for water all around the vehicle
 </remarks>
 \**--------------------------------------------------------------------------**/
-stock CA_IsVehicleNearWater(vehicleid, Float:dist=3.0, Float:height=3.0)
+stock CA_IsVehicleNearWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
 {
 	new Float:x, Float:y, Float:z, Float:tmp;
 	GetVehiclePos(vehicleid, x, y, z);
@@ -1035,14 +1042,14 @@ stock CA_IsVehicleNearWater(vehicleid, Float:dist=3.0, Float:height=3.0)
 <param name="Float:dist = 3.0">The distance to check for water</param>
 <param name="Float:height = 3.0">The height the player can be from the water</param>
 <returns>
-    0 if the player is not in water
-    1 if the player is in water
+    0 if the player is not facing water
+    1 if the player is facing water
 </returns>
 <remarks>
     Checks for water only in front of the player
 </remarks>
 \**--------------------------------------------------------------------------**/
-stock CA_IsPlayerFacingWater(playerid, Float:dist=3.0, Float:height=3.0)
+stock CA_IsPlayerFacingWater(playerid, Float:dist = 3.0, Float:height = 3.0)
 {
 	new Float:x, Float:y, Float:z, Float:r, Float:tmp;
 	GetPlayerPos(playerid, x, y, z);
@@ -1061,14 +1068,14 @@ stock CA_IsPlayerFacingWater(playerid, Float:dist=3.0, Float:height=3.0)
 <param name="Float:dist = 3.0">The distance to check for water</param>
 <param name="Float:height = 3.0">The height the vehicle can be from the water</param>
 <returns>
-    0 if the vehicle is not in water
-    1 if the vehicle is in water
+    0 if the vehicle is not facing water
+    1 if the vehicle is facing water
 </returns>
 <remarks>
     Checks for water only in front of the vehicle
 </remarks>
 \**--------------------------------------------------------------------------**/
-stock CA_IsVehicleFacingWater(vehicleid, Float:dist=3.0, Float:height=3.0)
+stock CA_IsVehicleFacingWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
 {
 	new Float:x, Float:y, Float:z, Float:r, Float:tmp;
 	GetVehiclePos(vehicleid, x, y, z);
@@ -1091,15 +1098,15 @@ stock CA_IsVehicleFacingWater(vehicleid, Float:dist=3.0, Float:height=3.0)
     1 if the player is blocked
 </returns>
 \**--------------------------------------------------------------------------**/
-stock CA_IsPlayerBlocked(playerid, Float:dist=1.5, Float:height=0.5)
+stock CA_IsPlayerBlocked(playerid, Float:dist = 1.5, Float:height = 0.5)
 {
 	new Float:x, Float:y, Float:z, Float:endx, Float:endy, Float:fa;
 	GetPlayerPos(playerid, x, y, z);
 	z -= 1.0 + height;
 	GetPlayerFacingAngle(playerid, fa);
 
-	endx = (x + dist * floatsin(-fa,degrees));
-	endy = (y + dist * floatcos(-fa,degrees));
+	endx = (x + dist * floatsin(-fa, degrees));
+	endy = (y + dist * floatcos(-fa, degrees));
 	if(CA_RayCastLine(x, y, z, endx, endy, z, x, y, z))
 		return 1;
 	return 0;
@@ -1117,15 +1124,15 @@ stock CA_IsPlayerBlocked(playerid, Float:dist=1.5, Float:height=0.5)
     1 if the vehicle is blocked
 </returns>
 \**--------------------------------------------------------------------------**/
-stock CA_IsVehicleBlocked(vehicleid, Float:dist=1.5, Float:height=0.5)
+stock CA_IsVehicleBlocked(vehicleid, Float:dist = 1.5, Float:height = 0.5)
 {
 	new Float:x, Float:y, Float:z, Float:endx, Float:endy, Float:za;
 	GetVehiclePos(vehicleid, x, y, z);
 	z -= 1.0 + height;
 	GetVehicleZAngle(vehicleid, za);
 
-	endx = (x + dist * floatsin(-za,degrees));
-	endy = (y + dist * floatcos(-za,degrees));
+	endx = (x + dist * floatsin(-za, degrees));
+	endy = (y + dist * floatcos(-za, degrees));
 	if(CA_RayCastLine(x, y, z, endx, endy, z, x, y, z))
 		return 1;
 	return 0;
@@ -1144,10 +1151,10 @@ stock CA_IsVehicleBlocked(vehicleid, Float:dist=1.5, Float:height=0.5)
 stock Float:CA_GetRoomHeight(Float:x, Float:y, Float:z)
 {
 	new Float:fx, Float:fy, Float:fz, Float:cx, Float:cy, Float:cz;
-	if(CA_RayCastLine(x, y, z, x, y, z-1000.0, fx, fy, fz))
+	if(CA_RayCastLine(x, y, z, x, y, z - 1000.0, fx, fy, fz))
 	{
-		if(CA_RayCastLine(x, y, z, x, y, z+1000.0, cx, cy, cz))
-			return floatsqroot(((fx-cx)*(fx-cx))+((fy-cy)*(fy-cy))+((fz-cz)*(fz-cz)));
+		if(CA_RayCastLine(x, y, z, x, y, z + 1000.0, cx, cy, cz))
+			return floatsqroot(((fx - cx) * (fx - cx)) + ((fy - cy) * (fy - cy)) + ((fz - cz) * (fz - cz)));
 	}
 	return 0.0;
 }
@@ -1199,6 +1206,7 @@ stock Float:CA_GetRoomCenter(Float:x, Float:y, Float:z, &Float:m_x, &Float:m_y)
 }
 
 // Hooked functions
+
 public OnFilterScriptExit()
 {
 	CA_DestroyAllObjects_DC();
@@ -1254,10 +1262,10 @@ Explode ray casts in every direction
 CA_RayCastExplode(Float:cX, Float:cY, Float:cZ, Float:Radius, Float:intensity = 20.0, Float:collisions[][3])
 
 Checks if a player is standing on any surface (prevent animation exploit when falling)
-CA_IsPlayerOnSurface(playerid, Float:tolerance=1.5)
+CA_IsPlayerOnSurface(playerid, Float:tolerance = 1.5)
 
 Checks if a vehicle is standing on any surface
-CA_IsVehicleOnSurface(vehicleid, Float:tolerance=1.5)
+CA_IsVehicleOnSurface(vehicleid, Float:tolerance = 1.5)
 
 Removes all barries this function only works BEFORE using CA_Init()
 CA_RemoveBarriers()
@@ -1265,27 +1273,29 @@ CA_RemoveBarriers()
 Removes all dynamic breakable objects, also only works BEFORE using CA_Init()
 CA_RemoveBreakableBuildings()
 
-Checks if a player is in the water depth returns the lowest collision point found playerdepth returns
-how deep the player is below the surface
+Checks if a player is in the water
 CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 
-Checks if a vehicle is in the water depth returns the lowest collision point found vehicledepth returns
-how deep the vehicle is below the surface
+Checks if a vehicle is in the water
 CA_IsVehicleInWater(vehicleid, &Float:depth, &Float:vehicledepth)
 
-Checks if a player is near water (returns 0 if they are actually in the water) distance is the radius to check
-Height is how high above the water to detect
-CA_IsPlayerNearWater(playerid, Float:dist=3.0, Float:height=3.0)
+Checks if a player is near water (returns 0 if they are actually in the water)
+CA_IsPlayerNearWater(playerid, Float:dist = 3.0, Float:height = 3.0)
 
-Checks if a vehicle is near water (returns 0 if it is actually in the water) distance is the radius to check
-Height is how high above the water to detect
-CA_IsVehicleNearWater(vehicleid, Float:dist=3.0, Float:height=3.0)
+Checks if a vehicle is near water (returns 0 if it is actually in the water)
+CA_IsVehicleNearWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
+
+//Checks for water directly in front of the player
+CA_IsPlayerFacingWater(playerid, Float:dist = 3.0, Float:height = 3.0)
+
+//Checks for water directly in front of the vehicle
+CA_IsVehicleFacingWater(vehicleid, Float:dist = 3.0, Float:height = 3.0)
 
 // Check if a player is blocked by a wall
-CA_IsPlayerBlocked(playerid, Float:dist=1.5, Float:height=0.5)
+CA_IsPlayerBlocked(playerid, Float:dist = 1.5, Float:height = 0.5)
 
 // Check if a vehicle is blocked by a wall
-CA_IsVehicleBlocked(vehicleid, Float:dist=1.5, Float:height=0.5)
+CA_IsVehicleBlocked(vehicleid, Float:dist = 1.5, Float:height = 0.5)
 
 
 Notes:
@@ -1294,6 +1304,7 @@ Recommended loading order
 - RemoveBuildings
 - Init static map
 - Add static objects
+- RestoreBuildings
 
 There is currently no support for virtual worlds / interior or per player with streamer objects
 
