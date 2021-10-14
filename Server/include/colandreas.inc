@@ -428,7 +428,7 @@ native CA_SetObjectPos(index, Float:x, Float:y, Float:z);
 \**--------------------------------------------------------------------------**/
 native CA_SetObjectRot(index, Float:rx, Float:ry, Float:rz);
 
-#if defined _Y_ITERATE_LOCAL_VERSION
+#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 	static stock Iterator:CA_Objects<MAX_CA_OBJECTS>;
 #endif
 
@@ -438,7 +438,7 @@ enum CAOBJECTINFO
 	ObjectID,
 	ObjectType,
 
-	#if !defined _Y_ITERATE_LOCAL_VERSION
+	#if !defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 		bool:ObjectUsed,
 	#endif
 }
@@ -473,7 +473,7 @@ static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 	stock CA_CreateDynamicObjectEx_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:streamdistance = STREAMER_OBJECT_SD, Float:drawdistance = STREAMER_OBJECT_DD, worlds[] = { -1 }, interiors[] = { -1 }, players[] = { -1 }, STREAMER_TAG_AREA:areas[] = { STREAMER_TAG_AREA:-1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players, maxareas = sizeof areas)
 	{
 		new index = -1;
-		#if defined _Y_ITERATE_LOCAL_VERSION
+		#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 			index = Iter_Free(CA_Objects);
 		#else
 			for(new i = 0; i < MAX_CA_OBJECTS; i++)
@@ -488,7 +488,7 @@ static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 
 		if(index > -1)
 		{
-			#if defined _Y_ITERATE_LOCAL_VERSION
+			#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 				Iter_Add(CA_Objects, index);
 			#else
 				CA_ObjectList[index][ObjectUsed] = true;
@@ -504,7 +504,7 @@ static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 	stock CA_CreateDynamicObject_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, vw = -1, interior = -1, playerid = -1, Float:streamdistance = STREAMER_OBJECT_SD, Float:drawdistance = STREAMER_OBJECT_DD, STREAMER_TAG_AREA:areaid = STREAMER_TAG_AREA:-1, priority = 0)
 	{
 		new index = -1;
-		#if defined _Y_ITERATE_LOCAL_VERSION
+		#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 			index = Iter_Free(CA_Objects);
 		#else
 			for(new i = 0; i < MAX_CA_OBJECTS; i++)
@@ -519,7 +519,7 @@ static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 
 		if(index > -1)
 		{
-			#if defined _Y_ITERATE_LOCAL_VERSION
+			#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 				Iter_Add(CA_Objects, index);
 			#else
 				CA_ObjectList[index][ObjectUsed] = true;
@@ -552,7 +552,7 @@ static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 stock CA_CreateObject_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:drawdistance = 300.0)
 {
 	new index = -1;
-	#if defined _Y_ITERATE_LOCAL_VERSION
+	#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 		index = Iter_Free(CA_Objects);
 	#else
 		for(new i = 0; i < MAX_CA_OBJECTS; i++)
@@ -569,7 +569,7 @@ stock CA_CreateObject_DC(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry,
 	if(id == INVALID_OBJECT_ID) return -1;
 	if(index > -1)
 	{
-		#if defined _Y_ITERATE_LOCAL_VERSION
+		#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 			Iter_Add(CA_Objects, index);
 		#else
 			CA_ObjectList[index][ObjectUsed] = true;
@@ -596,7 +596,7 @@ stock CA_DestroyObject_DC(index)
 {
 	// Out of bounds
 	if(index < 0 || index >= MAX_CA_OBJECTS) return -1;
-	#if defined _Y_ITERATE_LOCAL_VERSION
+	#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 		if(Iter_Contains(CA_Objects, index))
 		{
 			new next;
@@ -639,7 +639,7 @@ stock CA_SetObjectPos_DC(index, Float:x, Float:y, Float:z)
 {
 	// Out of bounds
 	if(index < 0 || index >= MAX_CA_OBJECTS) return -1;
-	#if defined _Y_ITERATE_LOCAL_VERSION
+	#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 		if(Iter_Contains(CA_Objects, index))
 		{
 			if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_OBJECT) SetObjectPos(CA_ObjectList[index][ObjectID], x, y, z);
@@ -679,7 +679,7 @@ stock CA_SetObjectRot_DC(index, Float:rx, Float:ry, Float:rz)
 {
 	// Out of bounds
 	if(index < 0 || index >= MAX_CA_OBJECTS) return -1;
-	#if defined _Y_ITERATE_LOCAL_VERSION
+	#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 		if(Iter_Contains(CA_Objects, index))
 		{
 			if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_OBJECT) SetObjectRot(CA_ObjectList[index][ObjectID], rx, ry, rz);
@@ -712,7 +712,7 @@ stock CA_SetObjectRot_DC(index, Float:rx, Float:ry, Float:rz)
 \**--------------------------------------------------------------------------**/
 stock CA_DestroyAllObjects_DC()
 {
-	#if defined _Y_ITERATE_LOCAL_VERSION
+	#if defined _Y_ITERATE_LOCAL_VERSION || _FOREACH_LOCAL_VERSION
 		foreach(new i : CA_Objects)
 		{
 			if(CA_ObjectList[i][ObjectType] == OBJECT_TYPE_OBJECT) i = CA_DestroyObject_DC(i);
@@ -1208,6 +1208,92 @@ stock Float:CA_GetRoomCenter(Float:x, Float:y, Float:z, &Float:m_x, &Float:m_y)
 	return VectorSize(m_x - pt1x, m_y - pt1y, 0.0);
 }
 
+/**--------------------------------------------------------------------------**\
+<summary>
+	CA_GetObjectID
+</summary>
+<param name="index">Index in CA_ObjectList</param>
+<returns>
+	Negative number if there is an error:
+		-1 - out of bounds
+		-2 - object is invalid
+
+	Otherwise it will return the id of the object
+</returns>
+<remarks>
+	Returns the ID of the real object (streamer / static) 
+</remarks>
+\**--------------------------------------------------------------------------**/
+stock CA_GetObjectID(const index)
+{
+	if (!(0 <= index < sizeof(CA_ObjectList)))
+	{
+		return -1;
+	}
+	if (!CA_IsValidObject(index))
+	{
+		return -2;
+	}
+	return CA_ObjectList[index][ObjectID];
+}
+
+/**--------------------------------------------------------------------------**\
+<summary>
+	CA_GetObjectType
+</summary>
+<param name="index">Index in CA_ObjectList</param>
+<returns>
+	Negative number if there is an error:
+		-1 - out of bounds
+		-2 - object is invalid
+
+	Otherwise it will return the id of the object
+</returns>
+<remarks>
+	Returns the object type
+</remarks>
+\**--------------------------------------------------------------------------**/
+stock CA_GetObjectType(const index)
+{
+	if (!(0 <= index < sizeof(CA_ObjectList)))
+	{
+		return -1;
+	}
+	if (!CA_IsValidObject(index))
+	{
+		return -2;
+	}
+	return CA_ObjectList[index][ObjectType];
+}
+
+/**--------------------------------------------------------------------------**\
+<summary>
+	CA_GetCollisionObjectID
+</summary>
+<param name="index">Index in CA_ObjectList</param>
+<returns>
+	Negative number if there is an error:
+		-1 - out of bounds
+		-2 - object is invalid
+
+	Otherwise it will return the id of collision object
+</returns>
+<remarks>
+	Returns collision object id
+</remarks>
+\**--------------------------------------------------------------------------**/
+stock CA_GetCollisionObjectID(const index)
+{
+	if (!(0 <= index < sizeof(CA_ObjectList)))
+	{
+		return -1;
+	}
+	if (!CA_IsValidObject(index))
+	{
+		return -2;
+	}
+	return CA_ObjectList[index][ColdAndreadsID];
+}
 // Hooked functions
 
 public OnFilterScriptExit()
