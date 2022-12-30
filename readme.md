@@ -1,6 +1,6 @@
 # ColAndreas
 
-[New thread](https://www.burgershot.gg/showthread.php?tid=175), since the previous thread was deleted by your king. 
+[New thread](https://www.open.mp/showthread.php?tid=175), since the previous thread was deleted by your king. 
 
 ColAndreas is a plugin for SA-MP which creates a simulation of the San Andreas world. Using the [Bullet Physics library](http://bulletphysics.org/), ColAndreas
 gives the server knowledge of the game environment itself.
