@@ -18,4 +18,11 @@ Go to the [releases page](https://github.com/Pottus/ColAndreas/releases) and gra
 	* Install the Bullet libraries using your distro's package manager.
 		* **Ubuntu:** `sudo apt-get install libbulletcollision2.82:i386 libbulletdynamics2.82:i386 liblinearmath2.82:i386 libbulletsoftbody2.82:i386`
 		* Please note that you must install the *32bit* (i386) version of the libraries, even if you use a 64bit OS.
-		
+
+## build instructions under debian
+sudo apt-get install libbullet-dev
+sudo apt-get install cmake
+cd ColAndreas-master
+cmake -B build
+cd build
+make
