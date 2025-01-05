@@ -493,7 +493,7 @@ static stock CA_ObjectList[MAX_CA_OBJECTS][CAOBJECTINFO];
 			#else
 				CA_ObjectList[index][ObjectUsed] = true;
 			#endif
-			CA_ObjectList[index][ObjectID] = _:CreateDynamicObjectEx(modelid, x, y, z, rx, ry, rz, drawdistance, streamdistance, worlds, interiors, players, areas, priority, maxworlds, maxinteriors, maxplayers, maxareas);
+			CA_ObjectList[index][ObjectID] = _:CreateDynamicObjectEx(modelid, x, y, z, rx, ry, rz, streamdistance, drawdistance, worlds, interiors, players, areas, priority, maxworlds, maxinteriors, maxplayers, maxareas);
 			CA_ObjectList[index][ColdAndreadsID] = CA_CreateObject(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, true);
 			CA_ObjectList[index][ObjectType] = OBJECT_TYPE_DYNAMIC;
 		}
