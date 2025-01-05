@@ -76,7 +76,7 @@ namespace rw {
 		ColHeader fileHeader;
 		std::streamoff beginPos = rw.tellg();
 		rw.read((char*)&fileHeader, sizeof(fileHeader));
-		if (rw.gcount() == sizeof(fileHeader) && !strncmp(fileHeader.validator, "COL3", 4))
+		if (rw.gcount() == sizeof(fileHeader) && !strncmp(fileHeader.validator, "COL", 3))
 		{
 			rw.seekg(40, std::ios::cur);
 			if (ModelCount > 0)
