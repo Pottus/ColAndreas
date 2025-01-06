@@ -895,6 +895,51 @@ stock CA_RemoveBreakableBuildings()
 
 /**--------------------------------------------------------------------------**\
 <summary>
+	CA_IsPointInWater
+</summary>
+<param name="Float:x, Float:y, Float:z">Point to be checked</param>
+<param name="&Float:depth">The lowest collision point found</param>
+<param name="&Float:pointdepth">How deep the point is below the surface</param>
+<returns>
+	0 if the point is not in water
+	1 if the point is in water
+</returns>
+\**--------------------------------------------------------------------------**/
+stock CA_IsPointInWater(Float:x, Float:y, Float:z, &Float:depth = 0.0, &Float:pointdepth = 0.0)
+{
+	new Float:retx[10], Float:rety[10], Float:retz[10], Float: retdist[10], modelids[10];
+	new collisions = CA_RayCastMultiLine(x, y, z+1000.0, x, y, z-1000.0, retx, rety, retz, retdist, modelids, 10);
+	if(collisions > 0)
+	{
+		for(new i = 0, j = 0; i < collisions; i++)
+		{
+			if(modelids[i] == WATER_OBJECT)
+			{
+				depth = FLOAT_INFINITY;
+
+				for(j = 0; j < collisions; j++)
+				{
+					if(retz[j] < depth)
+					depth = retz[j];
+				}
+
+				depth = retz[i] - depth;
+				if(depth < 0.001 && depth > -0.001)
+					depth = 100.0;
+				pointdepth = retz[i] - z;
+
+				if(pointdepth < -2.0)
+					return 0;
+
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+/**--------------------------------------------------------------------------**\
+<summary>
 	CA_IsPlayerInWater
 </summary>
 <param name="playerid">The playerid to check</param>
@@ -905,7 +950,7 @@ stock CA_RemoveBreakableBuildings()
 	1 if the player is in water
 </returns>
 \**--------------------------------------------------------------------------**/
-stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
+stock CA_IsPlayerInWater(playerid, &Float:depth = 0.0, &Float:playerdepth = 0.0)
 {
 	new Float:x, Float:y, Float:z, Float:retx[10], Float:rety[10], Float:retz[10], Float: retdist[10], modelids[10];
 	GetPlayerPos(playerid, x, y, z);
@@ -951,7 +996,7 @@ stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 	1 if the vehicle is in water
 </returns>
 \**--------------------------------------------------------------------------**/
-stock CA_IsVehicleInWater(vehicleid, &Float:depth, &Float:vehicledepth)
+stock CA_IsVehicleInWater(vehicleid, &Float:depth = 0.0, &Float:vehicledepth = 0.0)
 {
 	new Float:x, Float:y, Float:z, Float:retx[10], Float:rety[10], Float:retz[10], Float:retdist[10], modelids[10];
 	GetVehiclePos(vehicleid, x, y, z);
@@ -1361,6 +1406,9 @@ CA_RemoveBarriers()
 
 Removes all dynamic breakable objects, also only works BEFORE using CA_Init()
 CA_RemoveBreakableBuildings()
+
+Checks if a point is in the water
+CA_IsPointInWater(Float:x, Float:y, Float:z, &Float:depth, &Float:pointdepth)
 
 Checks if a player is in the water
 CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
