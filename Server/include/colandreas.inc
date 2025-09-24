@@ -905,38 +905,38 @@ stock CA_RemoveBreakableBuildings()
 	1 if the player is in water
 </returns>
 \**--------------------------------------------------------------------------**/
-stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
+stock CA_IsPlayerInWater(playerid, &Float:depth = 0.0, &Float:playerdepth = 0.0)
 {
-	new Float:x, Float:y, Float:z, Float:retx[10], Float:rety[10], Float:retz[10], Float: retdist[10], modelids[10];
+	new Float:x, Float:y, Float:z, Float:retx[10], Float:rety[10], Float:retz[10], Float:retdist[10], modelids[10];
 	GetPlayerPos(playerid, x, y, z);
-	new collisions = CA_RayCastMultiLine(x, y, z+1000.0, x, y, z-1000.0, retx, rety, retz, retdist, modelids, 10);
-	if(collisions > 0)
+
+	new collisions = CA_RayCastMultiLine(x, y, z + 1000.0, x, y, z - 1000.0, retx, rety, retz, retdist, modelids, 10);
+	if(collisions <= 0)
+		return 0;
+
+	new idx = -1, Float:minz = FLOAT_INFINITY;
+
+	for(new i = 0; i < collisions; i++)
 	{
-		for(new i = 0, j = 0; i < collisions; i++)
-		{
-			if(modelids[i] == WATER_OBJECT)
-			{
-				depth = FLOAT_INFINITY;
+		if(retz[i] < minz)
+			minz = retz[i];
 
-				for(j = 0; j < collisions; j++)
-				{
-					if(retz[j] < depth)
-					depth = retz[j];
-				}
-
-				depth = retz[i] - depth;
-				if(depth < 0.001 && depth > -0.001)
-					depth = 100.0;
-				playerdepth = retz[i] - z;
-
-				if(playerdepth < -2.0)
-					return 0;
-
-				return 1;
-			}
-		}
+		if(idx == -1 && modelids[i] == WATER_OBJECT)
+			idx = i;
 	}
-	return 0;
+
+	if(idx == -1)
+		return 0;
+
+	depth = retz[idx] - minz;
+	if(depth < 0.001 && depth > -0.001)
+		depth = 100.0;
+
+	playerdepth = retz[idx] - z;
+	if(playerdepth < -2.0)
+		return 0;
+
+	return 1;
 }
 
 /**--------------------------------------------------------------------------**\
@@ -951,38 +951,38 @@ stock CA_IsPlayerInWater(playerid, &Float:depth, &Float:playerdepth)
 	1 if the vehicle is in water
 </returns>
 \**--------------------------------------------------------------------------**/
-stock CA_IsVehicleInWater(vehicleid, &Float:depth, &Float:vehicledepth)
+stock CA_IsVehicleInWater(vehicleid, &Float:depth = 0.0, &Float:vehicledepth = 0.0)
 {
 	new Float:x, Float:y, Float:z, Float:retx[10], Float:rety[10], Float:retz[10], Float:retdist[10], modelids[10];
 	GetVehiclePos(vehicleid, x, y, z);
+
 	new collisions = CA_RayCastMultiLine(x, y, z + 1000.0, x, y, z - 1000.0, retx, rety, retz, retdist, modelids, 10);
-	if(collisions)
+	if(collisions <= 0)
+		return 0;
+
+	new idx = -1, Float:minz = FLOAT_INFINITY;
+
+	for(new i = 0; i < collisions; i++)
 	{
-		for(new i = 0, j = 0; i < collisions; i++)
-		{
-			if(modelids[i] == WATER_OBJECT)
-			{
-				depth = FLOAT_INFINITY;
+		if(retz[i] < minz)
+			minz = retz[i];
 
-				for(j = 0; j < collisions; j++)
-				{
-					if(retz[j] < depth)
-					depth = retz[j];
-				}
-
-				depth = retz[i] - depth;
-				if(depth < 0.001 && depth > -0.001)
-					depth = 100.0;
-				vehicledepth = retz[i] - z;
-
-				if(vehicledepth < -2.0)
-					return 0;
-
-				return 1;
-			}
-		}
+		if(idx == -1 && modelids[i] == WATER_OBJECT)
+			idx = i;
 	}
-	return 0;
+
+	if(idx == -1)
+		return 0;
+
+	depth = retz[idx] - minz;
+	if(depth < 0.001 && depth > -0.001)
+		depth = 100.0;
+
+	vehicledepth = retz[idx] - z;
+	if(vehicledepth < -2.0)
+		return 0;
+
+	return 1;
 }
 
 /**--------------------------------------------------------------------------**\
