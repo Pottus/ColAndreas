@@ -599,8 +599,12 @@ stock CA_DestroyObject_DC(index)
 	#if defined _Y_ITERATE_LOCAL_VERSION || defined _FOREACH_LOCAL_VERSION
 		if(Iter_Contains(CA_Objects, index))
 		{
-			new next;
+			new next = 1;
+			#if defined _Y_ITERATE_LOCAL_VERSION
+			Iter_Remove(CA_Objects, index);
+			#else // _FOREACH_LOCAL_VERSION
 			Iter_SafeRemove(CA_Objects, index, next);
+			#endif
 			if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_OBJECT) DestroyObject(CA_ObjectList[index][ObjectID]);
 			#if defined STREAMER_TYPE_OBJECT
 			else if(CA_ObjectList[index][ObjectType] == OBJECT_TYPE_DYNAMIC) DestroyDynamicObject(STREAMER_TAG_OBJECT:CA_ObjectList[index][ObjectID]);
